@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Master Bait - Select Authentication</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <!-- Background -->
+    <div class="app-root">
+        <div class="animated-bg"></div>
+        <div class="bg-overlay-pattern"></div>
+        <div class="bg-vignette"></div>
+
+        <!-- Content Wrapper -->
+        <div class="content-layer">
+            
+            <!-- Main Container -->
+            <div class="main-view">
+                
+                <div class="landing-container">
+                    <div style="width: 100%; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px; min-height: 600px;">
+                        
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 32px; width: 100%; max-width: 400px; padding: 0 16px;">
+                            
+                            <!-- Title -->
+                            <h1 style="color: white; font-size: 2rem; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.5); text-align: center;">
+                                Welcome Angler!
+                            </h1>
+                            <p style="color: #d1d5db; text-align: center; margin-top: -16px;">
+                                Please log in or sign up to save your catch.
+                            </p>
+
+                            <!-- Auth Buttons -->
+                            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px; margin-top: 32px;">
+                                <button id="auth-select-login-btn" class="btn-start" style="justify-content: center;">
+                                    <span style="position: relative; z-index: 10; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));">Login</span>
+                                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); pointer-events: none;"></div>
+                                </button>
+                                
+                                <button id="auth-select-signup-btn" class="btn-purple" style="justify-content: center;">
+                                    <span style="position: relative; z-index: 10; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));">Sign Up</span>
+                                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent); pointer-events: none;"></div>
+                                </button>
+                            </div>
+
+                            <!-- Back Button -->
+                            <button id="auth-select-back-btn" style="color: #9ca3af; background: none; border: none; cursor: pointer; font-size: 0.875rem; margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+                                <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                                Back to Home
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Version Footer -->
+                    <div class="footer">
+                        v1.0.6-live • MASTER BAIT STUDIOS<br/>
+                        FISHING FOR COMPLIMENTS
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
