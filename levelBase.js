@@ -33,7 +33,6 @@
     renderMessageList();
     renderReadingPane(activeMessage);
     renderHints();
-    bindHintables();
     bindActions();
     bindVerification();
   }
@@ -112,14 +111,7 @@
     }
   }
 
-  function bindHintables() {
-    document.querySelectorAll(".hintable").forEach((el, idx) => {
-      el.addEventListener("mouseenter", () => {
-        const hint = el.dataset.hint;
-        if (hint) addClue(hint);
-      });
-    });
-
+  function bindActions() {
     revealHintBtn.addEventListener("click", () => {
       if (revealedHintCount < activeMessage.orderedHints.length) {
         const nextHint = activeMessage.orderedHints[revealedHintCount];
@@ -128,9 +120,7 @@
         addClue(`Hint ${revealedHintCount} revealed: ${nextHint}`);
       }
     });
-  }
 
-  function bindActions() {
     document.querySelectorAll("[data-action]").forEach(btn => {
       btn.addEventListener("click", () => {
         handleAction(btn.dataset.action);
@@ -149,6 +139,8 @@
         "good",
         "Correct. Reporting phishing is the best action here. Now prove your understanding."
       );
+
+      addClue("Correct action chosen: Report phishing.");
 
       if (typeof window.showFishCoach === "function") {
         window.showFishCoach("perfect");
