@@ -16,14 +16,6 @@
   const senderAvatarEl = document.getElementById("senderAvatar");
   const accountLinkEl = document.getElementById("accountLink");
 
-  // Fish coach overlay elements
-  const fishOverlay = document.getElementById("fishCoachOverlay");
-  const fishText = document.getElementById("fishText");
-  const fishTitle = document.getElementById("fishTitle");
-  const fishLessons = document.getElementById("fishLessons");
-  const fishCloseBtn = document.getElementById("fishCloseBtn");
-
-  // proof challenge inside fish panel
   const proofBox = document.getElementById("proofBox");
   const verificationPrompt = document.getElementById("verificationPrompt");
   const verificationInput = document.getElementById("verificationInput");
@@ -42,7 +34,7 @@
     renderReadingPane(activeMessage);
     renderHints();
     bindActions();
-    bindFishCoach();
+    bindProof();
   }
 
   function renderMessageList() {
@@ -70,7 +62,8 @@
         retryCount = 0;
         waitingForProof = false;
         clearDecisionFeedback();
-        closeFishCoach();
+        hideProofBox();
+        if (window.closeFishCoachCustom) window.closeFishCoachCustom();
         renderReadingPane(msg);
         renderHints();
       });
@@ -138,12 +131,7 @@
     });
   }
 
-  function bindFishCoach() {
-    fishCloseBtn.addEventListener("click", () => {
-      if (waitingForProof) return;
-      closeFishCoach();
-    });
-
+  function bindProof() {
     verifySubmitBtn.addEventListener("click", submitVerificationAnswer);
     verificationInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") submitVerificationAnswer();
@@ -151,83 +139,72 @@
   }
 
   function handleAction(action) {
-    if (!activeMessage) return;
-
     const isCorrect = action === activeMessage.correctAction;
     const isPartial = action === activeMessage.partialAction;
 
     if (isCorrect) {
       addClue("Correct action chosen: Report phishing.");
-      showFishCoach("perfect", true);
+      setDecisionFeedback("good", "Correct. Reporting phishing is the best action here.");
+      showCoach("perfect", true);
       return;
     }
 
     if (isPartial) {
+      addClue("Partial credit: verifying officially is safer than clicking, but reporting is the best action here.");
       setDecisionFeedback(
         "warn",
-        "Safer than clicking, but not the best answer for this workplace scenario. If this is phishing, it should be reported. You can reveal another hint and try again."
+        "Safer than clicking, but not the best answer. Reporting phishing is the strongest workplace action here."
       );
-      addClue("Partial credit: verifying officially is safer than clicking, but reporting is the best action here.");
-      showFishCoach("good", false);
+      showCoach("good", false);
       return;
     }
 
+    addClue("Incorrect action chosen. Re-check sender details, urgency language, and the previewed link.");
     setDecisionFeedback(
       "bad",
-      "That action is risky. This email uses reward bait, pressure wording, and suspicious sender details. Reveal another hint and try again."
+      "That action is risky. Reveal another hint and try again."
     );
-    addClue("Incorrect action chosen. Re-check sender details, urgency language, and the previewed link.");
-    showFishCoach("bad", false);
+    showCoach("bad", false);
   }
 
-  function setDecisionFeedback(type, text) {
-    decisionFeedback.className = `decision-feedback ${type}`;
-    decisionFeedback.textContent = text;
-    decisionFeedback.classList.remove("hidden");
-  }
+  function showCoach(mode, withProof) {
+    if (!window.showFishCoachCustom) {
+      console.error("fishCoach.js is not loaded.");
+      return;
+    }
 
-  function clearDecisionFeedback() {
-    decisionFeedback.textContent = "";
-    decisionFeedback.className = "decision-feedback hidden";
-  }
+    const coachPayload = activeMessage.coach[mode];
+    window.showFishCoachCustom(coachPayload);
 
-  function showFishCoach(mode, withProof) {
-    const coach = activeMessage.coach[mode];
-    fishTitle.textContent = coach.title;
-    fishLessons.innerHTML = coach.lessons.map(x => `• ${escapeHtml(x)}`).join("<br>");
-    typeFishBubble(coach.bubble);
+    if (window.setFishCoachCloseHandler) {
+      window.setFishCoachCloseHandler(() => {
+        if (waitingForProof) return;
+        window.closeFishCoachCustom();
+      });
+    }
 
     if (withProof) {
       waitingForProof = true;
-      proofBox.classList.remove("hidden");
-      verificationPrompt.textContent = activeMessage.verification.prompt;
-      verificationInput.value = "";
-      verificationHelp.textContent = "Type the real official domain only.";
-      verificationResult.textContent = "";
-      verificationResult.className = "proof-result";
-      setTimeout(() => verificationInput.focus(), 50);
+      showProofBox();
     } else {
       waitingForProof = false;
-      proofBox.classList.add("hidden");
+      hideProofBox();
     }
-
-    fishOverlay.classList.remove("hidden");
-    fishOverlay.setAttribute("aria-hidden", "false");
   }
 
-  function closeFishCoach() {
-    fishOverlay.classList.add("hidden");
-    fishOverlay.setAttribute("aria-hidden", "true");
+  function showProofBox() {
+    proofBox.classList.remove("hidden");
+    verificationPrompt.textContent = activeMessage.verification.prompt;
+    verificationInput.value = "";
+    verificationHelp.textContent = "Type the real official domain only.";
+    verificationResult.textContent = "";
+    verificationResult.className = "proof-result";
+    setTimeout(() => verificationInput.focus(), 60);
+  }
+
+  function hideProofBox() {
     proofBox.classList.add("hidden");
     waitingForProof = false;
-  }
-
-  async function typeFishBubble(text) {
-    fishText.textContent = "";
-    for (let i = 0; i < text.length; i++) {
-      fishText.textContent += text[i];
-      await new Promise(r => setTimeout(r, 18));
-    }
   }
 
   function normalizeAnswer(value) {
@@ -256,8 +233,14 @@
         "Excellent. You reported the phish and correctly identified the official site to visit manually."
       );
 
+      if (window.setFishCoachCloseHandler) {
+        window.setFishCoachCloseHandler(() => {
+          window.closeFishCoachCustom();
+        });
+      }
+
       setTimeout(() => {
-        closeFishCoach();
+        hideProofBox();
       }, 1200);
 
       return;
@@ -272,6 +255,17 @@
     verificationHelp.textContent = guidance;
     verificationInput.focus();
     verificationInput.select();
+  }
+
+  function setDecisionFeedback(type, text) {
+    decisionFeedback.className = `decision-feedback ${type}`;
+    decisionFeedback.textContent = text;
+    decisionFeedback.classList.remove("hidden");
+  }
+
+  function clearDecisionFeedback() {
+    decisionFeedback.textContent = "";
+    decisionFeedback.className = "decision-feedback hidden";
   }
 
   function addClue(text) {
