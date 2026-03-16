@@ -14,15 +14,6 @@ window.LEVEL1_EMAIL = {
       previewBottom: "External email offering a gift card and asking the user to act quickly...",
       external: true,
       suspicious: true,
-      body: {
-        greeting: "Hello Bach,",
-        paragraphs: [
-          "Congratulations! You have been selected as one of today’s lucky Amazon customers. You are eligible to claim a $100 gift card if you confirm your account now.",
-          "We only have a few claim spots left today, so please act quickly before your reward expires.",
-          "To confirm your eligibility, click Claim Reward."
-        ],
-        closing: "Thank you,\nAmazon Rewards Team"
-      },
       inspector: {
         returnPath: "bounce-4801@mailer.amazon-claim-notice.net",
         replyTo: "support@amazon-prize-claims-help.com",
@@ -35,13 +26,6 @@ window.LEVEL1_EMAIL = {
         "The message uses reward language and urgency together: 'selected', '$100 gift card', and 'act quickly'. That combination is a common phishing tactic.",
         "The sender details are inconsistent. The visible sender, reply-to, and return-path do not match a trusted main Amazon domain pattern.",
         "The previewed link does not use Amazon’s real primary domain. A safer choice would be to type the official Amazon website manually in your browser."
-      ],
-      hoverClues: [
-        "Free reward language is commonly used to attract a fast click.",
-        "The visible link label sounds normal, but the true destination matters more than the label.",
-        "Return-Path does not match a normal trusted Amazon sender pattern.",
-        "Reply-To is different from the visible sender. That can be a phishing sign.",
-        "The previewed URL does not use Amazon’s real main domain."
       ],
       verification: {
         prompt: "In this email, what official website/domain should you manually type in your browser instead of clicking the email link?",
@@ -56,6 +40,35 @@ window.LEVEL1_EMAIL = {
           "Still not right. Try the main official Amazon domain only.",
           "Use the official base domain, for example: amazon.com"
         ]
+      },
+      coach: {
+        perfect: {
+          title: "Perfect!",
+          bubble: "Well done.\nYou passed this level.",
+          lessons: [
+            "Urgency + reward bait is a classic phishing tactic.",
+            "The sender, reply-to, and link domain do not match trusted Amazon patterns.",
+            "Safest move: report it and use the official website manually."
+          ]
+        },
+        good: {
+          title: "Good choice!",
+          bubble: "Nice.\nYou reduced risk.",
+          lessons: [
+            "Verifying through an official channel is much safer than clicking.",
+            "Still, workplace security policy usually expects phishing to be reported.",
+            "Good instinct — but there is an even better answer here."
+          ]
+        },
+        bad: {
+          title: "Got baited 😬",
+          bubble: "Oof…\nThat link was bait.",
+          lessons: [
+            "Attackers want a fast click, not careful thinking.",
+            "Never trust reward emails just because they look exciting.",
+            "Check the real domain before you click anything."
+          ]
+        }
       }
     }
   ]
