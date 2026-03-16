@@ -2,174 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Level 1 — Inbox</title>
-  <link rel="stylesheet" href="levelBase.css" />
-  <link rel="stylesheet" href="fishCoach.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Master Bait - Level 1</title>
+  <link rel="stylesheet" href="./level1.css" />
 </head>
 <body>
-
-  <header class="hud">
-    <div class="hud-left">
-      <h1 class="hud-title" id="levelTitle">Level 1 — Tutorial</h1>
-      <div class="hud-subtitle">Objective: Learn controls + spot obvious red flags</div>
-    </div>
-
-    <div class="hud-right">
-  <div class="pill timer">
-    ⏱ <span id="timer">05:00</span>
-  </div>
-
-  <div class="pill score">
-    ⭐ Score: <span id="score">0</span>
-  </div>
-
-  <div class="pill progress-pill">
-    <div class="progress-label">
-      Progress: <span id="progressText">0/3</span>
-    </div>
-    <div class="progressbar">
-      <div class="progressfill" id="progressFill" style="width:0%"></div>
-    </div>
-  </div>
-
-  <a class="exit" href="levelMap.html">Exit</a>
-</div>
-  </header>
-
-  <main class="layout">
-    <!-- Left Sidebar -->
-    <aside class="sidebar panel">
-      <div class="search">
-        <input type="text" placeholder="Search mail..." disabled />
+  <div class="level-shell">
+    <!-- Top black bar -->
+    <header class="mail-topbar">
+      <div class="top-left">
+        <div class="sait-badge">SAIT</div>
+        <div class="product-name">Outlook</div>
       </div>
 
-      <nav class="folders">
-        <button class="folder active">📥 Inbox</button>
-        <button class="folder">🚩 Reported</button>
-      </nav>
-
-      <div class="meta muted">
-        Tip: Start by reading the newest messages.
-      </div>
-    </aside>
-
-    <!-- Email List -->
-    <section class="list panel">
-      <div class="list-header">
-        <div class="list-title">Inbox</div>
-        <div class="list-count"><span id="count">3</span> messages</div>
+      <div class="top-search-wrap">
+        <input class="top-search" type="text" placeholder="Search" />
       </div>
 
-      <div class="email-items"></div>
-    </section>
+      <div class="top-right">
+        <button class="icon-btn">🔔</button>
+        <button class="icon-btn">⚙️</button>
+        <button class="icon-btn">👤</button>
+      </div>
+    </header>
 
-    <!-- Reading Pane -->
-    <section class="reader panel">
-      <div class="reader-header">
-        <div>
-          <div class="reader-subject" id="readerSubject"></div>
-          <div class="reader-meta muted" id="readerMeta"></div>
+    <!-- Toolbar -->
+    <div class="mail-toolbar">
+      <button class="primary-btn">New mail</button>
+      <button class="toolbar-btn">Delete</button>
+      <button class="toolbar-btn">Archive</button>
+      <button class="toolbar-btn">Junk</button>
+      <button class="toolbar-btn">Sweep</button>
+      <button class="toolbar-btn">Move to</button>
+      <button class="toolbar-btn">Categorize</button>
+      <button class="toolbar-btn">More</button>
+    </div>
+
+    <!-- Main layout -->
+    <main class="mail-layout">
+      <!-- Left app rail -->
+      <aside class="app-rail">
+        <button class="rail-btn active">📧</button>
+        <button class="rail-btn">📅</button>
+        <button class="rail-btn">👥</button>
+        <button class="rail-btn">☁️</button>
+      </aside>
+
+      <!-- Folder pane -->
+      <aside class="folder-pane">
+        <div class="folder-header">Favorites</div>
+        <div class="folder-item active">Inbox <span class="count">1</span></div>
+        <div class="folder-item">Sent Items</div>
+        <div class="folder-item">Drafts</div>
+        <div class="folder-item">Deleted Items</div>
+        <div class="folder-item">Junk Email</div>
+        <div class="folder-item">Archive</div>
+
+        <div class="folder-header mt">Bach.Tran@edu.sait.ca</div>
+        <div class="folder-item active">Inbox <span class="count">1</span></div>
+        <div class="folder-item">Drafts</div>
+        <div class="folder-item">Sent Items</div>
+      </aside>
+
+      <!-- Message list -->
+      <section class="message-list-pane">
+        <div class="list-header">
+          <div class="list-title">Inbox</div>
+          <div class="list-tools">⟲ ⤢ ⌕</div>
         </div>
 
-        <div class="reader-actions">
-  <button class="btn good" data-action="report">Report</button>
-  <button class="btn ok" data-action="inspect">Inspect</button>
-  <button class="btn bad" data-action="openLink">Open Link</button>
-  <button class="btn neutral" data-action="delete">Delete</button>
-  <button class="btn neutral" data-action="reply">Reply</button>
-</div>
-      </div>
+        <div class="message-group-label">Today</div>
 
-      <article class="reader-body" id="readerBody"></article>
+        <div id="messageList"></div>
+      </section>
 
-      <footer class="reader-footer muted">
-        (Later: this area can show “consequence” text or hints)
-      </footer>
-    </section>
-  </main>
+      <!-- Reading pane -->
+      <section class="reading-pane">
+        <div class="reading-subject" id="readingSubject">Loading...</div>
 
-  <!-- Level-specific settings -->
-<script>
-  window.LEVEL_CONFIG = {
-    id: 1,
-    title: "Tutorial",
-    minutes: 5,
-    totalItems: 3
-  };
-</script>
+        <div class="reading-meta">
+          <div class="sender-row">
+            <div class="avatar" id="senderAvatar">TP</div>
+            <div class="sender-meta">
+              <div class="sender-name-line">
+                <span class="sender-name suspicious" id="fromName">ThingSpeak Trial Program</span>
+                <span class="sender-address suspicious" id="fromEmail">&lt;trials@mail.thingspeak.com&gt;</span>
+              </div>
+              <div class="to-line">
+                To: <span id="toEmail">Bach Tran</span>
+              </div>
+            </div>
 
-<!-- Start Level Modal -->
-<div id="startModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-card panel">
-    <div class="modal-head">
-      <div>
-        <div class="modal-kicker">Mission Briefing</div>
-        <div class="modal-title" id="modalTitle">Level 1 — Tutorial</div>
-        <div class="modal-sub muted" id="modalDesc">
-          Learn the inbox controls and practice spotting obvious red flags.
+            <div class="reading-time" id="emailTime">Sat 3/14/2026 6:15 AM</div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="modal-body">
-      <div class="modal-section">
-        <div class="modal-label">Goals</div>
-        <ul id="modalGoals">
-          <li>Practice reading sender + subject + link</li>
-          <li>Use Report / Delete correctly</li>
-        </ul>
-      </div>
+        <div class="blocked-bar">
+          Some content in this message has been blocked because the sender isn't in your Safe senders list.
+          <button class="small-action">Trust sender</button>
+          <button class="small-action">Show blocked content</button>
+        </div>
 
-      <div class="modal-section">
-        <div class="modal-label">Tasks</div>
-        <ul id="modalTasks">
-          <li>Handle all messages in the inbox</li>
-          <li>Finish before the timer hits 0</li>
-        </ul>
-      </div>
+        <div class="external-warning">
+          <strong>CAUTION - EXTERNAL EMAIL</strong>
+          This e-mail has originated from outside of the organization. Do not respond, click on links,
+          or open attachments unless you recognize the sender or know the content is safe.
+        </div>
 
-      <div class="modal-meta">
-        <div class="pill">⏱ Time: <span id="modalTime">05:00</span></div>
-        <div class="pill">📩 Messages: <span id="modalCount">3</span></div>
-      </div>
-    </div>
+        <article class="email-canvas">
+          <div class="email-card">
+            <div class="email-brand-bar"></div>
 
-    <div class="modal-actions">
-      <button class="btn ok" id="modalReady">Ready</button>
-    </div>
+            <div class="email-body">
+              <div class="email-logo">MathWorks Logo</div>
+
+              <p>Hello Bach,</p>
+
+              <p>
+                You have exceeded the message limit for your ThingSpeak account
+                <span class="suspicious hintable" data-hint="The email creates urgency around service interruption.">
+                  bach.tran@edu.sait.ca
+                </span>.
+                All channels for this account are no longer collecting data.
+              </p>
+
+              <p>
+                Consider upgrading to a paid license to resume collection of data on your channels
+                prior to the anniversary date of your account.
+              </p>
+
+              <p>
+                For details on your message usage and to upgrade to a paid license, see the
+                <a href="#" class="email-link hintable suspicious"
+                   data-hint="Hover or inspect links. Link text may look safe, but the real destination can differ."
+                   id="accountLink">
+                  My Account
+                </a> page.
+              </p>
+
+              <p>Thank you,<br>The ThingSpeak Team</p>
+            </div>
+
+            <div class="email-footer-bar"></div>
+          </div>
+        </article>
+
+        <!-- Inspector / clue panel -->
+        <section class="inspector-panel">
+          <div class="inspector-title">Security Inspector</div>
+          <div class="inspector-grid">
+            <div class="inspector-item">
+              <div class="inspector-label">Return-Path</div>
+              <div class="inspector-value suspicious hintable"
+                   data-hint="Return-Path uses a different subdomain than a normal trusted business sender might use.">
+                bounce-1832@mailer.thingspeak-notice.net
+              </div>
+            </div>
+
+            <div class="inspector-item">
+              <div class="inspector-label">Reply-To</div>
+              <div class="inspector-value suspicious hintable"
+                   data-hint="Reply-To differs from the main From address. That can be a phishing red flag.">
+                support-upgrade@thingspeak-billing-help.com
+              </div>
+            </div>
+
+            <div class="inspector-item">
+              <div class="inspector-label">Link Preview</div>
+              <div class="inspector-value suspicious hintable"
+                   data-hint="The visible label says 'My Account', but players should learn to preview the true URL.">
+                https://thingspeak-upgrade-portal.com/account/recover
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Action area -->
+        <section class="action-panel">
+          <div class="action-title">What should the player do?</div>
+          <div class="action-buttons">
+            <button class="action-btn good" data-action="report">Report phishing</button>
+            <button class="action-btn okay" data-action="callit">Call / verify through official channel</button>
+            <button class="action-btn bad" data-action="click">Click the link</button>
+            <button class="action-btn bad" data-action="reply">Reply to sender</button>
+          </div>
+          <div class="action-note">
+            Goal: spot suspicious sender details, urgent wording, and mismatched link behavior.
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <!-- Bottom clue drawer -->
+    <footer class="clue-drawer">
+      <div class="clue-title">Clue Log</div>
+      <div id="clueLog" class="clue-log">
+        <div class="clue-empty">Hover highlighted items to collect clues.</div>
+      </div>
+    </footer>
   </div>
-</div>
 
-<!-- Fish Coach overlay -->
-<div id="fishCoachOverlay" class="fish-overlay hidden">
-  <div class="fish-container">
-
-    <div class="fish-image-wrapper">
-      <img src="./Fish game char.png" alt="Fish Coach" class="fish-image">
-      <div class="speech-bubble">
-        <div id="fishText"></div>
-      </div>
-    </div>
-
-    <div class="fish-panel">
-      <h2 id="fishTitle">Feedback</h2>
-      <div id="fishLessons"></div>
-      <button id="fishCloseBtn">Continue</button>
-    </div>
-
-  </div>
-</div>
-
-
-  <script>
-  window.LEVEL_CONFIG = { id: 1 };
-</script>
-
-<script src="./data/level1Data.js"></script>
-
-<script src="fishCoach.js"></script>
-<script src="./levelBase.js" defer></script>
-
+  <script src="./level1Data.js"></script>
+  <script src="./levelBase.js"></script>
 </body>
 </html>
