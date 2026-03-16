@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Master Bait - Level 1</title>
   <link rel="stylesheet" href="./level1.css" />
+  <link rel="stylesheet" href="./fishCoach.css" />
 </head>
 <body>
   <div class="level-shell">
@@ -121,9 +122,7 @@
               <p>
                 Congratulations! You have been selected as one of today’s lucky Amazon customers.
                 You are eligible to claim a
-                <span class="suspicious hintable">
-                  $100 gift card
-                </span>
+                <span class="suspicious hintable">$100 gift card</span>
                 if you confirm your account now.
               </p>
 
@@ -150,7 +149,7 @@
           </div>
         </article>
 
-        <!-- Inspector / clue panel -->
+        <!-- Inspector -->
         <section class="inspector-panel">
           <div class="inspector-title">Security Inspector</div>
           <div class="inspector-grid">
@@ -243,29 +242,48 @@
     </footer>
   </div>
 
-  <!-- Verification challenge modal -->
-  <div id="verificationModal" class="verify-overlay hidden" aria-hidden="true">
-    <div class="verify-modal">
-      <div class="verify-title">Proof of understanding</div>
-      <div class="verify-text" id="verificationPrompt">
-        In this email, what official website/domain should you manually type in your browser instead of clicking the email link?
+  <!-- Fish coach overlay -->
+  <div id="fishCoachOverlay" class="fish-overlay hidden" aria-hidden="true">
+    <div class="fish-fullscreen">
+
+      <div class="fish-image-wrapper">
+        <img src="./Fish%20game%20char.png" alt="Fish Coach" class="fish-image">
+        <div class="speech-bubble">
+          <div id="fishText"></div>
+        </div>
       </div>
 
-      <input id="verificationInput"
-             class="verify-input"
-             type="text"
-             placeholder="Type the safe official domain here" />
+      <div class="fish-panel">
+        <h2 id="fishTitle">Feedback</h2>
 
-      <div id="verificationHelp" class="verify-help">
-        Example format: amazon.com
+        <div id="fishLessons" class="fish-lessons"></div>
+
+        <!-- proof challenge goes here -->
+        <div id="proofBox" class="proof-box hidden">
+          <div class="proof-title">Proof of understanding</div>
+          <div id="verificationPrompt" class="proof-text">
+            In this email, what official website/domain should you manually type in your browser instead of clicking the email link?
+          </div>
+
+          <input id="verificationInput"
+                 class="proof-input"
+                 type="text"
+                 placeholder="Type the safe official domain here" />
+
+          <div id="verificationHelp" class="proof-help">
+            Example format: amazon.com
+          </div>
+
+          <div class="proof-actions">
+            <button id="verifySubmitBtn" class="proof-btn">Submit answer</button>
+          </div>
+
+          <div id="verificationResult" class="proof-result"></div>
+        </div>
+
+        <button id="fishCloseBtn">Continue</button>
       </div>
 
-      <div class="verify-actions">
-        <button id="verifySubmitBtn" class="verify-btn">Submit answer</button>
-        <button id="verifyCancelBtn" class="verify-btn ghost">Cancel</button>
-      </div>
-
-      <div id="verificationResult" class="verify-result"></div>
     </div>
   </div>
 
