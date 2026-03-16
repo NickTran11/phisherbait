@@ -9,7 +9,6 @@
 </head>
 <body>
   <div class="level-shell">
-    <!-- Top black bar -->
     <header class="mail-topbar">
       <div class="top-left">
         <div class="sait-badge">SAIT</div>
@@ -27,7 +26,6 @@
       </div>
     </header>
 
-    <!-- Toolbar -->
     <div class="mail-toolbar">
       <button class="primary-btn">New mail</button>
       <button class="toolbar-btn">Delete</button>
@@ -39,9 +37,7 @@
       <button class="toolbar-btn">More</button>
     </div>
 
-    <!-- Main layout -->
     <main class="mail-layout">
-      <!-- Left app rail -->
       <aside class="app-rail">
         <button class="rail-btn active">📧</button>
         <button class="rail-btn">📅</button>
@@ -49,7 +45,6 @@
         <button class="rail-btn">☁️</button>
       </aside>
 
-      <!-- Folder pane -->
       <aside class="folder-pane">
         <div class="folder-header">Favorites</div>
         <div class="folder-item active">Inbox <span class="count">1</span></div>
@@ -65,7 +60,6 @@
         <div class="folder-item">Sent Items</div>
       </aside>
 
-      <!-- Message list -->
       <section class="message-list-pane">
         <div class="list-header">
           <div class="list-title">Inbox</div>
@@ -76,7 +70,6 @@
         <div id="messageList"></div>
       </section>
 
-      <!-- Reading pane -->
       <section class="reading-pane">
         <div class="reading-subject" id="readingSubject">Loading...</div>
 
@@ -149,7 +142,6 @@
           </div>
         </article>
 
-        <!-- Inspector -->
         <section class="inspector-panel">
           <div class="inspector-title">Security Inspector</div>
           <div class="inspector-grid">
@@ -176,7 +168,6 @@
           </div>
         </section>
 
-        <!-- Ordered hints -->
         <section class="hint-panel">
           <div class="hint-panel-top">
             <div class="hint-title">Investigation Hints</div>
@@ -186,7 +177,6 @@
           <div id="hintList" class="hint-list"></div>
         </section>
 
-        <!-- Action area -->
         <section class="action-panel">
           <div class="action-title">What should the player do?</div>
 
@@ -233,7 +223,6 @@
       </section>
     </main>
 
-    <!-- Bottom clue drawer -->
     <footer class="clue-drawer">
       <div class="clue-title">Clue Log</div>
       <div id="clueLog" class="clue-log">
@@ -245,7 +234,6 @@
   <!-- Fish coach overlay -->
   <div id="fishCoachOverlay" class="fish-overlay hidden" aria-hidden="true">
     <div class="fish-fullscreen">
-
       <div class="fish-image-wrapper">
         <img src="./Fish%20game%20char.png" alt="Fish Coach" class="fish-image">
         <div class="speech-bubble">
@@ -255,24 +243,18 @@
 
       <div class="fish-panel">
         <h2 id="fishTitle">Feedback</h2>
-
         <div id="fishLessons" class="fish-lessons"></div>
 
-        <!-- proof challenge goes here -->
         <div id="proofBox" class="proof-box hidden">
           <div class="proof-title">Proof of understanding</div>
-          <div id="verificationPrompt" class="proof-text">
-            In this email, what official website/domain should you manually type in your browser instead of clicking the email link?
-          </div>
+          <div id="verificationPrompt" class="proof-text"></div>
 
           <input id="verificationInput"
                  class="proof-input"
                  type="text"
                  placeholder="Type the safe official domain here" />
 
-          <div id="verificationHelp" class="proof-help">
-            Example format: amazon.com
-          </div>
+          <div id="verificationHelp" class="proof-help"></div>
 
           <div class="proof-actions">
             <button id="verifySubmitBtn" class="proof-btn">Submit answer</button>
@@ -283,10 +265,10 @@
 
         <button id="fishCloseBtn">Continue</button>
       </div>
-
     </div>
   </div>
 
+  <script src="./fishCoach.js"></script>
   <script src="./level1Data.js"></script>
   <script src="./levelBase.js"></script>
 </body>
