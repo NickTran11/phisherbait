@@ -11,8 +11,8 @@
     <!-- Top black bar -->
     <header class="mail-topbar">
       <div class="top-left">
-        <div class="sait-badge">LEVEL 1</div>
-        <div class="product-name">Email</div>
+        <div class="sait-badge">SAIT</div>
+        <div class="product-name">Outlook</div>
       </div>
 
       <div class="top-search-wrap">
@@ -20,9 +20,9 @@
       </div>
 
       <div class="top-right">
-        <button class="icon-btn">🔔</button>
-        <button class="icon-btn">⚙️</button>
-        <button class="icon-btn">👤</button>
+        <button class="icon-btn" aria-label="Notifications">🔔</button>
+        <button class="icon-btn" aria-label="Settings">⚙️</button>
+        <button class="icon-btn" aria-label="Account">👤</button>
       </div>
     </header>
 
@@ -55,10 +55,10 @@
         <div class="folder-item">Sent Items</div>
         <div class="folder-item">Drafts</div>
         <div class="folder-item">Deleted Items</div>
-        <div class="folder-item">Spam</div>
+        <div class="folder-item">Junk Email</div>
         <div class="folder-item">Archive</div>
 
-        <div class="folder-header mt">bendover@email.com</div>
+        <div class="folder-header mt">Bach.Tran@edu.sait.ca</div>
         <div class="folder-item active">Inbox <span class="count">1</span></div>
         <div class="folder-item">Drafts</div>
         <div class="folder-item">Sent Items</div>
@@ -72,7 +72,6 @@
         </div>
 
         <div class="message-group-label">Today</div>
-
         <div id="messageList"></div>
       </section>
 
@@ -82,18 +81,19 @@
 
         <div class="reading-meta">
           <div class="sender-row">
-            <div class="avatar" id="senderAvatar">TP</div>
+            <div class="avatar" id="senderAvatar">AM</div>
+
             <div class="sender-meta">
               <div class="sender-name-line">
-                <span class="sender-name suspicious" id="fromName">Amazon Giveaways</span>
-                <span class="sender-address suspicious" id="fromEmail">&lt;amazon-rep@mail.com&gt;</span>
+                <span class="sender-name suspicious" id="fromName">Amazon Rewards Center</span>
+                <span class="sender-address suspicious" id="fromEmail">&lt;offers@amazon-reward-center-mail.com&gt;</span>
               </div>
               <div class="to-line">
-                To: <span id="toEmail">Ben Dover</span>
+                To: <span id="toEmail">Bach Tran</span>
               </div>
             </div>
 
-            <div class="reading-time" id="emailTime">Sat 3/14/2026 6:15 AM</div>
+            <div class="reading-time" id="emailTime">Sun 3/15/2026 9:52 PM</div>
           </div>
         </div>
 
@@ -114,32 +114,38 @@
             <div class="email-brand-bar"></div>
 
             <div class="email-body">
-              <div class="email-logo">Amazon</div>
+              <div class="email-logo">Amazon Logo</div>
 
-              <p>Hello Ben,</p>
+              <p>Hello Bach,</p>
 
               <p>
-                You have been chosen as our lucky customer to enter Amazon giveaways
-                <span class="suspicious hintable" data-hint="The email creates urgency around service interruption.">
-                  bendover@email.com
-                </span>.
-                There are only 20 spots and you are that lucky!
+                Congratulations! You have been selected as one of today’s lucky Amazon customers.
+                You are eligible to claim a
+                <span class="suspicious hintable"
+                      data-hint="Free reward language is commonly used to attract a fast click.">
+                  $100 gift card
+                </span>
+                if you confirm your account now.
               </p>
 
               <p>
-                Claim your free Amazon giveaways now by enter this link in order to spin the wheel and receive your prize.
+                We only have a few claim spots left today, so please act quickly before your reward expires.
               </p>
 
               <p>
-                Don't trust us? See our official page for more details
-                <a href="#" class="email-link hintable suspicious"
-                   data-hint="Hover or inspect links. Link text may look safe, but the real destination can differ."
+                To confirm your eligibility, click
+                <a href="#"
+                   class="email-link hintable suspicious"
+                   data-hint="The visible text sounds normal, but the real destination matters more than the label."
                    id="accountLink">
-                  Amazon.com
-                </a> page.
+                  Claim Reward
+                </a>.
               </p>
 
-              <p>Congratualation,<br>Amazon Team</p>
+              <p>
+                Thank you,<br>
+                Amazon Rewards Team
+              </p>
             </div>
 
             <div class="email-footer-bar"></div>
@@ -153,41 +159,82 @@
             <div class="inspector-item">
               <div class="inspector-label">Return-Path</div>
               <div class="inspector-value suspicious hintable"
-                   data-hint="Return-Path uses a different subdomain than a normal trusted business sender might use.">
-                bounce-1832@mailer.amazon-notice.net
+                   data-hint="Return-Path does not match a normal trusted Amazon sender pattern.">
+                bounce-4801@mailer.amazon-claim-notice.net
               </div>
             </div>
 
             <div class="inspector-item">
               <div class="inspector-label">Reply-To</div>
               <div class="inspector-value suspicious hintable"
-                   data-hint="Reply-To differs from the main From address. That can be a phishing red flag.">
-                support-upgrade@amazon-billing-help.com
+                   data-hint="Reply-To is different from the visible sender. That can be a phishing sign.">
+                support@amazon-prize-claims-help.com
               </div>
             </div>
 
             <div class="inspector-item">
               <div class="inspector-label">Link Preview</div>
               <div class="inspector-value suspicious hintable"
-                   data-hint="The visible label says 'My Account', but players should learn to preview the true URL.">
-                https://amazon-upgrade-portal.com/giveaways/enter
+                   data-hint="The previewed URL does not use Amazon’s real main domain.">
+                https://amazon-gift-claim-center.com/reward/confirm
               </div>
             </div>
           </div>
         </section>
 
+        <!-- Ordered hints -->
+        <section class="hint-panel">
+          <div class="hint-panel-top">
+            <div class="hint-title">Investigation Hints</div>
+            <button id="revealHintBtn" class="reveal-hint-btn">Reveal next hint</button>
+          </div>
+
+          <div id="hintList" class="hint-list"></div>
+        </section>
+
         <!-- Action area -->
         <section class="action-panel">
-          <div class="action-title">What should you do?</div>
-          <div class="action-buttons">
-            <button class="action-btn good" data-action="report">Report phishing</button>
-            <button class="action-btn okay" data-action="callit">Call / verify through official channel</button>
-            <button class="action-btn bad" data-action="click">Click the link</button>
-            <button class="action-btn bad" data-action="reply">Reply to sender</button>
+          <div class="action-title">What should the player do?</div>
+
+          <div class="action-cards">
+            <button class="action-card good" data-action="report">
+              <div class="action-icon">🚩</div>
+              <div class="action-copy">
+                <div class="action-name">Report phishing</div>
+                <div class="action-desc">Send to security / report as suspicious</div>
+              </div>
+            </button>
+
+            <button class="action-card okay" data-action="callit">
+              <div class="action-icon">📞</div>
+              <div class="action-copy">
+                <div class="action-name">Verify officially</div>
+                <div class="action-desc">Use Amazon’s real website or official support</div>
+              </div>
+            </button>
+
+            <button class="action-card bad" data-action="click">
+              <div class="action-icon">🔗</div>
+              <div class="action-copy">
+                <div class="action-name">Click the link</div>
+                <div class="action-desc">Open the message link directly</div>
+              </div>
+            </button>
+
+            <button class="action-card bad" data-action="reply">
+              <div class="action-icon">↩</div>
+              <div class="action-copy">
+                <div class="action-name">Reply to sender</div>
+                <div class="action-desc">Ask for more details by email</div>
+              </div>
+            </button>
           </div>
+
           <div class="action-note">
-            Goal: spot suspicious sender details, urgent wording, and mismatched link behavior.
+            Goal: inspect sender details, pressure wording, and link destination before deciding.
           </div>
+
+          <div id="decisionFeedback" class="decision-feedback hidden"></div>
         </section>
       </section>
     </main>
@@ -199,6 +246,32 @@
         <div class="clue-empty">Hover highlighted items to collect clues.</div>
       </div>
     </footer>
+  </div>
+
+  <!-- Verification challenge modal -->
+  <div id="verificationModal" class="verify-overlay hidden" aria-hidden="true">
+    <div class="verify-modal">
+      <div class="verify-title">Proof of understanding</div>
+      <div class="verify-text" id="verificationPrompt">
+        In this email, what official website/domain should you manually type in your browser instead of clicking the email link?
+      </div>
+
+      <input id="verificationInput"
+             class="verify-input"
+             type="text"
+             placeholder="Type the safe official domain here" />
+
+      <div id="verificationHelp" class="verify-help">
+        Example format: amazon.com
+      </div>
+
+      <div class="verify-actions">
+        <button id="verifySubmitBtn" class="verify-btn">Submit answer</button>
+        <button id="verifyCancelBtn" class="verify-btn ghost">Cancel</button>
+      </div>
+
+      <div id="verificationResult" class="verify-result"></div>
+    </div>
   </div>
 
   <script src="./level1Data.js"></script>
