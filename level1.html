@@ -89,7 +89,7 @@
         <button class="icon-btn" aria-label="Notifications">🔔</button>
         <button class="icon-btn" aria-label="Settings">⚙️</button>
         <a href="./levelMap.html" class="exit-link" aria-label="Exit level" title="Exit level">EXIT</a>
-        <button class="icon-btn dossier-btn" id="openDossierBtn">👤</button>
+        <button class="icon-btn dossier-btn" id="openDossierBtn" type="button" aria-label="Open dossier" title="Open dossier" onclick="openLevelDossier()">👤</button>
       </div>
     </header>
 
@@ -330,8 +330,32 @@
     </div>
   </div>
 
-  <script src="./fishCoach.js"></script>
-  <script src="./level1Data.js"></script>
-  <script src="./levelBase.js"></script>
+<script>
+  function beginLevelMission() {
+    const overlay = document.getElementById("scenarioOverlay");
+    if (!overlay) return;
+
+    overlay.style.opacity = "0";
+    overlay.style.transition = "opacity 0.25s ease";
+
+    setTimeout(() => {
+      overlay.style.display = "none";
+      overlay.setAttribute("aria-hidden", "true");
+    }, 250);
+  }
+
+  function openLevelDossier() {
+    const overlay = document.getElementById("scenarioOverlay");
+    if (!overlay) return;
+
+    overlay.style.display = "grid";
+    overlay.style.opacity = "1";
+    overlay.setAttribute("aria-hidden", "false");
+  }
+</script>
+
+<script src="./fishCoach.js"></script>
+<script src="./level1Data.js"></script>
+<script src="./levelBase.js"></script>
 </body>
 </html>
