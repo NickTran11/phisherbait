@@ -73,10 +73,12 @@ html, body{
 }
 
 .scenario-polaroid{
+  width: 185px;
   background: #f5efe3;
-  padding: 10px 10px 26px;
+  padding: 10px 10px 24px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.12);
   border: 1px solid #b8ae9f;
+  overflow: hidden;
 }
 
 .scenario-photo-img{
@@ -84,7 +86,9 @@ html, body{
   height: 165px;
   display: block;
   object-fit: cover;
+  object-position: center top;
   background: #16181c;
+  overflow: hidden;
 }
 
 .scenario-name{
