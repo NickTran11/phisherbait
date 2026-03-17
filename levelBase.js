@@ -1,4 +1,4 @@
-(function () {
+document.addEventListener("DOMContentLoaded", () => {
   const data = window.LEVEL1_EMAIL;
   if (!data || !data.messages || !data.messages.length) return;
 
@@ -48,56 +48,61 @@
     renderHints();
     bindActions();
     bindProof();
-    bindScenarioStart();
+    bindScenarioButtons();
   }
 
   function renderScenario() {
     if (!data.scenario) return;
 
-    scenarioName.textContent = data.scenario.codename || "PLAYER";
-    scenarioTitle.textContent = data.scenario.title || "";
-    scenarioDescription.textContent = data.scenario.description || "";
-    scenarioContext.textContent = data.scenario.context || "";
-    scenarioPhoto.textContent = data.scenario.initials || "P";
+    if (scenarioName) scenarioName.textContent = data.scenario.codename || "PLAYER";
+    if (scenarioTitle) scenarioTitle.textContent = data.scenario.title || "";
+    if (scenarioDescription) scenarioDescription.textContent = data.scenario.description || "";
+    if (scenarioContext) scenarioContext.textContent = data.scenario.context || "";
+    if (scenarioPhoto) scenarioPhoto.textContent = data.scenario.initials || "P";
 
-    scenarioStrengths.innerHTML = "";
-    (data.scenario.strengths || []).forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      scenarioStrengths.appendChild(li);
-    });
+    if (scenarioStrengths) {
+      scenarioStrengths.innerHTML = "";
+      (data.scenario.strengths || []).forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        scenarioStrengths.appendChild(li);
+      });
+    }
 
-    scenarioWeaknesses.innerHTML = "";
-    (data.scenario.weaknesses || []).forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      scenarioWeaknesses.appendChild(li);
-    });
+    if (scenarioWeaknesses) {
+      scenarioWeaknesses.innerHTML = "";
+      (data.scenario.weaknesses || []).forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        scenarioWeaknesses.appendChild(li);
+      });
+    }
   }
 
-function bindScenarioStart() {
-  if (beginMissionBtn && scenarioOverlay) {
-    beginMissionBtn.addEventListener("click", () => {
-      scenarioOverlay.style.opacity = "0";
-      scenarioOverlay.style.transition = "opacity 0.3s ease";
+  function bindScenarioButtons() {
+    if (beginMissionBtn && scenarioOverlay) {
+      beginMissionBtn.addEventListener("click", () => {
+        scenarioOverlay.style.opacity = "0";
+        scenarioOverlay.style.transition = "opacity 0.25s ease";
 
-      setTimeout(() => {
-        scenarioOverlay.style.display = "none";
-        scenarioOverlay.setAttribute("aria-hidden", "true");
-      }, 300);
-    });
-  }
+        setTimeout(() => {
+          scenarioOverlay.style.display = "none";
+          scenarioOverlay.setAttribute("aria-hidden", "true");
+        }, 250);
+      });
+    }
 
-  if (openDossierBtn && scenarioOverlay) {
-    openDossierBtn.addEventListener("click", () => {
-      scenarioOverlay.style.display = "grid";
-      scenarioOverlay.style.opacity = "1";
-      scenarioOverlay.setAttribute("aria-hidden", "false");
-    });
+    if (openDossierBtn && scenarioOverlay) {
+      openDossierBtn.addEventListener("click", () => {
+        scenarioOverlay.style.display = "grid";
+        scenarioOverlay.style.opacity = "1";
+        scenarioOverlay.setAttribute("aria-hidden", "false");
+      });
+    }
   }
-}
 
   function renderMessageList() {
+    if (!messageList) return;
     messageList.innerHTML = "";
 
     data.messages.forEach((msg, index) => {
@@ -133,19 +138,21 @@ function bindScenarioStart() {
   }
 
   function renderReadingPane(msg) {
-    readingSubjectEl.textContent = msg.subject;
-    fromNameEl.textContent = msg.fromName;
-    fromEmailEl.textContent = msg.fromEmail;
-    toEmailEl.textContent = msg.toEmail;
-    emailTimeEl.textContent = msg.time;
-    senderAvatarEl.textContent = msg.senderInitials;
-    accountLinkEl.setAttribute("title", msg.inspector.linkPreview);
+    if (readingSubjectEl) readingSubjectEl.textContent = msg.subject;
+    if (fromNameEl) fromNameEl.textContent = msg.fromName;
+    if (fromEmailEl) fromEmailEl.textContent = msg.fromEmail;
+    if (toEmailEl) toEmailEl.textContent = msg.toEmail;
+    if (emailTimeEl) emailTimeEl.textContent = msg.time;
+    if (senderAvatarEl) senderAvatarEl.textContent = msg.senderInitials;
+    if (accountLinkEl) accountLinkEl.setAttribute("title", msg.inspector.linkPreview);
   }
 
   function renderHints() {
-    hintList.innerHTML = "";
+    if (!hintList || !revealHintBtn) return;
 
+    hintList.innerHTML = "";
     const hints = activeMessage.orderedHints || [];
+
     hints.forEach((hint, index) => {
       const card = document.createElement("div");
       const unlocked = index < revealedHintCount;
@@ -175,14 +182,16 @@ function bindScenarioStart() {
   }
 
   function bindActions() {
-    revealHintBtn.addEventListener("click", () => {
-      if (revealedHintCount < activeMessage.orderedHints.length) {
-        const nextHint = activeMessage.orderedHints[revealedHintCount];
-        revealedHintCount += 1;
-        renderHints();
-        addClue(`Hint ${revealedHintCount} revealed: ${nextHint}`);
-      }
-    });
+    if (revealHintBtn) {
+      revealHintBtn.addEventListener("click", () => {
+        if (revealedHintCount < activeMessage.orderedHints.length) {
+          const nextHint = activeMessage.orderedHints[revealedHintCount];
+          revealedHintCount += 1;
+          renderHints();
+          addClue(`Hint ${revealedHintCount} revealed: ${nextHint}`);
+        }
+      });
+    }
 
     document.querySelectorAll("[data-action]").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -192,10 +201,14 @@ function bindScenarioStart() {
   }
 
   function bindProof() {
-    verifySubmitBtn.addEventListener("click", submitVerificationAnswer);
-    verificationInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") submitVerificationAnswer();
-    });
+    if (verifySubmitBtn) {
+      verifySubmitBtn.addEventListener("click", submitVerificationAnswer);
+    }
+    if (verificationInput) {
+      verificationInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") submitVerificationAnswer();
+      });
+    }
   }
 
   function handleAction(action) {
@@ -211,19 +224,13 @@ function bindScenarioStart() {
 
     if (isPartial) {
       addClue("Partial credit: safer than clicking, but not the best answer.");
-      setDecisionFeedback(
-        "warn",
-        "Safer than clicking, but not the best answer for this scenario."
-      );
+      setDecisionFeedback("warn", "Safer than clicking, but not the best answer for this scenario.");
       showCoach("good", false);
       return;
     }
 
     addClue("Incorrect action chosen. Re-check sender details, urgency language, and the previewed link.");
-    setDecisionFeedback(
-      "bad",
-      "That action is risky. Reveal another hint and try again."
-    );
+    setDecisionFeedback("bad", "That action is risky. Reveal another hint and try again.");
     showCoach("bad", false);
   }
 
@@ -253,17 +260,20 @@ function bindScenarioStart() {
   }
 
   function showProofBox() {
+    if (!proofBox) return;
     proofBox.classList.remove("hidden");
-    verificationPrompt.textContent = activeMessage.verification.prompt;
-    verificationInput.value = "";
-    verificationHelp.textContent = "Type the real official domain only.";
-    verificationResult.textContent = "";
-    verificationResult.className = "proof-result";
-    setTimeout(() => verificationInput.focus(), 60);
+    if (verificationPrompt) verificationPrompt.textContent = activeMessage.verification.prompt;
+    if (verificationInput) verificationInput.value = "";
+    if (verificationHelp) verificationHelp.textContent = "Type the real official domain only.";
+    if (verificationResult) {
+      verificationResult.textContent = "";
+      verificationResult.className = "proof-result";
+    }
+    setTimeout(() => verificationInput && verificationInput.focus(), 60);
   }
 
   function hideProofBox() {
-    proofBox.classList.add("hidden");
+    if (proofBox) proofBox.classList.add("hidden");
     waitingForProof = false;
   }
 
@@ -277,31 +287,26 @@ function bindScenarioStart() {
   }
 
   function submitVerificationAnswer() {
-    const raw = verificationInput.value;
+    const raw = verificationInput ? verificationInput.value : "";
     const answer = normalizeAnswer(raw);
     const accepted = activeMessage.verification.acceptedAnswers.map(normalizeAnswer);
 
     if (accepted.includes(answer)) {
-      verificationResult.textContent = "Correct. The safe behavior is to manually type the official site instead of clicking the email link.";
-      verificationResult.className = "proof-result good";
-      verificationHelp.textContent = "Nice work. You identified the trusted domain.";
+      if (verificationResult) {
+        verificationResult.textContent = "Correct. The safe behavior is to manually type the official site instead of clicking the email link.";
+        verificationResult.className = "proof-result good";
+      }
+      if (verificationHelp) verificationHelp.textContent = "Nice work. You identified the trusted domain.";
       addClue("Player correctly identified the official domain to visit manually.");
 
       waitingForProof = false;
-      setDecisionFeedback(
-        "good",
-        "Excellent. You chose the safest action and identified the correct official website."
-      );
+      setDecisionFeedback("good", "Excellent. You chose the safest action and identified the correct official website.");
 
       if (window.setFishCoachCloseHandler) {
         window.setFishCoachCloseHandler(() => {
           window.location.href = "./levelMap.html";
         });
       }
-
-      setTimeout(() => {
-        hideProofBox();
-      }, 1200);
 
       return;
     }
@@ -310,31 +315,36 @@ function bindScenarioStart() {
     const guidance = guidanceList[Math.min(retryCount, guidanceList.length - 1)] || "Try again.";
     retryCount += 1;
 
-    verificationResult.textContent = "Not correct yet. Try again.";
-    verificationResult.className = "proof-result bad";
-    verificationHelp.textContent = guidance;
-    verificationInput.focus();
-    verificationInput.select();
+    if (verificationResult) {
+      verificationResult.textContent = "Not correct yet. Try again.";
+      verificationResult.className = "proof-result bad";
+    }
+    if (verificationHelp) verificationHelp.textContent = guidance;
+    if (verificationInput) {
+      verificationInput.focus();
+      verificationInput.select();
+    }
   }
 
   function setDecisionFeedback(type, text) {
+    if (!decisionFeedback) return;
     decisionFeedback.className = `decision-feedback ${type}`;
     decisionFeedback.textContent = text;
     decisionFeedback.classList.remove("hidden");
   }
 
   function clearDecisionFeedback() {
+    if (!decisionFeedback) return;
     decisionFeedback.textContent = "";
     decisionFeedback.className = "decision-feedback hidden";
   }
 
   function addClue(text) {
-    if (clueSet.has(text)) return;
+    if (!clueLog || clueSet.has(text)) return;
     clueSet.add(text);
 
-    if (clueLog.querySelector(".clue-empty")) {
-      clueLog.innerHTML = "";
-    }
+    const empty = clueLog.querySelector(".clue-empty");
+    if (empty) clueLog.innerHTML = "";
 
     const chip = document.createElement("div");
     chip.className = "clue-chip";
@@ -357,4 +367,4 @@ function bindScenarioStart() {
   }
 
   init();
-})();
+});
