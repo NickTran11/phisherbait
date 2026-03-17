@@ -1102,3 +1102,18 @@ html, body{
     min-width: 190px;
   }
 }
+
+/* stronger override */
+.icon-btn.dossier-btn{
+  color: #d8b4fe !important;
+  font-size: 26px !important;
+  font-weight: 900;
+  text-shadow: none !important;   /* REMOVE glow */
+  filter: brightness(1.3) contrast(1.2);
+  opacity: 1 !important;
+}
+
+.icon-btn.dossier-btn:hover{
+  color: #ffffff !important;
+  transform: scale(1.1);
+}
