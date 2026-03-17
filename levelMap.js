@@ -1,18 +1,18 @@
 // ---------- Level data (edit text anytime) ----------
 const LEVELS = {
   "1": {
-    title: "Level 1 — Tutorial",
+    title: "Level 1 — Mass Phishing",
     objectives: [
-      "Learn the inbox controls (open, report, delete)",
-      "Understand Security vs Work score"
+      "Experience one of the most common phishing",
+      "Understand how to deal with the situation"
     ],
     unlocked: true
   },
   "2": {
-    title: "Level 2 — Authority & Urgency",
+    title: "Level 2 — Social Media Phishing",
     objectives: [
-      "Spot authority/urgency manipulation",
-      "Use Verify Sender when unsure"
+      "Spot scamming links, advertisements, posts",
+      "Know how to verify source"
     ],
     unlocked: true
   },
@@ -33,7 +33,7 @@ const LEVELS = {
     unlocked: false
   },
   "5": {
-    title: "Level 5 — Final Scenario",
+    title: "Level 5 — Final Surprise",
     objectives: [
       "Apply skills across multiple messages",
       "Make safe choices under pressure"
