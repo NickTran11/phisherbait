@@ -35,9 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const decisionFeedback = document.getElementById("decisionFeedback");
   const clueLog = document.getElementById("clueLog");
 
-  const dmPanel = document.getElementById("dmPanel");
-  const openDmPreviewBtn = document.getElementById("openDmPreviewBtn");
-  const closeDmPreviewBtn = document.getElementById("closeDmPreviewBtn");
+  const messagesBubble = document.getElementById("messagesBubble");
+const messagesPopup = document.getElementById("messagesPopup");
+const conversationPopup = document.getElementById("conversationPopup");
+
+const contactsList = document.getElementById("contactsList");
+const backToContactsBtn = document.getElementById("backToContactsBtn");
+const closeConversationBtn = document.getElementById("closeConversationBtn");
+const closeMessagesPopupBtn = document.getElementById("closeMessagesPopupBtn");
+const openDmPreviewBtn = document.getElementById("openDmPreviewBtn");
+const conversationName = document.getElementById("conversationName");
+const conversationAvatar = document.getElementById("conversationAvatar");
 
   const proofBox = document.getElementById("proofBox");
   const verificationPrompt = document.getElementById("verificationPrompt");
@@ -150,21 +158,69 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function bindFeedButtons() {
-    if (openDmPreviewBtn && dmPanel) {
-      openDmPreviewBtn.addEventListener("click", () => {
-        dmPanel.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
-    }
-
-    if (closeDmPreviewBtn && dmPanel) {
-      closeDmPreviewBtn.addEventListener("click", () => {
-        dmPanel.classList.toggle("hidden");
-        setTimeout(() => {
-          dmPanel.classList.remove("hidden");
-        }, 180);
-      });
-    }
+  if (messagesBubble && messagesPopup) {
+    messagesBubble.addEventListener("click", () => {
+      messagesPopup.classList.remove("hidden");
+      conversationPopup && conversationPopup.classList.add("hidden");
+    });
   }
+
+  if (openDmPreviewBtn && messagesPopup) {
+    openDmPreviewBtn.addEventListener("click", () => {
+      messagesPopup.classList.remove("hidden");
+      conversationPopup && conversationPopup.classList.add("hidden");
+    });
+  }
+
+  if (closeMessagesPopupBtn && messagesPopup) {
+    closeMessagesPopupBtn.addEventListener("click", () => {
+      messagesPopup.classList.add("hidden");
+    });
+  }
+
+  if (contactsList) {
+    contactsList.querySelectorAll(".contact-row").forEach(row => {
+      row.addEventListener("click", () => {
+        const contact = row.dataset.contact || "";
+        openConversation(contact);
+      });
+    });
+  }
+
+  if (backToContactsBtn) {
+    backToContactsBtn.addEventListener("click", () => {
+      conversationPopup && conversationPopup.classList.add("hidden");
+      messagesPopup && messagesPopup.classList.remove("hidden");
+    });
+  }
+
+  if (closeConversationBtn) {
+    closeConversationBtn.addEventListener("click", () => {
+      conversationPopup && conversationPopup.classList.add("hidden");
+    });
+  }
+}
+
+  function openConversation(contact) {
+  if (!conversationPopup || !messagesPopup) return;
+
+  const contactMap = {
+    haydude: { name: "HayDude", avatar: "H" },
+    david: { name: "David N.", avatar: "D" },
+    understandable: { name: "under.standable_posts", avatar: "u" },
+    fortnite: { name: "Fortnite", avatar: "F" },
+    girl: { name: "I'm just a girl 💅", avatar: "G" },
+    jada: { name: "Jada H", avatar: "J" }
+  };
+
+  const selected = contactMap[contact] || contactMap.understandable;
+
+  if (conversationName) conversationName.textContent = selected.name;
+  if (conversationAvatar) conversationAvatar.textContent = selected.avatar;
+
+  messagesPopup.classList.add("hidden");
+  conversationPopup.classList.remove("hidden");
+}
 
   function bindActions() {
     if (revealHintBtn) {
