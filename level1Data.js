@@ -1,19 +1,19 @@
 window.LEVEL1_EMAIL = {
   scenario: {
-    codename: "BACH TRAN",
-    title: "IT Student Intern",
-    description: "You are checking your school inbox during a busy evening and receive a reward email claiming you won an Amazon gift card.",
-    strengths: [
-      "Careful reader",
-      "Knows common online scams",
-      "Will inspect links before trusting them"
+    codename: "SOPHIE BLUE",
+    title: "High School Student",
+    description: "You are Sophie Blue, checking your email in your bedroom and receive a reward email claiming you won an Amazon gift card.",
+    profile: [
+      "Active on social media",
+      "Love shopping, makeup and boyfriend",
+      "Online shopping on Amazon a lot"
     ],
-    weaknesses: [
-      "Can be tempted by urgent rewards",
-      "May act too fast when tired"
+    habits: [
+      "Allow any cookie data that pops up",
+      "Use discount, gift card, reward to buy things"
     ],
     context: "Your goal is to decide whether this email is legitimate or a phishing attempt. Inspect the sender, message tone, and the real destination of the link before acting.",
-    initials: "BT"
+    initials: "SB"
   },
 
   folderName: "Inbox",
