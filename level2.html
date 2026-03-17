@@ -1,1 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Master Bait - Level 2 Social Media Phishing</title>
+  <link rel="stylesheet" href="./level2.css" />
+  <link rel="stylesheet" href="./fishCoach.css" />
+</head>
+<body>
+  <!-- ===== Mission intro ===== -->
+  <div id="scenarioOverlay" class="scenario-overlay" aria-hidden="false">
+    <div class="scenario-card">
+      <div class="paperclip" aria-hidden="true"></div>
 
+      <div class="scenario-photo-wrap">
+        <div class="scenario-polaroid">
+          <div class="scenario-photo">SB</div>
+        </div>
+      </div>
+
+      <div class="scenario-name" id="scenarioName">SOPHIE BLUE</div>
+      <div class="scenario-divider"></div>
+
+      <div class="scenario-meta">
+        <div class="meta-row">
+          <span class="meta-label">TITLE:</span>
+          <span class="meta-value" id="scenarioTitle">High School Student</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">DESCRIPTION:</span>
+          <span class="meta-value" id="scenarioDescription">
+            You are scrolling a social media reel feed after school and receive a suspicious giveaway bait through a post and DM.
+          </span>
+        </div>
+      </div>
+
+      <div class="scenario-divider"></div>
+
+      <div class="scenario-columns">
+        <div class="scenario-column">
+          <div class="scenario-section-title">PROFILE</div>
+          <ul id="scenarioStrengths" class="scenario-list">
+            <li>Active on social media</li>
+            <li>Follows creators and trend pages</li>
+            <li>Curious about giveaways and reels</li>
+          </ul>
+        </div>
+
+        <div class="scenario-column">
+          <div class="scenario-section-title">HABITS</div>
+          <ul id="scenarioWeaknesses" class="scenario-list">
+            <li>Scrolls fast without checking details</li>
+            <li>May trust popular-looking accounts too quickly</li>
+            <li>Can be tempted by exclusive offers</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="scenario-divider"></div>
+
+      <div class="scenario-context">
+        <div class="scenario-section-title">MISSION CONTEXT</div>
+        <p id="scenarioContext">
+          Inspect a giveaway reel, account details, and a direct message. Decide the safest action without falling for the bait.
+        </p>
+      </div>
+
+      <div class="scenario-actions">
+        <button id="beginMissionBtn" type="button" class="begin-mission-btn" onclick="beginLevel2Mission()">Begin Mission</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Main app ===== -->
+  <div class="level-shell">
+    <aside class="app-rail">
+      <div class="brand">◎</div>
+      <button class="rail-btn">⌂</button>
+      <button class="rail-btn active">▶</button>
+      <button class="rail-btn notice-wrap">
+        ♡
+        <span class="notice-dot">3</span>
+      </button>
+      <button class="rail-btn">⌕</button>
+      <button class="rail-btn">✉</button>
+      <button class="rail-btn">＋</button>
+      <button class="rail-btn dossier-btn" id="openDossierBtn" type="button" onclick="openLevel2Dossier()" title="Open dossier">👤</button>
+      <div class="rail-spacer"></div>
+      <button class="rail-btn">☰</button>
+    </aside>
+
+    <main class="feed-shell">
+      <header class="feed-topbar">
+        <div class="feed-title">Social Feed</div>
+        <div class="top-actions">
+          <a href="./levelMap.html" class="exit-link">EXIT</a>
+        </div>
+      </header>
+
+      <section class="feed-layout">
+        <!-- Center feed -->
+        <div class="feed-center">
+          <div class="reel-wrapper">
+            <div class="reel-card">
+              <div class="reel-media">
+                <div class="fake-video-bg">
+                  <div class="stadium-glow"></div>
+                  <div class="reel-person"></div>
+                </div>
+
+                <div class="reel-overlay-top">
+                  <div class="reel-chip">LIVE GIVEAWAY</div>
+                </div>
+
+                <div class="reel-overlay-bottom">
+                  <div class="profile-row">
+                    <div class="profile-avatar">TG</div>
+                    <div>
+                      <div class="profile-name" id="postAccountName">trend.giveaway_now</div>
+                      <div class="profile-meta">Sponsored reel · just now</div>
+                    </div>
+                    <button class="follow-btn">Follow</button>
+                  </div>
+
+                  <div class="post-caption" id="postCaption">
+                    Last 100 winners only 🎁 Comment “WIN” and tap the link in bio to claim your gift card now.
+                  </div>
+
+                  <div class="bio-preview" id="bioPreview">
+                    Link in bio: prize-claim-fast.net/winner
+                  </div>
+                </div>
+              </div>
+
+              <div class="reel-actions">
+                <button class="social-icon">♡</button>
+                <div class="action-label">Likes</div>
+
+                <button class="social-icon" id="openDmPreviewBtn">💬</button>
+                <div class="action-label" id="commentCount">57</div>
+
+                <button class="social-icon">✈</button>
+                <button class="social-icon">🔖</button>
+                <button class="social-icon">⋯</button>
+              </div>
+            </div>
+
+            <div class="reel-nav">
+              <button class="nav-pill">⌃</button>
+              <button class="nav-pill">⌄</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right side panel -->
+        <aside class="feed-right">
+          <div class="dm-panel" id="dmPanel">
+            <div class="dm-header">
+              <div class="dm-title">under.standable_posts</div>
+              <button class="dm-close" id="closeDmPreviewBtn">✕</button>
+            </div>
+
+            <div class="dm-body">
+              <div class="dm-preview-card">
+                <div class="dm-preview-top">
+                  <div class="dm-avatar">CW</div>
+                  <div>
+                    <div class="dm-name">the_coding_wiz...</div>
+                    <div class="verified">verified-looking badge ✓</div>
+                  </div>
+                </div>
+
+                <div class="dm-graphic">
+                  <div class="dm-graphic-chip">Project</div>
+                  <div class="dm-graphic-title">Bow Game</div>
+                  <div class="dm-graphic-sub">exclusive creator reward</div>
+                </div>
+              </div>
+
+              <div class="dm-message" id="dmMessage">
+                Hey Sophie, you were selected for our private winner list. Tap this secret creator link before the reward expires.
+              </div>
+
+              <div class="dm-link" id="dmLink">
+                creator-prize-access.com/claim
+              </div>
+
+              <div class="dm-input-row">
+                <input type="text" placeholder="Message..." disabled />
+              </div>
+            </div>
+          </div>
+
+          <section class="inspector-panel">
+            <div class="panel-title">Account Inspector</div>
+            <div class="inspector-grid">
+              <div class="inspector-item">
+                <div class="inspector-label">Username</div>
+                <div class="inspector-value" id="inspectorUser">trend.giveaway_now</div>
+              </div>
+              <div class="inspector-item">
+                <div class="inspector-label">Profile Age</div>
+                <div class="inspector-value" id="inspectorAge">2 days old</div>
+              </div>
+              <div class="inspector-item">
+                <div class="inspector-label">Link in Bio</div>
+                <div class="inspector-value suspicious" id="inspectorLink">prize-claim-fast.net/winner</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="hint-panel">
+            <div class="hint-panel-top">
+              <div class="panel-title">Investigation Hints</div>
+              <button id="revealHintBtn" class="reveal-hint-btn">Reveal next hint</button>
+            </div>
+            <div id="hintList" class="hint-list"></div>
+          </section>
+
+          <section class="action-panel">
+            <div class="panel-title">What should the player do?</div>
+
+            <div class="action-cards">
+              <button class="action-card good" data-action="report">
+                <div class="action-icon">🚩</div>
+                <div>
+                  <div class="action-name">Report account</div>
+                  <div class="action-desc">Flag suspicious reel / DM as scam</div>
+                </div>
+              </button>
+
+              <button class="action-card okay" data-action="verify">
+                <div class="action-icon">🔎</div>
+                <div>
+                  <div class="action-name">Verify creator</div>
+                  <div class="action-desc">Check official verified profile or website</div>
+                </div>
+              </button>
+
+              <button class="action-card bad" data-action="click">
+                <div class="action-icon">🔗</div>
+                <div>
+                  <div class="action-name">Tap link in bio</div>
+                  <div class="action-desc">Open prize page directly from the reel</div>
+                </div>
+              </button>
+
+              <button class="action-card bad" data-action="dm">
+                <div class="action-icon">✉</div>
+                <div>
+                  <div class="action-name">Open DM link</div>
+                  <div class="action-desc">Trust the private message and proceed</div>
+                </div>
+              </button>
+            </div>
+
+            <div id="decisionFeedback" class="decision-feedback hidden"></div>
+          </section>
+
+          <section class="clue-panel">
+            <div class="panel-title">Clue Log</div>
+            <div id="clueLog" class="clue-log">
+              <div class="clue-empty">Clues appear only when you reveal hints or complete important steps.</div>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== Fish coach overlay ===== -->
+  <div id="fishCoachOverlay" class="fish-overlay hidden" aria-hidden="true">
+    <div class="fish-fullscreen">
+      <div class="fish-image-wrapper">
+        <img src="./Fish%20game%20char.png" alt="Fish Coach" class="fish-image">
+        <div class="speech-bubble">
+          <div id="fishText"></div>
+        </div>
+      </div>
+
+      <div class="fish-panel">
+        <h2 id="fishTitle">Feedback</h2>
+        <div id="fishLessons" class="fish-lessons"></div>
+
+        <div id="proofBox" class="proof-box hidden">
+          <div class="proof-title">Proof of understanding</div>
+          <div id="verificationPrompt" class="proof-text"></div>
+
+          <input id="verificationInput"
+                 class="proof-input"
+                 type="text"
+                 placeholder="Type your answer here" />
+
+          <div id="verificationHelp" class="proof-help"></div>
+
+          <div class="proof-actions">
+            <button id="verifySubmitBtn" class="proof-btn">Submit answer</button>
+          </div>
+
+          <div id="verificationResult" class="proof-result"></div>
+        </div>
+
+        <button id="fishCloseBtn">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function beginLevel2Mission() {
+      const overlay = document.getElementById("scenarioOverlay");
+      if (!overlay) return;
+      overlay.style.opacity = "0";
+      overlay.style.transition = "opacity 0.25s ease";
+      setTimeout(() => {
+        overlay.style.display = "none";
+        overlay.setAttribute("aria-hidden", "true");
+      }, 250);
+    }
+
+    function openLevel2Dossier() {
+      const overlay = document.getElementById("scenarioOverlay");
+      if (!overlay) return;
+      overlay.style.display = "grid";
+      overlay.style.opacity = "1";
+      overlay.setAttribute("aria-hidden", "false");
+    }
+  </script>
+
+  <script src="./fishCoach.js"></script>
+  <script src="./level2Data.js"></script>
+  <script src="./level2.js"></script>
+</body>
+</html>
