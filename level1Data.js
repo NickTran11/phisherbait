@@ -24,11 +24,11 @@ window.LEVEL1_EMAIL = {
       senderInitials: "AM",
       fromName: "Amazon Rewards Center",
       fromEmail: "<offers@amazon-reward-center-mail.com>",
-      toEmail: "Bach Tran",
+      toEmail: "Sophie Blue",
       time: "Sun 3/15/2026 9:52 PM",
       subject: "Congratulations! Claim your Amazon gift card reward today",
       previewTop: "Congratulations! Claim your Amazon reward",
-      previewBottom: "External email offering a gift card and asking the user to act quickly...",
+      previewBottom: "Check This!",
       external: true,
       suspicious: true,
       inspector: {
@@ -45,7 +45,7 @@ window.LEVEL1_EMAIL = {
         "The previewed link does not use Amazon’s real primary domain. A safer choice would be to type the official Amazon website manually in your browser."
       ],
       verification: {
-        prompt: "In this email, what official website/domain should you manually type in your browser instead of clicking the email link?",
+        prompt: "In this email, Amazon is the company presented. What is the official website/domain of Amazon?",
         acceptedAnswers: [
           "amazon.com",
           "www.amazon.com",
