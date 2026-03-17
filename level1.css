@@ -46,7 +46,7 @@ html, body{
 .scenario-card{
   position: relative;
   width: min(600px, 95vw);   /* bigger width */
-  background: #e7dbc3;
+  background: linear-gradient(180deg, #e8dcc4, #d9cbb0);
   color: #2f2a24;
   border: 1px solid #b5a78b;
   box-shadow: 0 25px 60px rgba(0,0,0,0.45);
