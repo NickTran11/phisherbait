@@ -4,6 +4,7 @@
 
   const scenarioOverlay = document.getElementById("scenarioOverlay");
   const beginMissionBtn = document.getElementById("beginMissionBtn");
+  const openDossierBtn = document.getElementById("openDossierBtn");
 
   const scenarioName = document.getElementById("scenarioName");
   const scenarioTitle = document.getElementById("scenarioTitle");
