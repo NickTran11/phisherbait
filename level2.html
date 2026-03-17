@@ -155,42 +155,125 @@
 
         <!-- Right side panel -->
         <aside class="feed-right">
-          <div class="dm-panel" id="dmPanel">
-            <div class="dm-header">
-              <div class="dm-title">under.standable_posts</div>
-              <button class="dm-close" id="closeDmPreviewBtn">✕</button>
-            </div>
+  <!-- closed messages bubble -->
+  <div class="messages-bubble" id="messagesBubble">
+    <div class="messages-badge">3</div>
+    <div class="messages-bubble-icon">♡</div>
+    <div class="messages-bubble-text">Messages</div>
+  </div>
 
-            <div class="dm-body">
-              <div class="dm-preview-card">
-                <div class="dm-preview-top">
-                  <div class="dm-avatar">CW</div>
-                  <div>
-                    <div class="dm-name">the_coding_wiz...</div>
-                    <div class="verified">verified-looking badge ✓</div>
-                  </div>
-                </div>
+  <!-- contacts list popup -->
+  <div class="messages-popup hidden" id="messagesPopup">
+    <div class="messages-popup-header">
+      <div class="messages-popup-title">
+        Messages <span class="popup-count">2</span>
+      </div>
+      <div class="messages-popup-actions">
+        <button class="popup-icon-btn" id="expandMessagesBtn">⤢</button>
+        <button class="popup-icon-btn" id="closeMessagesPopupBtn">✕</button>
+      </div>
+    </div>
 
-                <div class="dm-graphic">
-                  <div class="dm-graphic-chip">Project</div>
-                  <div class="dm-graphic-title">Bow Game</div>
-                  <div class="dm-graphic-sub">exclusive creator reward</div>
-                </div>
-              </div>
+    <div class="contacts-list" id="contactsList">
+      <button class="contact-row" data-contact="haydude">
+        <div class="contact-avatar small-photo">H</div>
+        <div class="contact-main">
+          <div class="contact-name">HayDude</div>
+          <div class="contact-preview">Haedyn sent an attachment. · 38m</div>
+        </div>
+      </button>
 
-              <div class="dm-message" id="dmMessage">
-                Hey Sophie, you were selected for our private winner list. Tap this secret creator link before the reward expires.
-              </div>
+      <button class="contact-row" data-contact="david">
+        <div class="contact-avatar blue-mask">D</div>
+        <div class="contact-main">
+          <div class="contact-name">David N.</div>
+          <div class="contact-preview bold-preview">Neymar? 💔 · 56m</div>
+        </div>
+        <div class="contact-dot"></div>
+      </button>
 
-              <div class="dm-link" id="dmLink">
-                creator-prize-access.com/claim
-              </div>
+      <button class="contact-row suspicious-contact" data-contact="understandable">
+        <div class="contact-avatar black-avatar">u</div>
+        <div class="contact-main">
+          <div class="contact-name">under.standable_posts</div>
+          <div class="contact-preview">You sent an attachment. · 2h</div>
+        </div>
+      </button>
 
-              <div class="dm-input-row">
-                <input type="text" placeholder="Message..." disabled />
-              </div>
-            </div>
-          </div>
+      <button class="contact-row" data-contact="fortnite">
+        <div class="contact-avatar dark-avatar">F</div>
+        <div class="contact-main">
+          <div class="contact-name">Fortnite</div>
+          <div class="contact-preview bold-preview">LeBron James: Robel does t... · 12h</div>
+        </div>
+        <div class="contact-dot"></div>
+      </button>
+
+      <button class="contact-row" data-contact="girl">
+        <div class="contact-avatar city-avatar">G</div>
+        <div class="contact-main">
+          <div class="contact-name">I'm just a girl 💅</div>
+          <div class="contact-preview">You: Maybe I don’t know everything in ... · 16h</div>
+        </div>
+      </button>
+
+      <button class="contact-row" data-contact="jada">
+        <div class="contact-avatar anime-avatar">J</div>
+        <div class="contact-main">
+          <div class="contact-name">Jada H</div>
+          <div class="contact-preview">You: There’re still Part 2 code explainati... </div>
+        </div>
+      </button>
+    </div>
+
+    <button class="compose-fab">✎</button>
+  </div>
+
+  <!-- conversation popup -->
+  <div class="conversation-popup hidden" id="conversationPopup">
+    <div class="conversation-header">
+      <button class="popup-icon-btn" id="backToContactsBtn">←</button>
+      <div class="contact-avatar black-avatar" id="conversationAvatar">u</div>
+      <div class="conversation-name" id="conversationName">under.standable_posts</div>
+      <div class="conversation-header-actions">
+        <button class="popup-icon-btn">⤢</button>
+        <button class="popup-icon-btn" id="closeConversationBtn">✕</button>
+      </div>
+    </div>
+
+    <div class="conversation-body" id="conversationBody">
+      <div class="shared-card-wrap">
+        <div class="dm-graphic conversation-graphic">
+          <div class="dm-graphic-chip">Project</div>
+          <div class="dm-graphic-title">Bow Game</div>
+          <div class="dm-graphic-sub">Web Developer @the_coding_wizard</div>
+        </div>
+      </div>
+
+      <div class="message-time-stamp">11:04 AM</div>
+
+      <div class="chat-bubble outgoing">Hello</div>
+      <div class="chat-bubble outgoing">Hi</div>
+      <div class="chat-bubble outgoing">Yes</div>
+      <div class="chat-bubble outgoing">Abc</div>
+
+      <div class="chat-bubble incoming suspicious-message">
+        Hey Sophie, you were selected for our private winner list. Tap this secret creator link before the reward expires.
+      </div>
+
+      <div class="chat-link-bubble" id="dmLink">
+        creator-prize-access.com/claim
+      </div>
+    </div>
+
+    <div class="conversation-input-row">
+      <button class="input-icon-btn">☺</button>
+      <input type="text" placeholder="Message..." disabled />
+      <button class="input-icon-btn">🎤</button>
+      <button class="input-icon-btn">🖼</button>
+      <button class="input-icon-btn">😊</button>
+    </div>
+  </div>
 
           <section class="inspector-panel">
             <div class="panel-title">Account Inspector</div>
