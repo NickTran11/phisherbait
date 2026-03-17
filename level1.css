@@ -811,3 +811,15 @@ html, body{
     grid-template-columns: 1fr;
   }
 }
+
+/* dossier button in top-right */
+.dossier-btn{
+  color: #c084fc !important;
+  font-size: 22px;
+  text-shadow: 0 0 8px rgba(192,132,252,0.75);
+}
+
+.dossier-btn:hover{
+  color: #e9d5ff !important;
+  transform: scale(1.08);
+}
