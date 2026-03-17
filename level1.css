@@ -79,16 +79,12 @@ html, body{
   border: 1px solid #b8ae9f;
 }
 
-.scenario-photo{
+.scenario-photo-img{
   width: 165px;
   height: 165px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(180deg, #2e3440, #16181c);
-  color: #ececec;
-  font-size: 40px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  display: block;
+  object-fit: cover;
+  background: #16181c;
 }
 
 .scenario-name{
