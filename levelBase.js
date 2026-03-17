@@ -2,12 +2,22 @@
   const data = window.LEVEL1_EMAIL;
   if (!data || !data.messages || !data.messages.length) return;
 
+  const scenarioOverlay = document.getElementById("scenarioOverlay");
+  const beginMissionBtn = document.getElementById("beginMissionBtn");
+
+  const scenarioName = document.getElementById("scenarioName");
+  const scenarioTitle = document.getElementById("scenarioTitle");
+  const scenarioDescription = document.getElementById("scenarioDescription");
+  const scenarioStrengths = document.getElementById("scenarioStrengths");
+  const scenarioWeaknesses = document.getElementById("scenarioWeaknesses");
+  const scenarioContext = document.getElementById("scenarioContext");
+  const scenarioPhoto = document.getElementById("scenarioPhoto");
+
   const messageList = document.getElementById("messageList");
   const clueLog = document.getElementById("clueLog");
   const hintList = document.getElementById("hintList");
   const revealHintBtn = document.getElementById("revealHintBtn");
   const decisionFeedback = document.getElementById("decisionFeedback");
-  const exitLevelBtn = document.getElementById("exitLevelBtn");
 
   const fromNameEl = document.getElementById("fromName");
   const fromEmailEl = document.getElementById("fromEmail");
@@ -31,18 +41,43 @@
   let waitingForProof = false;
 
   function init() {
+    renderScenario();
     renderMessageList();
     renderReadingPane(activeMessage);
     renderHints();
     bindActions();
     bindProof();
-    bindExitButton();
+    bindScenarioStart();
   }
 
-  function bindExitButton() {
-    if (!exitLevelBtn) return;
-    exitLevelBtn.addEventListener("click", () => {
-      window.location.href = "./levelMap.html";
+  function renderScenario() {
+    if (!data.scenario) return;
+
+    scenarioName.textContent = data.scenario.codename || "PLAYER";
+    scenarioTitle.textContent = data.scenario.title || "";
+    scenarioDescription.textContent = data.scenario.description || "";
+    scenarioContext.textContent = data.scenario.context || "";
+    scenarioPhoto.textContent = data.scenario.initials || "P";
+
+    scenarioStrengths.innerHTML = "";
+    (data.scenario.strengths || []).forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      scenarioStrengths.appendChild(li);
+    });
+
+    scenarioWeaknesses.innerHTML = "";
+    (data.scenario.weaknesses || []).forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      scenarioWeaknesses.appendChild(li);
+    });
+  }
+
+  function bindScenarioStart() {
+    beginMissionBtn.addEventListener("click", () => {
+      scenarioOverlay.classList.add("hidden");
+      scenarioOverlay.setAttribute("aria-hidden", "true");
     });
   }
 
