@@ -239,7 +239,7 @@ function bindScenarioStart() {
     if (window.setFishCoachCloseHandler) {
       window.setFishCoachCloseHandler(() => {
         if (waitingForProof) return;
-        window.closeFishCoachCustom();
+        window.location.href = "./levelMap.html";
       });
     }
 
@@ -295,7 +295,7 @@ function bindScenarioStart() {
 
       if (window.setFishCoachCloseHandler) {
         window.setFishCoachCloseHandler(() => {
-          window.closeFishCoachCustom();
+          window.location.href = "./levelMap.html";
         });
       }
 
