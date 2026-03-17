@@ -8,34 +8,39 @@
   <link rel="stylesheet" href="./fishCoach.css" />
 </head>
 <body>
-  <!-- ===== Scenario intro overlay ===== -->
+  <!-- ===================== DOSSIER / SCENARIO INTRO ===================== -->
   <div id="scenarioOverlay" class="scenario-overlay" aria-hidden="false">
     <div class="scenario-card">
       <div class="paperclip" aria-hidden="true"></div>
 
       <div class="scenario-photo-wrap">
-        <div class="scenario-photo">
-          <div class="photo-placeholder">BT</div>
+        <div class="scenario-polaroid">
+          <div class="scenario-photo" id="scenarioPhoto">BT</div>
         </div>
       </div>
 
       <div class="scenario-name" id="scenarioName">BACH TRAN</div>
 
+      <div class="scenario-divider"></div>
+
       <div class="scenario-meta">
         <div class="meta-row">
           <span class="meta-label">TITLE:</span>
-          <span id="scenarioTitle">IT Student Intern</span>
+          <span class="meta-value" id="scenarioTitle">IT Student Intern</span>
         </div>
+
         <div class="meta-row">
           <span class="meta-label">DESCRIPTION:</span>
-          <span id="scenarioDescription">
+          <span class="meta-value" id="scenarioDescription">
             You are checking your school inbox during a busy evening and receive a reward email claiming you won an Amazon gift card.
           </span>
         </div>
       </div>
 
-      <div class="scenario-grid">
-        <div class="scenario-col">
+      <div class="scenario-divider"></div>
+
+      <div class="scenario-columns">
+        <div class="scenario-column">
           <div class="scenario-section-title">STRENGTHS</div>
           <ul id="scenarioStrengths" class="scenario-list">
             <li>Careful reader</li>
@@ -44,7 +49,7 @@
           </ul>
         </div>
 
-        <div class="scenario-col">
+        <div class="scenario-column">
           <div class="scenario-section-title">WEAKNESSES</div>
           <ul id="scenarioWeaknesses" class="scenario-list">
             <li>Can be tempted by urgent rewards</li>
@@ -53,7 +58,9 @@
         </div>
       </div>
 
-      <div class="scenario-context-block">
+      <div class="scenario-divider"></div>
+
+      <div class="scenario-context">
         <div class="scenario-section-title">MISSION CONTEXT</div>
         <p id="scenarioContext">
           Your goal is to decide whether this email is legitimate or a phishing attempt. Inspect the sender, message tone, and the real destination of the link before acting.
@@ -66,7 +73,8 @@
     </div>
   </div>
 
-  <div class="level-shell">
+  <!-- ===================== MAIN LEVEL ===================== -->
+  <div id="levelShell" class="level-shell">
     <header class="mail-topbar">
       <div class="top-left">
         <div class="sait-badge">SAIT</div>
@@ -80,11 +88,7 @@
       <div class="top-right">
         <button class="icon-btn" aria-label="Notifications">🔔</button>
         <button class="icon-btn" aria-label="Settings">⚙️</button>
-
-        <a href="./levelMap.html" class="exit-link" aria-label="Exit level" title="Exit level">
-          EXIT
-        </a>
-
+        <a href="./levelMap.html" class="exit-link" aria-label="Exit level" title="Exit level">EXIT</a>
         <button class="icon-btn" aria-label="Account">👤</button>
       </div>
     </header>
@@ -188,11 +192,7 @@
 
               <p>
                 To confirm your eligibility, click
-                <a href="#"
-                   class="email-link hintable suspicious"
-                   id="accountLink">
-                  Claim Reward
-                </a>.
+                <a href="#" class="email-link hintable suspicious" id="accountLink">Claim Reward</a>.
               </p>
 
               <p>
