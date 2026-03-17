@@ -1,4 +1,4 @@
-window.LEVEL1_EMAIL = {
+window.LEVEL5_EMAIL = {
   scenario: {
     codename: "CRISTIANA BLUM",
     title: "Company CEO",
