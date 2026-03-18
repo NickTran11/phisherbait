@@ -68,7 +68,7 @@ let activeReelIndex = 0;
 const reels = [
   {
     type: "video",
-    src: "./reel1.mp4",
+    src: "./reel1.mov",
     chip: "LIVE GIVEAWAY",
     avatar: "TG",
     accountName: "trend.giveaway_now",
@@ -78,7 +78,7 @@ const reels = [
   },
   {
     type: "video",
-    src: "./reel2.mp4",
+    src: "./reel2.mov",
     chip: "CREATOR DROP",
     avatar: "TG",
     accountName: "trend.giveaway_now",
