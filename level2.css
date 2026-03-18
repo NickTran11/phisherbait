@@ -1161,3 +1161,13 @@ html, body{
 .reel-sound-btn:hover{
   background: rgba(0,0,0,0.72);
 }
+
+.reel-loading{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 18px;
+  background: linear-gradient(180deg, #111827, #000);
+}
