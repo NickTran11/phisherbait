@@ -349,12 +349,20 @@ function renderCommentsPopup() {
     });
   }
 
-  if (openDmPreviewBtn && messagesPopup) {
-    openDmPreviewBtn.addEventListener("click", () => {
-      messagesPopup.classList.remove("hidden");
-      conversationPopup && conversationPopup.classList.add("hidden");
-    });
-  }
+  if (openCommentsBtn && commentsPopup) {
+  openCommentsBtn.addEventListener("click", () => {
+    renderCommentsPopup();
+    commentsPopup.classList.remove("hidden");
+    messagesPopup && messagesPopup.classList.add("hidden");
+    conversationPopup && conversationPopup.classList.add("hidden");
+  });
+}
+
+if (closeCommentsPopupBtn && commentsPopup) {
+  closeCommentsPopupBtn.addEventListener("click", () => {
+    commentsPopup.classList.add("hidden");
+  });
+}
 
   if (closeMessagesPopupBtn && messagesPopup) {
     closeMessagesPopupBtn.addEventListener("click", () => {
