@@ -69,32 +69,32 @@ const reels = [
   {
     type: "video",
     src: "./reel1.mov",
-    chip: "LIVE GIVEAWAY",
-    avatar: "TG",
-    accountName: "trend.giveaway_now",
-    meta: "Sponsored reel · just now",
-    caption: "Last 100 winners only 🎁 Comment “WIN” and tap the link in bio to claim your gift card now.",
-    bio: "Link in bio: prize-claim-fast.net/winner"
+    chip: "CREATOR DROP",
+    avatar: "TC",
+    accountName: "thorus_canva.official",
+    meta: "1.3M views · Mar 16, 2026",
+    caption: "All my courses are 25% OFF this week 🔥 BUY NOW BEFORE SOLD OUT 🎯",
+    bio: "Investigate the creator page and their courses integrity"
   },
   {
     type: "video",
     src: "./reel2.mov",
-    chip: "CREATOR DROP",
-    avatar: "TG",
-    accountName: "trend.giveaway_now",
-    meta: "Sponsored reel · 3m ago",
-    caption: "Exclusive creator reward unlocked 🔥 Tap now before this page disappears.",
-    bio: "Link in bio: creator-prize-access.com/claim"
+    chip: "INTERACTIVE REEL",
+    avatar: "CM",
+    accountName: "cute_mootion",
+    meta: "53 views · 23h ago",
+    caption: "Interact and play with the reel 😝",
+    bio: "Investigate the creator page and their reel integrity"
   },
   {
     type: "image",
     src: "./reel3.png",
     chip: "PROMO POST",
-    avatar: "TG",
-    accountName: "trend.giveaway_now",
-    meta: "Sponsored post · 8m ago",
-    caption: "Special promo image. Check comments and bio to claim your reward.",
-    bio: "Link in bio: prize-claim-fast.net/winner"
+    avatar: "BB",
+    accountName: "blue_bud",
+    meta: "Sponsored post · 16m ago",
+    caption: "Limited special offer 🥳 SHOP NOW 🛒",
+    bio: "Investigate the creator page, advertisement and product integrity"
   }
 ];
   let revealedHintCount = 0;
