@@ -151,22 +151,53 @@ const reels = [
     reelSlide.appendChild(counter);
 
     if (reel.type === "video") {
-      const video = document.createElement("video");
-      video.className = "reel-asset reel-video";
-      video.src = reel.src;
-      video.autoplay = true;
-      video.muted = true;
-      video.loop = true;
-      video.playsInline = true;
-      video.setAttribute("webkit-playsinline", "true");
-      reelSlide.appendChild(video);
-    } else {
-      const img = document.createElement("img");
-      img.className = "reel-asset reel-image";
-      img.src = reel.src;
-      img.alt = "Social media reel";
-      reelSlide.appendChild(img);
-    }
+  const video = document.createElement("video");
+  video.className = "reel-asset reel-video";
+  video.autoplay = true;
+  video.muted = true;   // start muted so autoplay works
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = "auto";
+  video.setAttribute("webkit-playsinline", "true");
+  video.setAttribute("playsinline", "true");
+
+  const source = document.createElement("source");
+  source.src = reel.src;
+  source.type = "video/mov";
+  video.appendChild(source);
+
+  const soundBtn = document.createElement("button");
+  soundBtn.className = "reel-sound-btn";
+  soundBtn.textContent = "🔇";
+  soundBtn.type = "button";
+
+  soundBtn.addEventListener("click", () => {
+    video.muted = !video.muted;
+    soundBtn.textContent = video.muted ? "🔇" : "🔊";
+  });
+
+  video.addEventListener("error", () => {
+    reelSlide.innerHTML = `
+      <div class="reel-loading">
+        Video could not load.
+      </div>
+    `;
+  });
+
+  reelSlide.appendChild(video);
+  reelSlide.appendChild(soundBtn);
+
+  const playPromise = video.play();
+  if (playPromise && typeof playPromise.catch === "function") {
+    playPromise.catch(() => {
+      reelSlide.innerHTML = `
+        <div class="reel-loading">
+          Tap to play video
+        </div>
+      `;
+    });
+  }
+} else {
   }
 
   if (reelChip) reelChip.textContent = reel.chip;
