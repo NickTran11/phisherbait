@@ -247,16 +247,24 @@ const reels = [
     reelSlide.appendChild(counter);
 
     if (reel.type === "video") {
-      const video = document.createElement("video");
-      video.className = "reel-asset reel-video";
-      video.src = reel.src;
-      video.autoplay = true;
-      video.muted = true;
-video.loop = true;
-video.playsInline = true;
-video.preload = "auto";
-video.setAttribute("webkit-playsinline", "true");
-video.setAttribute("playsinline", "true");
+  const video = document.createElement("video");
+  video.className = "reel-asset reel-video";
+  video.src = reel.src;
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = "auto";
+  video.setAttribute("webkit-playsinline", "true");
+  video.setAttribute("playsinline", "true");
+
+  // Reel 2: clicking the reel sends player to hacked page
+  if (activeReelIndex === 1) {
+    video.style.cursor = "pointer";
+    video.addEventListener("click", () => {
+      window.location.href = "https://nicktran11.github.io/youjustgothacked/index.html";
+    });
+  }
 
 const soundBtn = document.createElement("button");
       soundBtn.className = "reel-sound-btn";
