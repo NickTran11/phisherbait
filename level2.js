@@ -73,6 +73,7 @@ const closeMessagesPopupBtn = document.getElementById("closeMessagesPopupBtn");
 
 const conversationName = document.getElementById("conversationName");
 const conversationAvatar = document.getElementById("conversationAvatar");
+const conversationThread = document.getElementById("conversationThread");
 
   const proofBox = document.getElementById("proofBox");
   const verificationPrompt = document.getElementById("verificationPrompt");
