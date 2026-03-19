@@ -582,7 +582,7 @@ const conversationData = {
   sender: "Cold Snipe",
   type: "imageLink",
   imageSrc: "./fornite-qr.png",
-  href: "#",
+  href: "https://tinyurl.com/fcbarcelapplytryout",
   alt: "Fortnite free V-Bucks QR code"
 },
       { who: "them", sender: "Messy Ety", text: "Wow where you find this??" },
