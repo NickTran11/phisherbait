@@ -560,7 +560,13 @@ const conversationData = {
     messages: [
       { who: "me", text: "Dear FC Barcel, I am Alexiska Vanz, despite background being an online influencer, I'm secretly discipline football hustler. I've been training in my freetime with one of your side trainer Defiso Jipph, you can discuss with him about my ability. May I have an opportunity for tryout for the team?" },
       { who: "them", text: "Thank you for reaching out. It's a pleasure to talk to you Alexiska Vanz. Here is the link to apply for tryout to our football team this season:" },
-      { who: "them", type: "link", text: "applytryout.com" },
+      {
+  who: "them",
+  type: "imageLink",
+  imageSrc: "./fcbarcelposter.png",
+  href: "https://tinyurl.com/fcbarcelapplytryout",
+  alt: "FC Barcel tryout poster"
+},
       { who: "them", text: "There's a little fee to it, hope to see you soon!" }
     ]
   },
