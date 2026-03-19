@@ -426,6 +426,57 @@
     <input type="text" placeholder="Add a comment..." disabled />
   </div>
 </div>
+
+<div class="creator-profile-popup hidden" id="creatorProfilePopup">
+  <div class="creator-profile-header">
+    <button class="popup-icon-btn" id="closeCreatorProfileBtn" type="button">←</button>
+    <div class="creator-profile-menu">⋯</div>
+  </div>
+
+  <div class="creator-profile-top">
+    <div class="creator-profile-avatar-wrap">
+      <img id="creatorProfileAvatar" class="creator-profile-avatar" src="./images/default-profile.png" alt="Creator avatar">
+    </div>
+
+    <div class="creator-profile-main">
+      <div class="creator-profile-name-row">
+        <h2 id="creatorProfileHandle">thorus_canva.official</h2>
+        <span class="creator-profile-verified" id="creatorProfileVerified">✔</span>
+      </div>
+
+      <div class="creator-profile-display-name" id="creatorProfileDisplayName">Thorus Canva</div>
+
+      <div class="creator-profile-stats">
+        <span><strong id="creatorPostsCount">24</strong> posts</span>
+        <span><strong id="creatorFollowersCount">124K</strong> followers</span>
+        <span><strong id="creatorFollowingCount">32</strong> following</span>
+      </div>
+
+      <div class="creator-profile-category" id="creatorProfileCategory">Digital Creator</div>
+      <div class="creator-profile-bio" id="creatorProfileBio">
+        Helping creators grow fast.
+      </div>
+
+      <div class="creator-profile-link" id="creatorProfileLink">creator-link.example</div>
+    </div>
+  </div>
+
+  <div class="creator-profile-actions">
+    <button type="button">Following</button>
+    <button type="button">Message</button>
+    <button type="button">+</button>
+  </div>
+
+  <div class="creator-profile-highlights" id="creatorProfileHighlights"></div>
+
+  <div class="creator-profile-tabs">
+    <span class="active">▦</span>
+    <span>▷</span>
+    <span>⌖</span>
+  </div>
+
+  <div class="creator-profile-grid" id="creatorProfileGrid"></div>
+</div>
   
   <script>
     function beginLevel2Mission() {
