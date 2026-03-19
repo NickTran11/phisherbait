@@ -501,7 +501,7 @@ if (closeCreatorProfileBtn && creatorProfilePopup) {
 }
 
 const conversationData = {
-  haydude: {
+  bestfriend: {
     name: "Best Friend",
     avatar: "BFF",
     messages: [
@@ -520,7 +520,7 @@ const conversationData = {
     ]
   },
 
-  david: {
+  mrleast: {
     name: "MrLeast",
     avatar: "ML",
     messages: [
@@ -529,7 +529,7 @@ const conversationData = {
     ]
   },
 
-  understandable: {
+  fcbarcel: {
     name: "FC Barcel FanPage",
     avatar: "FB",
     messages: [
@@ -556,14 +556,14 @@ const conversationData = {
   },
 
   girl: {
-    name: "I'm just a girl",
+    name: "I'm just a girl 💅",
     avatar: "G",
     messages: [
       { who: "them", text: "Are you alone right now?" }
     ]
   },
 
-  jada: {
+  realationall: {
     name: "Realationall",
     avatar: "R",
     messages: [
@@ -577,7 +577,7 @@ const conversationData = {
 function renderConversation(contact) {
   if (!conversationThread) return;
 
-  const selected = conversationData[contact] || conversationData.haydude;
+  const selected = conversationData[contact] || conversationData.bestfriend;
 
   if (conversationName) conversationName.textContent = selected.name;
   if (conversationAvatar) conversationAvatar.textContent = selected.avatar;
