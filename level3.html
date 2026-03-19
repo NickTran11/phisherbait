@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 3: The Commuter's Chaos - Master Bait</title>
+    <link rel="stylesheet" href="level3.css">
+</head>
+<body>
+    <div class="app-root">
+        <div class="animated-bg"></div>
+        <div class="bg-overlay-pattern"></div>
+        <div class="bg-vignette"></div>
+
+        <div class="content-layer" style="display: flex; flex-direction: column;">
+            <div class="train-board">
+                <div class="train-board-title">Departures</div>
+                <div class="train-board-row">
+                    <span class="train-board-dest">NEXT TRAIN</span>
+                    <span class="train-board-time" id="train-timer-display">05:00</span>
+                </div>
+            </div>
+
+            <div class="dashboard-header" style="padding: 24px; position: relative; display: flex; justify-content: center;">
+                <button onclick="window.location.href='levelMap.html'" class="btn-back" style="position: absolute; right: 24px; top: 24px; z-index: 30;">
+                    <span style="font-weight: bold; text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.05em;">Map</span>
+                    <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <h2 class="dashboard-title" style="position: relative; transform: none; left: 0;">The Commuter's Chaos</h2>
+            </div>
+
+            <div style="display: flex; justify-content: center; align-items: center; flex: 1; padding: 20px; overflow: hidden;">
+                <div class="phone-container" id="phone">
+                    <div class="phone-notch"></div>
+                    <div class="phone-header">
+                        <span id="clock">08:00</span>
+                        <div class="battery-container">
+                            <div class="battery-outline">
+                                <div class="battery-fill" id="battery-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-stack" id="card-stack">
+                        </div>
+
+                    <div class="controls-area">
+                        <button class="btn-swipe btn-swipe-left" id="btn-swipe-left" title="Report/Block">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                        <div style="text-align: center; font-size: 0.75rem; color: #6b7280; font-weight: bold;">
+                            SWIPE LEFT<br>TO REPORT
+                        </div>
+                        <div style="text-align: center; font-size: 0.75rem; color: #6b7280; font-weight: bold;">
+                            SWIPE RIGHT<br>TO KEEP
+                        </div>
+                        <button class="btn-swipe btn-swipe-right" id="btn-swipe-right" title="Keep/Open">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="overlay active" id="start-overlay" style="background-color: rgba(31, 41, 55, 0.98); z-index: 100;">
+                        <div style="font-size: 40px; margin-bottom: 12px;">📱</div>
+                        <h2 style="margin-bottom: 12px; font-size: 1.3rem; color: #facc15;">The Commuter's Chaos</h2>
+                        <div style="text-align: left; font-size: 0.85rem; line-height: 1.5; color: #d1d5db; margin-bottom: 20px; width: 100%;">
+                            <p style="margin-bottom: 10px;">Your phone is blowing up with messages. Some are real, some are <strong>smishing</strong> (SMS phishing) scams.</p>
+                            <ul style="padding-left: 20px; margin-bottom: 10px;">
+                                <li style="margin-bottom: 6px;"><span style="color: #ef4444; font-weight: bold;">SWIPE LEFT</span> to report a scam.</li>
+                                <li style="margin-bottom: 6px;"><span style="color: #22c55e; font-weight: bold;">SWIPE RIGHT</span> to keep a safe message.</li>
+                            </ul>
+                            <p style="margin-bottom: 10px; color: #facc15; font-weight: bold; text-align: center;">⏱️ You have 5 minutes before your train arrives!</p>
+                            <p style="color: #f87171; font-weight: bold; font-size: 0.8rem; text-align: center;">Don't click suspicious links!</p>
+                        </div>
+                        <button class="btn-continue" id="btn-start">Start Commute</button>
+                    </div>
+
+                    <div class="overlay" id="consequence-overlay">
+                        <div class="consequence-box">
+                            <div class="consequence-title" id="consequence-title">HACKER ALERT</div>
+                            <div class="consequence-text" id="consequence-text"></div>
+                        </div>
+                        <button class="btn-continue" id="btn-continue">Acknowledge & Continue</button>
+                    </div>
+
+                    <div class="overlay" id="end-overlay">
+                        <div style="font-size: 48px; margin-bottom: 16px;" id="end-icon"></div>
+                        <h2 id="end-title" style="margin-bottom: 12px; font-size: 1.5rem;"></h2>
+                        <div id="end-stars" style="font-size: 32px; margin-bottom: 16px; letter-spacing: 4px;"></div>
+                        <p id="end-message" style="color: #d1d5db; margin-bottom: 24px; font-size: 0.9rem; line-height: 1.5;"></p>
+                        <button id="btn-learn" class="btn-continue" style="margin-bottom: 12px; background-color: #3b82f6;">How to Spot Smishing</button>
+                        <button onclick="window.location.href='levelMap.html'" class="btn-continue" style="background-color: #4b5563;">Return to Map</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="overlay" id="learn-overlay" style="background-color: rgba(31, 41, 55, 0.98); z-index: 100; overflow-y: auto; padding: 40px 20px;">
+            <div style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+                <h2 style="margin-bottom: 24px; font-size: 2rem; color: #facc15;">How to Spot Smishing</h2>
+                <div style="text-align: left; font-size: 1rem; line-height: 1.6; color: #d1d5db; margin-bottom: 30px; width: 100%;">
+                    <p style="margin-bottom: 16px;"><strong>Smishing</strong> is phishing via SMS. Scammers use text messages to trick you into giving away personal info or clicking malicious links.</p>
+                    
+                    <h3 style="color: #60a5fa; margin-bottom: 10px; font-size: 1.2rem;">Red Flags to Watch For:</h3>
+                    <ul style="padding-left: 24px; margin-bottom: 24px;">
+                        <li style="margin-bottom: 10px;"><strong>Urgency:</strong> "Act now," "Your account will be suspended," or "Urgent bill." Scammers want you to panic.</li>
+                        <li style="margin-bottom: 10px;"><strong>Unknown Numbers:</strong> Especially long numbers or international codes you don't recognize.</li>
+                        <li style="margin-bottom: 10px;"><strong>Suspicious Links:</strong> URLs that look slightly off (e.g., <code>pay-pals.com</code> instead of <code>paypal.com</code>) or use URL shorteners (like <code>bit.ly</code>).</li>
+                        <li style="margin-bottom: 10px;"><strong>Unexpected Prizes:</strong> "You won a gift card!" If you didn't enter, you didn't win.</li>
+                        <li style="margin-bottom: 10px;"><strong>Requests for Info:</strong> Legitimate companies will never ask for your password or SSN via text.</li>
+                    </ul>
+
+                    <h3 style="color: #4ade80; margin-bottom: 10px; font-size: 1.2rem;">What to Do:</h3>
+                    <ul style="padding-left: 24px; margin-bottom: 16px;">
+                        <li style="margin-bottom: 10px;">Don't click links or call the number provided.</li>
+                        <li style="margin-bottom: 10px;">Verify independently: Go directly to the company's official website or app.</li>
+                        <li style="margin-bottom: 10px;">Block the number and delete the message.</li>
+                    </ul>
+                </div>
+                <button onclick="window.location.href='levelMap.html'" class="btn-continue" style="font-size: 1.1rem; padding: 12px 32px;">Return to Map</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            { 
+                id: 1, 
+                sender: "+44 7700 900077", 
+                text: "Hey! I dropped my phone in the toilet. This is my new number. Can you please pay this urgent bill for me? I'll pay you back tomorrow! <a href='#'>http://urgent-bill-pay.com/pay</a>", 
+                isSmish: true, 
+                consequenceType: 'contact_leak',
+                consequenceText: "The link installed malware! The hacker is now sending this exact scam text to everyone in your contact list: Mom, Boss, Crush...",
+                preview: {
+                    title: "Urgent Bill Payment Portal",
+                    domain: "urgent-bill-pay.com",
+                    image: "https://picsum.photos/seed/bill/400/200"
+                }
+            },
+            { 
+                id: 2, 
+                sender: "Domino's", 
+                text: "Your pizza is 5 minutes away! Track here: <a href='#'>https://dominos.com/track/12345</a>", 
+                isSmish: false,
+                preview: {
+                    title: "Domino's Pizza Tracker",
+                    domain: "dominos.com",
+                    image: "https://picsum.photos/seed/pizza/400/200"
+                }
+            },
+            { 
+                id: 3, 
+                sender: "USPS", 
+                text: "USPS: Your package was diverted due to an incorrect address. Please update your details within 2 hours or it will be returned: <a href='#'>usps-delivery-verify.top</a>", 
+                isSmish: true, 
+                consequenceType: 'glitch',
+                consequenceText: "You clicked a malicious link! A virus is taking over your display...",
+                preview: {
+                    title: "USPS Tracking Update",
+                    domain: "usps-delivery-verify.top",
+                    image: "https://picsum.photos/seed/usps/400/200"
+                }
+            },
+            { 
+                id: 4, 
+                sender: "Sarah", 
+                text: "Happy Birthday! See you at 7pm? - Sarah", 
+                isSmish: false 
+            },
+            { 
+                id: 5, 
+                sender: "BAnk-Alert", 
+                text: "A login from [Strange City] was detected. If this wasn't you, secure your account NOW: <a href='#'>bit.ly/secure-bank-99</a>", 
+                isSmish: true, 
+                consequenceType: 'auto_reply',
+                consequenceText: "Your phone was hijacked! It just sent an embarrassing auto-reply to your Boss.",
+                preview: {
+                    title: "Secure Your Account",
+                    domain: "bit.ly",
+                    image: "https://picsum.photos/seed/bank/400/200"
+                }
+            },
+            { 
+                id: 6, 
+                sender: "AuthMsg", 
+                text: "Your 2FA code is 992-101. Do not share this code.", 
+                isSmish: false 
+            }
+        ];
+
+        // Shuffle messages
+        messages.sort(() => Math.random() - 0.5);
+
+        let currentCardIndex = 0;
+        let batteryLevel = 100;
+        let mistakes = 0;
+        const maxMistakes = 3;
+        let timerSeconds = 300; // 5 minutes
+        let timerInterval;
+
+        const stackEl = document.getElementById('card-stack');
+        const batteryFill = document.getElementById('battery-fill');
+        const clockEl = document.getElementById('clock');
+        const phoneEl = document.getElementById('phone');
+        
+        const consequenceOverlay = document.getElementById('consequence-overlay');
+        const consequenceTitle = document.getElementById('consequence-title');
+        const consequenceText = document.getElementById('consequence-text');
+        const btnContinue = document.getElementById('btn-continue');
+
+        const endOverlay = document.getElementById('end-overlay');
+        const endIcon = document.getElementById('end-icon');
+        const endTitle = document.getElementById('end-title');
+        const endMessage = document.getElementById('end-message');
+
+        function initGame() {
+            renderCards();
+            startTimer();
+            updateBattery();
+        }
+
+        function renderCards() {
+            stackEl.innerHTML = '';
+            // Render in reverse so the first is on top
+            for (let i = messages.length - 1; i >= currentCardIndex; i--) {
+                const msg = messages[i];
+                const isTop = i === currentCardIndex;
+                
+                const card = document.createElement('div');
+                card.className = 'swipe-card';
+                card.dataset.index = i;
+                
+                // Stacking effect
+                const offset = (i - currentCardIndex) * 4;
+                const scale = 1 - ((i - currentCardIndex) * 0.05);
+                card.style.transform = `translateY(${offset}px) scale(${scale})`;
+                card.style.zIndex = messages.length - i;
+                
+                if (!isTop) {
+                    card.style.pointerEvents = 'none';
+                }
+
+                let previewHtml = '';
+                if (msg.preview) {
+                    previewHtml = `
+                        <a href="#" class="link-preview">
+                            <img src="${msg.preview.image}" class="link-preview-img" alt="Preview Image" referrerPolicy="no-referrer">
+                            <div class="link-preview-info">
+                                <div class="link-preview-title">${msg.preview.title}</div>
+                                <div class="link-preview-domain">${msg.preview.domain}</div>
+                            </div>
+                        </a>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="swipe-badge badge-keep">KEEP</div>
+                    <div class="swipe-badge badge-report">REPORT</div>
+                    <div class="card-header">
+                        <div class="card-header-avatar">${msg.sender.charAt(0).toUpperCase()}</div>
+                        <div class="card-sender">${msg.sender}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="message-bubble">${msg.text}</div>
+                        ${previewHtml}
+                    </div>
+                `;
+
+                if (isTop) {
+                    setupDragEvents(card);
+                }
+
+                stackEl.appendChild(card);
+            }
+        }
+
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentX = 0;
+        let isScrolling = false;
+        let activeCard = null;
+
+        function setupDragEvents(card) {
+            activeCard = card;
+            
+            card.addEventListener('mousedown', dragStart);
+            card.addEventListener('touchstart', dragStart, {passive: true});
+            
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('touchmove', dragMove, {passive: false});
+            
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+        }
+
+        function dragStart(e) {
+            if (e.target.tagName.toLowerCase() === 'a') return; // Let links be clickable (though we intercept them)
+            isDragging = true;
+            isScrolling = false;
+            startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+            startY = e.type.includes('mouse') ? e.pageY : e.touches[0].pageY;
+            activeCard.classList.add('dragging');
+        }
+
+        function dragMove(e) {
+            if (!isDragging) return;
+            
+            const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+            const y = e.type.includes('mouse') ? e.pageY : e.touches[0].pageY;
+            const deltaX = x - startX;
+            const deltaY = y - startY;
+            
+            if (!isScrolling) {
+                // If moving vertically more than horizontally, treat as scroll
+                if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 5) {
+                    isScrolling = true;
+                }
+            }
+            
+            if (isScrolling) {
+                return; // Let browser handle vertical scrolling
+            }
+            
+            if (e.cancelable) {
+                e.preventDefault(); // Prevent scrolling on touch when swiping horizontally
+            }
+            
+            currentX = deltaX;
+            
+            const rotate = currentX * 0.05;
+            activeCard.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
+            
+            const keepBadge = activeCard.querySelector('.badge-keep');
+            const reportBadge = activeCard.querySelector('.badge-report');
+            
+            if (currentX > 50) {
+                keepBadge.style.opacity = Math.min(1, currentX / 100);
+                reportBadge.style.opacity = 0;
+            } else if (currentX < -50) {
+                reportBadge.style.opacity = Math.min(1, Math.abs(currentX) / 100);
+                keepBadge.style.opacity = 0;
+            } else {
+                keepBadge.style.opacity = 0;
+                reportBadge.style.opacity = 0;
+            }
+        }
+
+        function dragEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            activeCard.classList.remove('dragging');
+            
+            if (isScrolling) {
+                activeCard.style.transform = '';
+                const keepBadge = activeCard.querySelector('.badge-keep');
+                const reportBadge = activeCard.querySelector('.badge-report');
+                if (keepBadge) keepBadge.style.opacity = 0;
+                if (reportBadge) reportBadge.style.opacity = 0;
+                currentX = 0;
+                return;
+            }
+            
+            if (currentX > 100) {
+                handleSwipe('right');
+            } else if (currentX < -100) {
+                handleSwipe('left');
+            } else {
+                // Reset
+                activeCard.style.transform = '';
+                const keepBadge = activeCard.querySelector('.badge-keep');
+                const reportBadge = activeCard.querySelector('.badge-report');
+                if (keepBadge) keepBadge.style.opacity = 0;
+                if (reportBadge) reportBadge.style.opacity = 0;
+            }
+            currentX = 0;
+        }
+
+        function handleSwipe(direction) {
+            const msg = messages[currentCardIndex];
+            
+            // Animate card out
+            activeCard.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+            activeCard.style.transform = `translateX(${direction === 'right' ? 1000 : -1000}px) rotate(${direction === 'right' ? 30 : -30}deg)`;
+            activeCard.style.opacity = 0;
+            
+            // Cleanup listeners
+            document.removeEventListener('mousemove', dragMove);
+            document.removeEventListener('touchmove', dragMove);
+            document.removeEventListener('mouseup', dragEnd);
+            document.removeEventListener('touchend', dragEnd);
+
+            setTimeout(() => {
+                evaluateChoice(direction, msg);
+            }, 300);
+        }
+
+        // Button controls
+        document.getElementById('btn-swipe-left').addEventListener('click', () => {
+            if (activeCard && !isDragging) {
+                currentX = -150;
+                handleSwipe('left');
+            }
+        });
+        document.getElementById('btn-swipe-right').addEventListener('click', () => {
+            if (activeCard && !isDragging) {
+                currentX = 150;
+                handleSwipe('right');
+            }
+        });
+
+        function evaluateChoice(direction, msg) {
+            let isMistake = false;
+            
+            if (direction === 'right') { // Kept
+                if (msg.isSmish) {
+                    isMistake = true;
+                    triggerConsequence(msg);
+                }
+            } else { // Reported
+                if (!msg.isSmish) {
+                    isMistake = true;
+                    // Minor penalty for blocking a safe message
+                    triggerMinorPenalty();
+                }
+            }
+
+            if (!isMistake) {
+                nextCard();
+            }
+        }
+
+        function triggerConsequence(msg) {
+            mistakes++;
+            updateBattery();
+            
+            consequenceTitle.innerText = "YOU GOT BAITED!";
+            let extraHtml = '';
+
+            if (msg.consequenceType === 'auto_reply') {
+                extraHtml = `
+                    <div class="imessage-fake">
+                        <div class="imessage-header">To: Boss</div>
+                        <div class="imessage-bubble">I'm quitting to become a professional kazoo player!</div>
+                    </div>
+                `;
+            }
+
+            consequenceText.innerHTML = msg.consequenceText + extraHtml;
+            consequenceOverlay.classList.add('active');
+
+            if (msg.consequenceType === 'glitch') {
+                phoneEl.classList.add('glitch');
+            }
+        }
+
+        function triggerMinorPenalty() {
+            mistakes++;
+            updateBattery();
+            consequenceTitle.innerText = "OOPS!";
+            consequenceText.innerHTML = "You just reported a safe message! Your friend/service might be blocked now.";
+            consequenceOverlay.classList.add('active');
+        }
+
+        btnContinue.addEventListener('click', () => {
+            consequenceOverlay.classList.remove('active');
+            phoneEl.classList.remove('glitch');
+            
+            if (mistakes >= maxMistakes) {
+                endGame(false);
+            } else {
+                nextCard();
+            }
+        });
+
+        function nextCard() {
+            currentCardIndex++;
+            if (currentCardIndex >= messages.length) {
+                endGame(true);
+            } else {
+                renderCards();
+            }
+        }
+
+        function updateBattery() {
+            batteryLevel = Math.max(0, 100 - (mistakes * 33.33));
+            batteryFill.style.width = `${batteryLevel}%`;
+            
+            if (batteryLevel <= 35) {
+                batteryFill.style.backgroundColor = '#ef4444'; // Red
+            } else if (batteryLevel <= 70) {
+                batteryFill.style.backgroundColor = '#eab308'; // Yellow
+            } else {
+                batteryFill.style.backgroundColor = '#22c55e'; // Green
+            }
+        }
+
+        const trainTimerDisplay = document.getElementById('train-timer-display');
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                
+                // Train board countdown (05:00 -> 00:00)
+                const mDown = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+                const sDown = (timerSeconds % 60).toString().padStart(2, '0');
+                if (trainTimerDisplay) {
+                    trainTimerDisplay.innerText = `${mDown}:${sDown}`;
+                }
+
+                // Phone clock count up (08:00 -> 08:05)
+                const elapsed = 300 - timerSeconds;
+                const hUp = '08';
+                const mUp = Math.floor(elapsed / 60).toString().padStart(2, '0');
+                clockEl.innerText = `${hUp}:${mUp}`;
+                
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    endGame(false, "Time's up! You missed your train while sorting through messages.");
+                }
+            }, 1000);
+        }
+
+        function endGame(isWin, customMessage = null) {
+            clearInterval(timerInterval);
+            endOverlay.classList.add('active');
+            
+            const endStars = document.getElementById('end-stars');
+            let earnedStars = 0;
+            
+            if (isWin) {
+                endIcon.innerHTML = '🏆';
+                endTitle.innerText = 'Commute Survived!';
+                endTitle.style.color = '#4ade80';
+                endMessage.innerHTML = 'You successfully sorted through the noise, avoided the smishing traps, and caught your train!';
+                
+                if (mistakes === 0) earnedStars = 3;
+                else if (mistakes === 1) earnedStars = 2;
+                else if (mistakes === 2) earnedStars = 1;
+            } else {
+                endIcon.innerHTML = '🪫';
+                endTitle.innerText = 'Phone Compromised!';
+                endTitle.style.color = '#ef4444';
+                endMessage.innerHTML = customMessage || 'You fell for too many traps. Your battery died, your contacts are leaked, and your boss thinks you play the kazoo.';
+                earnedStars = 0;
+            }
+            
+            if (endStars) {
+                let starsHtml = '';
+                for (let i = 0; i < 3; i++) {
+                    const isEarned = i < earnedStars;
+                    const dimClass = isEarned ? '' : 'star-dim';
+                    const delay = (i * 0.2) + 0.3; // Stagger animation
+                    starsHtml += `<span class="star-anim ${dimClass}" style="animation-delay: ${delay}s;">⭐</span>`;
+                }
+                endStars.innerHTML = starsHtml;
+            }
+        }
+
+        // Intercept link clicks inside cards
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName.toLowerCase() === 'a' && e.target.closest('.swipe-card')) {
+                e.preventDefault();
+                // Treat clicking a link as "Keeping" the message (swiping right)
+                if (activeCard && !isDragging) {
+                    currentX = 150;
+                    handleSwipe('right');
+                }
+            }
+        });
+
+        const startOverlay = document.getElementById('start-overlay');
+        const btnStart = document.getElementById('btn-start');
+        const learnOverlay = document.getElementById('learn-overlay');
+        const btnLearn = document.getElementById('btn-learn');
+
+        btnStart.addEventListener('click', () => {
+            startOverlay.classList.remove('active');
+            initGame();
+        });
+
+        btnLearn.addEventListener('click', () => {
+            endOverlay.classList.remove('active');
+            learnOverlay.classList.add('active');
+        });
+    </script>
+</body>
+</html>
