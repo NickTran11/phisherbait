@@ -488,6 +488,19 @@ if (closeCommentsPopupBtn && commentsPopup) {
       conversationPopup && conversationPopup.classList.add("hidden");
     });
   }
+
+    if (postAccountName && creatorProfilePopup) {
+  postAccountName.addEventListener("click", () => {
+    renderCreatorProfile();
+    creatorProfilePopup.classList.remove("hidden");
+  });
+}
+
+if (closeCreatorProfileBtn && creatorProfilePopup) {
+  closeCreatorProfileBtn.addEventListener("click", () => {
+    creatorProfilePopup.classList.add("hidden");
+  });
+}
 }
 
   function openConversation(contact) {
