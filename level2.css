@@ -285,9 +285,9 @@ html, body{
 
 .reel-wrapper{
   display:grid;
-  grid-template-columns:minmax(380px, 460px) 72px 430px;
+  grid-template-columns:minmax(380px, 460px) 72px;
   gap:22px;
-  align-items:start;
+  align-items:center;
 }
 
 .reel-card{
