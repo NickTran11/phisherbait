@@ -49,6 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
   let waitingForProof = false;
   const completedMessages = new Set();
 
+  function currentMessageNeedsVerification() {
+  return !!(
+    activeMessage.verification &&
+    activeMessage.verification.prompt &&
+    Array.isArray(activeMessage.verification.acceptedAnswers)
+  );
+}
+
+function finishCurrentMessage() {
+  completedMessages.add(activeMessage.id);
+}
+
+function allMessagesCompleted() {
+  return completedMessages.size === data.messages.length;
+}
+
   function init() {
     renderScenario();
     renderMessageList();
@@ -209,21 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    function currentMessageNeedsVerification() {
-  return !!(
-    activeMessage.verification &&
-    activeMessage.verification.prompt &&
-    Array.isArray(activeMessage.verification.acceptedAnswers)
-  );
-}
 
-function finishCurrentMessage() {
-  completedMessages.add(activeMessage.id);
-}
-
-function allMessagesCompleted() {
-  return completedMessages.size === data.messages.length;
-}
 
     document.querySelectorAll("[data-action]").forEach(btn => {
       btn.addEventListener("click", () => {
@@ -248,15 +250,10 @@ function allMessagesCompleted() {
     const isPartial = action === activeMessage.partialAction;
 
     if (isCorrect) {
-  addClue("Correct action chosen.");
-  setDecisionFeedback("good", "Correct. That is the best action here.");
-
   const needsProof = currentMessageNeedsVerification();
 
-  if (!needsProof) {
-    finishCurrentMessage();
-  }
-
+  addClue("Correct action chosen: Report phishing.");
+  setDecisionFeedback("good", "Correct. Reporting phishing is the best action here.");
   showCoach("perfect", needsProof);
   return;
 }
@@ -264,6 +261,11 @@ function allMessagesCompleted() {
     if (isPartial) {
       addClue("Partial credit: safer than clicking, but not the best answer.");
       setDecisionFeedback("warn", "Safer than clicking, but not the best answer for this scenario.");
+      
+      if (!needsProof) {
+    finishCurrentMessage();
+  }
+      
       showCoach("good", false);
       return;
     }
@@ -307,17 +309,19 @@ function allMessagesCompleted() {
   }
 
   function showProofBox() {
-    if (!proofBox) return;
-    proofBox.classList.remove("hidden");
-    if (verificationPrompt) verificationPrompt.textContent = activeMessage.verification.prompt;
-    if (verificationInput) verificationInput.value = "";
-    if (verificationHelp) verificationHelp.textContent = "Type the real official domain only.";
-    if (verificationResult) {
-      verificationResult.textContent = "";
-      verificationResult.className = "proof-result";
-    }
-    setTimeout(() => verificationInput && verificationInput.focus(), 60);
+  if (!activeMessage.verification) {
+    hideProofBox();
+    return;
   }
+
+  proofBox.classList.remove("hidden");
+  verificationPrompt.textContent = activeMessage.verification.prompt;
+  verificationInput.value = "";
+  verificationHelp.textContent = "Type the real official domain only.";
+  verificationResult.textContent = "";
+  verificationResult.className = "proof-result";
+  setTimeout(() => verificationInput.focus(), 60);
+}
 
   function hideProofBox() {
     if (proofBox) proofBox.classList.add("hidden");
