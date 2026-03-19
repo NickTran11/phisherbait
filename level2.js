@@ -99,11 +99,29 @@ const reels = [
     likes: "1.1M",
     commentCount: "14k",
     comments: [
-      { avatar: "y", username: "yahya_lmkadmi", time: "11h", text: "Ragebait final boss", meta: "361 likes   Reply" },
-      { avatar: "d", username: "denver29519", time: "9h", text: "Explain?", meta: "Reply" },
-      { avatar: "k", username: "k.khainaa", time: "9h", text: "THE QUEEN HERSELF", meta: "127 likes   Reply" },
-      { avatar: "p", username: "pink3matter", time: "11h", text: "What is she doing rn does anyone know", meta: "52 likes   Reply" }
-    ]
+      { avatar: "S", username: "spidey_sink", time: "11h", text: "FAKE😂😂😂", meta: "201 likes   Reply" },
+      { avatar: "D", username: "denver29519", time: "9h", text: "Big Fan, sir!🔥", meta: "Reply" },
+      { avatar: "K", username: "k.khainaa", time: "9h", text: "Selling courses in big 2026 lol 😭🥀", meta: "1.2k likes   Reply" },
+      { avatar: "P", username: "pink3matter", time: "11h", text: "Talent❌ Hardwork✅", meta: "52k likes   Reply" }
+    ],
+        creatorProfile: {
+      avatar: "./images/creator1-avatar.jpg",
+      handle: "thorus_canva.official",
+      verified: true,
+      displayName: "Thorus Canva",
+      posts: "24",
+      followers: "951K",
+      following: "111",
+      category: "Entrepreneur",
+      bio: "Day one, one day",
+      link: "the-thorus-way.com",
+      ],
+      grid: [
+        "./images/creator1-grid1.jpg",
+        "./images/creator1-grid2.jpg",
+        "./images/creator1-grid3.jpg",
+      ]
+    }
   },
   {
     type: "video",
@@ -117,11 +135,29 @@ const reels = [
     likes: "10",
     commentCount: "4",
     comments: [
-      { avatar: "a", username: "ashley.edittts", time: "7h", text: "This trend is everywhere now", meta: "41 likes   Reply" },
-      { avatar: "m", username: "mika.flow", time: "6h", text: "Why does the page keep asking people to click out?", meta: "19 likes   Reply" },
-      { avatar: "r", username: "rio_vfx", time: "4h", text: "The account looks copied from other creators", meta: "28 likes   Reply" },
-      { avatar: "s", username: "sunniepop", time: "2h", text: "Something feels off about this reel", meta: "12 likes   Reply" }
-    ]
+      { avatar: "A", username: "ashley.edittts", time: "7h", text: "This trend is everywhere now", meta: "4 likes   Reply" },
+      { avatar: "M", username: "mika.flow", time: "6h", text: "ITS SO FUNNN ❤️", meta: "8 likes   Reply" },
+      { avatar: "R", username: "rio_vfx", time: "4h", text: "The account looks copied from other creators", meta: "1 likes   Reply" },
+      { avatar: "S", username: "sunniepop", time: "2h", text: "What happened at the end, anyone got that same thing??", meta: "1 likes   Reply" }
+    ],
+    creatorProfile: {
+      avatar: "./images/creator2-avatar.jpg",
+      handle: "cute_mootion",
+      verified: false,
+      displayName: "Cute Mootion",
+      posts: "9",
+      followers: "32",
+      following: "418",
+      category: "Video Creator",
+      bio: "Short trend edits and viral remix posts ✨",
+      link: "cute-mootion-vibes.net",
+      ],
+      grid: [
+        "./images/creator2-grid1.jpg",
+        "./images/creator2-grid2.jpg",
+        "./images/creator2-grid3.jpg",
+      ]
+    }
   },
   {
     type: "image",
@@ -135,11 +171,29 @@ const reels = [
     likes: "1k",
     commentCount: "206",
     comments: [
-      { avatar: "j", username: "jayyy_lee", time: "5h", text: "Is this even a real store?", meta: "23 likes   Reply" },
-      { avatar: "n", username: "nina.codes", time: "4h", text: "That discount is way too extreme", meta: "17 likes   Reply" },
-      { avatar: "o", username: "omarxv", time: "3h", text: "The website URL looks suspicious", meta: "31 likes   Reply" },
-      { avatar: "l", username: "lulu_draws", time: "1h", text: "I would not trust that ad", meta: "9 likes   Reply" }
-    ]
+      { avatar: "J", username: "jayyy_lee", time: "5h", text: "What a deal!", meta: "43 likes   Reply" },
+      { avatar: "N", username: "nina.codes", time: "4h", text: "That discount is way too extreme", meta: "17 likes   Reply" },
+      { avatar: "O", username: "omarxv", time: "3h", text: "Technologia", meta: "2k likes   Reply" },
+      { avatar: "L", username: "lulu_draws", time: "1h", text: "I will buy one", meta: "9 likes   Reply" }
+    ],
+    creatorProfile: {
+      avatar: "./images/creator3-avatar.jpg",
+      handle: "blue_bud",
+      verified: false,
+      displayName: "Blue Bud Store",
+      posts: "1",
+      followers: "8,421",
+      following: "12",
+      category: "Shopping & Retail",
+      bio: "Lifestyle deals, trending picks, daily shop drops.",
+      link: "blue-bud-limited-store.com",
+      ],
+      grid: [
+        "./images/creator3-grid1.jpg",
+        "./images/creator3-grid2.jpg",
+        "./images/creator3-grid3.jpg",
+      ]
+    }
   }
 ];
   let revealedHintCount = 0;
@@ -297,6 +351,33 @@ function renderCommentsPopup() {
   });
 }
 
+function renderCreatorProfile() {
+  const reel = reels[activeReelIndex];
+  const profile = reel.creatorProfile;
+  if (!profile) return;
+
+  if (creatorProfileAvatar) creatorProfileAvatar.src = profile.avatar;
+  if (creatorProfileHandle) creatorProfileHandle.textContent = profile.handle;
+  if (creatorProfileVerified) creatorProfileVerified.style.display = profile.verified ? "inline-block" : "none";
+  if (creatorProfileDisplayName) creatorProfileDisplayName.textContent = profile.displayName;
+  if (creatorPostsCount) creatorPostsCount.textContent = profile.posts;
+  if (creatorFollowersCount) creatorFollowersCount.textContent = profile.followers;
+  if (creatorFollowingCount) creatorFollowingCount.textContent = profile.following;
+  if (creatorProfileCategory) creatorProfileCategory.textContent = profile.category;
+  if (creatorProfileBio) creatorProfileBio.textContent = profile.bio;
+  if (creatorProfileLink) creatorProfileLink.textContent = profile.link;
+
+  if (creatorProfileGrid) {
+    creatorProfileGrid.innerHTML = "";
+    (profile.grid || []).forEach((imgSrc) => {
+      const img = document.createElement("img");
+      img.src = imgSrc;
+      img.alt = "Creator post";
+      creatorProfileGrid.appendChild(img);
+    });
+  }
+}
+  
   function renderHints() {
     if (!hintList || !revealHintBtn) return;
 
