@@ -115,7 +115,6 @@ const reels = [
       category: "Entrepreneur",
       bio: "Day one, one day",
       link: "the-thorus-way.com",
-      ],
       grid: [
         "./images/creator1-grid1.jpg",
         "./images/creator1-grid2.jpg",
@@ -151,7 +150,6 @@ const reels = [
       category: "Video Creator",
       bio: "Short trend edits and viral remix posts ✨",
       link: "cute-mootion-vibes.net",
-      ],
       grid: [
         "./images/creator2-grid1.jpg",
         "./images/creator2-grid2.jpg",
@@ -187,7 +185,6 @@ const reels = [
       category: "Shopping & Retail",
       bio: "Lifestyle deals, trending picks, daily shop drops.",
       link: "blue-bud-limited-store.com",
-      ],
       grid: [
         "./images/creator3-grid1.jpg",
         "./images/creator3-grid2.jpg",
