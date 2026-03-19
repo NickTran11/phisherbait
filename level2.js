@@ -629,21 +629,34 @@ function renderConversation(contact) {
       bubble.appendChild(sender);
     }
 
-    if (msg.type === "link") {
-      const link = document.createElement("a");
-      link.className = "ig-message-link";
-      link.href = msg.text.startsWith("http") ? msg.text : `https://${msg.text}`;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = msg.text;
-      bubble.appendChild(link);
-    } else {
-      const text = document.createElement("div");
-      text.className = "ig-message-text";
-      text.textContent = msg.text;
-      bubble.appendChild(text);
-    }
+    if (msg.type === "imageLink") {
+  const link = document.createElement("a");
+  link.className = "ig-message-image-link";
+  link.href = msg.href;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
 
+  const img = document.createElement("img");
+  img.className = "ig-message-image";
+  img.src = msg.imageSrc;
+  img.alt = msg.alt || "Linked image";
+
+  link.appendChild(img);
+  bubble.appendChild(link);
+} else if (msg.type === "link") {
+  const link = document.createElement("a");
+  link.className = "ig-message-link";
+  link.href = msg.text.startsWith("http") ? msg.text : `https://${msg.text}`;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = msg.text;
+  bubble.appendChild(link);
+} else {
+  const text = document.createElement("div");
+  text.className = "ig-message-text";
+  text.textContent = msg.text;
+  bubble.appendChild(text);
+}
     row.appendChild(bubble);
     conversationThread.appendChild(row);
   });
