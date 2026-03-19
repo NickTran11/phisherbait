@@ -289,6 +289,7 @@ html, body{
   grid-template-columns:minmax(380px, 460px) 72px;
   gap:22px;
   align-items:center;
+  position:relative;
 }
 
 .reel-card{
