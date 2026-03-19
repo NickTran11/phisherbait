@@ -577,7 +577,14 @@ const conversationData = {
     isGroup: true,
     messages: [
       { who: "them", sender: "Cold Snipe", text: "Free V-Bucks drop guys!" },
-      { who: "them", sender: "Cold Snipe", type: "link", text: "freevbucks.com" },
+      {
+  who: "them",
+  sender: "Cold Snipe",
+  type: "imageLink",
+  imageSrc: "./fornite-qr.png",
+  href: "#",
+  alt: "Fortnite free V-Bucks QR code"
+},
       { who: "them", sender: "Messy Ety", text: "Wow where you find this??" },
       { who: "them", sender: "Cold Snipe", text: "There's this guy I met on Fortnite shared it to me" },
       { who: "them", sender: "Headshot100", text: "Idk man that's kinda sus" },
