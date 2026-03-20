@@ -489,6 +489,13 @@ function renderCreatorProfile() {
     });
   }
 
+    if (openMessagesFromRailBtn && messagesPopup) {
+  openMessagesFromRailBtn.addEventListener("click", () => {
+    messagesPopup.classList.remove("hidden");
+    conversationPopup && conversationPopup.classList.add("hidden");
+  });
+}
+
   if (openCommentsBtn && commentsPopup) {
   openCommentsBtn.addEventListener("click", () => {
     renderCommentsPopup();
