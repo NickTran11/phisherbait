@@ -619,6 +619,155 @@ function renderCreatorProfile() {
     }
   }
 
+function updateTasksBadge() {
+  if (!tasksTopBadge) return;
+  const remaining = Math.max(level2Tasks.length - answeredTaskIndexes.size, 0);
+  tasksTopBadge.textContent = remaining;
+}
+
+function openTasksPanel(index = currentTaskIndex) {
+  if (!tasksOverlay) return;
+  currentTaskIndex = Math.max(0, Math.min(index, level2Tasks.length - 1));
+  renderTaskQuestion();
+  tasksOverlay.classList.remove("hidden");
+  tasksOverlay.setAttribute("aria-hidden", "false");
+}
+
+function closeTasksPanel() {
+  if (!tasksOverlay) return;
+  tasksOverlay.classList.add("hidden");
+  tasksOverlay.setAttribute("aria-hidden", "true");
+}
+
+function renderTaskQuestion() {
+  if (!taskQuestionText || !taskOptions || !taskQuestionNumber || !tasksProgressText || !tasksProgressFill) return;
+
+  const task = level2Tasks[currentTaskIndex];
+  const answered = answeredTaskIndexes.has(currentTaskIndex);
+
+  taskQuestionNumber.textContent = `Question ${currentTaskIndex + 1} / ${level2Tasks.length}`;
+  tasksProgressText.textContent = `Question ${currentTaskIndex + 1} of ${level2Tasks.length}`;
+  tasksProgressFill.style.width = `${((currentTaskIndex + 1) / level2Tasks.length) * 100}%`;
+
+  taskQuestionText.textContent = task.question;
+
+  if (task.hint && task.hint.trim()) {
+    revealTaskHintBtn.classList.remove("hidden");
+    revealTaskHintBtn.disabled = false;
+    revealTaskHintBtn.textContent = "Reveal Hint";
+  } else {
+    revealTaskHintBtn.classList.add("hidden");
+  }
+
+  taskHintBox.classList.add("hidden");
+  taskHintBox.textContent = task.hint || "";
+
+  taskFeedback.classList.add("hidden");
+  taskFeedback.classList.remove("correct", "wrong");
+  taskFeedback.textContent = "";
+
+  nextTaskBtn.classList.add("hidden");
+  taskOptions.innerHTML = "";
+
+  task.options.forEach((optionText, index) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "task-option-btn";
+    btn.textContent = optionText;
+    btn.addEventListener("click", () => handleTaskAnswer(index));
+    taskOptions.appendChild(btn);
+  });
+
+  if (answered) {
+    lockTaskOptions();
+  }
+
+  updateTasksBadge();
+}
+
+function lockTaskOptions() {
+  taskOptions.querySelectorAll(".task-option-btn").forEach(btn => {
+    btn.classList.add("is-disabled");
+    btn.disabled = true;
+  });
+}
+
+function handleTaskAnswer(selectedIndex) {
+  const task = level2Tasks[currentTaskIndex];
+  const optionButtons = [...taskOptions.querySelectorAll(".task-option-btn")];
+  const isCorrect = selectedIndex === task.correctIndex;
+
+  optionButtons.forEach((btn, index) => {
+    btn.disabled = true;
+    btn.classList.add("is-disabled");
+
+    if (index === task.correctIndex) {
+      btn.classList.add("is-correct");
+    }
+
+    if (index === selectedIndex && index !== task.correctIndex) {
+      btn.classList.add("is-wrong");
+    }
+  });
+
+  taskFeedback.classList.remove("hidden");
+  taskFeedback.classList.remove("correct", "wrong");
+  taskFeedback.classList.add(isCorrect ? "correct" : "wrong");
+  taskFeedback.textContent = `${isCorrect ? "Correct ✅" : "Incorrect ❌"} ${task.feedback}`;
+
+  answeredTaskIndexes.add(currentTaskIndex);
+  updateTasksBadge();
+
+  if (currentTaskIndex < level2Tasks.length - 1) {
+    nextTaskBtn.classList.remove("hidden");
+    nextTaskBtn.textContent = "Next Question";
+  } else {
+    nextTaskBtn.classList.remove("hidden");
+    nextTaskBtn.textContent = "Finish Tasks";
+  }
+}
+
+function goToNextTask() {
+  if (currentTaskIndex < level2Tasks.length - 1) {
+    currentTaskIndex += 1;
+    renderTaskQuestion();
+  } else {
+    closeTasksPanel();
+  }
+}
+
+function bindTaskButtons() {
+  if (tasksLauncherBtn) {
+    tasksLauncherBtn.addEventListener("click", () => {
+      openTasksPanel(currentTaskIndex);
+    });
+  }
+
+  if (closeTasksBtn) {
+    closeTasksBtn.addEventListener("click", closeTasksPanel);
+  }
+
+  if (exitTasksBtn) {
+    exitTasksBtn.addEventListener("click", closeTasksPanel);
+  }
+
+  if (nextTaskBtn) {
+    nextTaskBtn.addEventListener("click", goToNextTask);
+  }
+
+  if (revealTaskHintBtn) {
+    revealTaskHintBtn.addEventListener("click", () => {
+      const task = level2Tasks[currentTaskIndex];
+      if (!task.hint || !task.hint.trim()) return;
+
+      taskHintBox.textContent = `Hint: ${task.hint}`;
+      taskHintBox.classList.remove("hidden");
+      revealTaskHintBtn.disabled = true;
+      revealTaskHintBtn.textContent = "Hint Revealed";
+    });
+  }
+}
+  
   function bindScenarioButtons() {
     if (beginMissionBtn && scenarioOverlay) {
       beginMissionBtn.addEventListener("click", () => {
@@ -1056,3 +1205,5 @@ function escapeHtml(str) {
     .replaceAll("'", "&#39;");
 }
 });
+
+window.openTasksPanel = openTasksPanel;
