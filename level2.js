@@ -83,6 +83,21 @@ const conversationThread = document.getElementById("conversationThread");
   const verificationResult = document.getElementById("verificationResult");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
 
+const tasksLauncherBtn = document.getElementById("tasksLauncherBtn");
+const tasksOverlay = document.getElementById("tasksOverlay");
+const closeTasksBtn = document.getElementById("closeTasksBtn");
+const exitTasksBtn = document.getElementById("exitTasksBtn");
+const nextTaskBtn = document.getElementById("nextTaskBtn");
+const revealTaskHintBtn = document.getElementById("revealTaskHintBtn");
+const taskQuestionNumber = document.getElementById("taskQuestionNumber");
+const taskQuestionText = document.getElementById("taskQuestionText");
+const taskHintBox = document.getElementById("taskHintBox");
+const taskOptions = document.getElementById("taskOptions");
+const taskFeedback = document.getElementById("taskFeedback");
+const tasksProgressText = document.getElementById("tasksProgressText");
+const tasksProgressFill = document.getElementById("tasksProgressFill");
+const tasksTopBadge = document.getElementById("tasksTopBadge");
+  
   const clueSet = new Set();
   let activeMessage = data.messages[0];
 let activeReelIndex = 0;
