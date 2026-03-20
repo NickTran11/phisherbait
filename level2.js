@@ -59,6 +59,7 @@ const decisionFeedback = document.getElementById("decisionFeedback");
 const clueLog = document.getElementById("clueLog");
 
 const messagesBubble = document.getElementById("messagesBubble");
+const openMessagesFromRailBtn = document.getElementById("openMessagesFromRailBtn");
 const messagesPopup = document.getElementById("messagesPopup");
 
 const commentsPopup = document.getElementById("commentsPopup");
