@@ -805,6 +805,251 @@ html, body{
 }
 
 /* =========================
+   TASKS POPUP
+========================= */
+
+.tasks-overlay{
+  position:fixed;
+  inset:0;
+  z-index:10020;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  background:rgba(15, 23, 42, 0.62);
+  backdrop-filter:blur(6px);
+}
+
+.tasks-card{
+  width:min(760px, 96vw);
+  max-height:min(88vh, 900px);
+  overflow:auto;
+  background:linear-gradient(180deg, #ffffff, #f8fafc);
+  border:1px solid #e5e7eb;
+  border-radius:24px;
+  box-shadow:0 30px 80px rgba(15, 23, 42, 0.28);
+}
+
+.tasks-card-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  padding:24px 24px 16px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.tasks-kicker{
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:#6366f1;
+  margin-bottom:6px;
+}
+
+.tasks-title{
+  margin:0;
+  font-size:28px;
+  line-height:1.15;
+}
+
+.tasks-progress-text{
+  margin-top:8px;
+  color:#6b7280;
+  font-size:14px;
+  font-weight:600;
+}
+
+.tasks-header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.tasks-header-btn{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:999px;
+  background:#f3f4f6;
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+}
+
+.tasks-progress-bar{
+  height:10px;
+  margin:0 24px;
+  border-radius:999px;
+  background:#e5e7eb;
+  overflow:hidden;
+}
+
+.tasks-progress-fill{
+  height:100%;
+  width:7.69%;
+  border-radius:999px;
+  background:linear-gradient(90deg, #8b5cf6, #06b6d4);
+  transition:width 0.25s ease;
+}
+
+.tasks-body{
+  padding:24px;
+}
+
+.tasks-intro-note{
+  padding:14px 16px;
+  border-radius:16px;
+  background:#eef2ff;
+  color:#312e81;
+  font-size:14px;
+  line-height:1.55;
+  margin-bottom:20px;
+}
+
+.task-question-shell{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 10px 26px rgba(0,0,0,0.06);
+}
+
+.task-question-number{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#111827;
+  color:#fff;
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:16px;
+}
+
+.task-question-text{
+  font-size:22px;
+  line-height:1.4;
+  font-weight:800;
+  margin-bottom:18px;
+  color:#111827;
+}
+
+.task-hint-wrap{
+  margin-bottom:18px;
+}
+
+.task-hint-btn{
+  border:none;
+  background:#f59e0b;
+  color:#fff;
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:800;
+  box-shadow:0 10px 24px rgba(245, 158, 11, 0.22);
+}
+
+.task-hint-box{
+  margin-top:12px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:#fff7ed;
+  border:1px solid #fdba74;
+  color:#9a3412;
+  font-weight:600;
+  line-height:1.55;
+}
+
+.task-options{
+  display:grid;
+  gap:12px;
+}
+
+.task-option-btn{
+  width:100%;
+  border:1px solid #d1d5db;
+  background:#fff;
+  border-radius:16px;
+  padding:14px 16px;
+  text-align:left;
+  cursor:pointer;
+  font-size:15px;
+  line-height:1.5;
+  transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.task-option-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.06);
+}
+
+.task-option-btn.is-correct{
+  border-color:#16a34a;
+  background:#f0fdf4;
+}
+
+.task-option-btn.is-wrong{
+  border-color:#dc2626;
+  background:#fef2f2;
+}
+
+.task-option-btn.is-disabled{
+  opacity:0.72;
+  cursor:not-allowed;
+}
+
+.task-feedback{
+  margin-top:18px;
+  padding:16px 18px;
+  border-radius:16px;
+  font-size:15px;
+  line-height:1.6;
+  font-weight:600;
+}
+
+.task-feedback.correct{
+  background:#ecfdf5;
+  border:1px solid #86efac;
+  color:#166534;
+}
+
+.task-feedback.wrong{
+  background:#fef2f2;
+  border:1px solid #fca5a5;
+  color:#991b1b;
+}
+
+.tasks-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:0 24px 24px;
+}
+
+.tasks-footer-btn{
+  border:none;
+  border-radius:14px;
+  padding:13px 18px;
+  cursor:pointer;
+  font-weight:800;
+  font-size:15px;
+}
+
+.tasks-footer-btn.secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.tasks-footer-btn.primary{
+  background:linear-gradient(135deg, #7c3aed, #2563eb);
+  color:#fff;
+  box-shadow:0 12px 28px rgba(59, 130, 246, 0.25);
+}
+
+/* =========================
    MESSAGE BUBBLE + POPUPS
 ========================= */
 
