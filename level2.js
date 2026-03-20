@@ -558,9 +558,9 @@ const conversationData = {
     name: "Best Friend",
     avatar: "BFF",
     messages: [
-      { who: "them", text: "Yooo heard of this guy Thorus viral recently?" },
+      { who: "them", text: "Yooo heard of this guy Thorus viral recently on the news?" },
       { who: "me", text: "Huh who?" },
-      { who: "them", text: "Lol you will find later" },
+      { who: "them", text: "Lol you will find out soon, he's popping up right now!" },
       { who: "them", text: "How's your FC Barcel dream going?" },
       { who: "me", text: "Still tryna figure out way to apply, hope they reply to me soon" },
       { who: "them", text: "I got a chat recently from someone named \"I'm just a girl\" tryna rizz me up recently lmao" },
