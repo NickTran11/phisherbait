@@ -450,27 +450,85 @@
 
   <div class="creator-profile-grid" id="creatorProfileGrid"></div>
 </div>
-  
-  <script>
-    function beginLevel2Mission() {
-      const overlay = document.getElementById("scenarioOverlay");
-      if (!overlay) return;
-      overlay.style.opacity = "0";
-      overlay.style.transition = "opacity 0.25s ease";
-      setTimeout(() => {
-        overlay.style.display = "none";
-        overlay.setAttribute("aria-hidden", "true");
-      }, 250);
-    }
 
-    function openLevel2Dossier() {
-      const overlay = document.getElementById("scenarioOverlay");
-      if (!overlay) return;
-      overlay.style.display = "grid";
-      overlay.style.opacity = "1";
-      overlay.setAttribute("aria-hidden", "false");
+<div class="tasks-overlay hidden" id="tasksOverlay" aria-hidden="true">
+  <div class="tasks-card">
+    <div class="tasks-card-header">
+      <div>
+        <div class="tasks-kicker">Mission Tasks</div>
+        <h2 class="tasks-title">Find the clues and answer the questions</h2>
+        <div class="tasks-progress-text" id="tasksProgressText">Question 1 of 13</div>
+      </div>
+
+      <div class="tasks-header-actions">
+        <button type="button" class="tasks-header-btn" id="closeTasksBtn">✕</button>
+      </div>
+    </div>
+
+    <div class="tasks-progress-bar">
+      <div class="tasks-progress-fill" id="tasksProgressFill"></div>
+    </div>
+
+    <div class="tasks-body">
+      <div class="tasks-intro-note">
+        Here is your task: Find the clues and answer these questions below. Before doing the questions, go explore the entire game level 2 first, you may find hidden clues.
+      </div>
+
+      <div class="task-question-shell">
+        <div class="task-question-number" id="taskQuestionNumber">Question 1 / 13</div>
+        <div class="task-question-text" id="taskQuestionText"></div>
+
+        <div class="task-hint-wrap">
+          <button type="button" class="task-hint-btn" id="revealTaskHintBtn">Reveal Hint</button>
+          <div class="task-hint-box hidden" id="taskHintBox"></div>
+        </div>
+
+        <div class="task-options" id="taskOptions"></div>
+
+        <div class="task-feedback hidden" id="taskFeedback"></div>
+      </div>
+    </div>
+
+    <div class="tasks-footer">
+      <button type="button" class="tasks-footer-btn secondary" id="exitTasksBtn">Back to Feed</button>
+      <button type="button" class="tasks-footer-btn primary hidden" id="nextTaskBtn">Next Question</button>
+    </div>
+  </div>
+</div>
+  
+<script>
+  function hideLevel2Dossier() {
+    const overlay = document.getElementById("scenarioOverlay");
+    if (!overlay) return;
+
+    overlay.style.opacity = "0";
+    overlay.style.transition = "opacity 0.25s ease";
+
+    setTimeout(() => {
+      overlay.style.display = "none";
+      overlay.setAttribute("aria-hidden", "true");
+    }, 250);
+  }
+
+  function beginLevel2Mission() {
+    hideLevel2Dossier();
+
+    if (typeof window.openTasksPanel === "function") {
+      setTimeout(() => {
+        window.openTasksPanel(0);
+      }, 260);
     }
-  </script>
+  }
+
+  function openLevel2Dossier() {
+    const overlay = document.getElementById("scenarioOverlay");
+    if (!overlay) return;
+
+    overlay.style.display = "grid";
+    overlay.style.opacity = "1";
+    overlay.setAttribute("aria-hidden", "false");
+  }
+</script>
 
   <script src="./fishCoach.js"></script>
   <script src="./level2Data.js"></script>
