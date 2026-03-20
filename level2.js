@@ -357,6 +357,17 @@ const level2Tasks = [
     correctIndex: 1,
     feedback: "You don’t always know who is behind a message. Accounts can be hacked. For important matters, verify through a call, meet in-person or another method."
   }
+  {
+  type: "counter",
+  question: "Be honest, how many times have you got baited?",
+  hint: "",
+  min: 0,
+  max: 99,
+  startValue: 0,
+  feedbackZero: "Perfect! You are genius",
+  feedbackLow: "Uh oh! One bait is enough to harm your device, be more cautious!",
+  feedbackHigh: "Oh no! Check and verify all sources before enter any link, your device needs to be safe!"
+}
 ];
 
 let currentTaskIndex = 0;
