@@ -1989,6 +1989,10 @@ html, body{
   width:90px;
   height:90px;
   object-fit:contain;
+
+background: transparent !important;
+mix-blend-mode: multiply;
+  
   opacity:0;
   transform:scale(0.5) translateY(20px);
   animation:starPop 0.6s ease forwards;
