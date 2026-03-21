@@ -867,7 +867,7 @@ function bindTaskButtons() {
   }
 
 if (nextTaskBtn) {
-  nextTaskBtn.onclick = goToNextTask;
+  nextTaskBtn.addEventListener("click", goToNextTask);
 }
 
   if (revealTaskHintBtn) {
