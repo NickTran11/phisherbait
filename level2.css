@@ -1986,8 +1986,8 @@ html, body{
 }
 
 .result-star-img{
-  width:90px;
-  height:90px;
+  width:120px;
+  height:120px;
   object-fit:contain;
 
 background: transparent !important;
@@ -2004,29 +2004,36 @@ mix-blend-mode: multiply;
 
 /* 📝 TEXT */
 .stars-final-message{
-  font-size:26px;
+  font-size:34px;
   font-weight:900;
+  line-height:1.25;
 }
 
 /* 🔘 BUTTONS */
 .stars-final-buttons{
   display:flex;
-  gap:16px;
+  gap:20px;
   justify-content:center;
   align-items:center;
 flex-wrap:wrap;
 }
 
 .stars-action-btn{
-  min-width:200px;
-  padding:14px;
-  border-radius:16px;
+  min-width:240px;
+  min-height:60px;              /* 👈 keeps buttons same height */
+  padding:18px 22px;
+  border-radius:18px;
   border:none;
-  font-size:18px;
+  font-size:24px;
   font-weight:800;
   cursor:pointer;
   background:#fff;
   box-shadow:0 8px 18px rgba(0,0,0,0.15);
+
+  display:flex;                 /* 👇 center text perfectly */
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
 
 .stars-action-btn.primary{
@@ -2039,4 +2046,30 @@ flex-wrap:wrap;
   0%{opacity:0; transform:scale(0.4) translateY(30px);}
   60%{opacity:1; transform:scale(1.2);}
   100%{opacity:1; transform:scale(1);}
+}
+
+/* ===== Stars-only result layout ===== */
+.stars-only-body{
+  padding-top: 6px !important;
+}
+
+.stars-only-shell{
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding-top: 0 !important;
+  margin-top: -10px !important;
+}
+
+.stars-only-shell .task-question-number,
+.stars-only-shell .task-question-text{
+  display: none !important;
+}
+
+.stars-only-shell #taskOptions{
+  margin-top: 0 !important;
+}
+
+.stars-final-screen{
+  margin-top: -10px !important;
 }
