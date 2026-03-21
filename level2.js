@@ -773,6 +773,8 @@ function handleTaskAnswer(selectedIndex) {
   taskFeedback.classList.add(isCorrect ? "correct" : "wrong");
   taskFeedback.textContent = `${isCorrect ? "Correct ✅" : "Incorrect ❌"} ${task.feedback}`;
 
+taskAnswers[currentTaskIndex] = selectedValue;
+  
   answeredTaskIndexes.add(currentTaskIndex);
   updateTasksBadge();
 
@@ -808,6 +810,8 @@ function handleCounterTaskAnswer(selectedValue) {
 
   taskFeedback.textContent = feedbackText;
 
+taskAnswers[currentTaskIndex] = selectedValue;
+  
   answeredTaskIndexes.add(currentTaskIndex);
   updateTasksBadge();
 
