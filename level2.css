@@ -1932,3 +1932,105 @@ html, body{
     transform: scale(1);
   }
 }
+
+/* ===== STARS FINAL SCREEN ===== */
+.stars-final-screen{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:24px 0 8px;
+}
+
+.stars-final-wrap{
+  width:100%;
+  max-width:680px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  padding:32px 24px;
+  border-radius:28px;
+  text-align:center;
+  box-shadow:0 18px 40px rgba(15,23,42,0.16);
+}
+
+/* 🎨 THEMES */
+.stars-theme-0 .stars-final-wrap{
+  background:linear-gradient(180deg,#f8fafc 0%,#e5e7eb 100%);
+  border:2px solid #cbd5e1;
+}
+
+.stars-theme-1 .stars-final-wrap{
+  background:linear-gradient(180deg,#fff7ed 0%,#ffedd5 100%);
+  border:2px solid #fdba74;
+}
+
+.stars-theme-2 .stars-final-wrap{
+  background:linear-gradient(180deg,#eff6ff 0%,#dbeafe 100%);
+  border:2px solid #60a5fa;
+}
+
+.stars-theme-3 .stars-final-wrap{
+  background:linear-gradient(180deg,#fefce8 0%,#fde68a 100%);
+  border:2px solid #facc15;
+}
+
+/* ⭐ STARS */
+.stars-final-row{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+}
+
+.result-star-img{
+  width:90px;
+  height:90px;
+  object-fit:contain;
+  opacity:0;
+  transform:scale(0.5) translateY(20px);
+  animation:starPop 0.6s ease forwards;
+}
+
+.result-star-img:nth-child(1){ animation-delay:0.05s; }
+.result-star-img:nth-child(2){ animation-delay:0.18s; }
+.result-star-img:nth-child(3){ animation-delay:0.31s; }
+
+/* 📝 TEXT */
+.stars-final-message{
+  font-size:26px;
+  font-weight:900;
+}
+
+/* 🔘 BUTTONS */
+.stars-final-buttons{
+  display:flex;
+  gap:16px;
+  justify-content:center;
+}
+
+.stars-action-btn{
+  min-width:200px;
+  padding:14px;
+  border-radius:16px;
+  border:none;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+  background:#fff;
+  box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+.stars-action-btn.primary{
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+  color:#fff;
+}
+
+/* ✨ ANIMATION */
+@keyframes starPop{
+  0%{opacity:0; transform:scale(0.4) translateY(30px);}
+  60%{opacity:1; transform:scale(1.2);}
+  100%{opacity:1; transform:scale(1);}
+}
