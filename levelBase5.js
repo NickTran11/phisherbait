@@ -62,6 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function finishCurrentMessage() {
   completedMessages.add(activeMessage.id);
 
+  renderMessageList();
+
   if (allMessagesCompleted() && !levelCompleted) {
     showLevelCompleteCoach();
   }
@@ -84,9 +86,15 @@ function showLevelCompleteCoach() {
 
   hideProofBox();
 
+   // Reset any currently open coach popup first
+  if (window.closeFishCoachCustom) {
+    window.closeFishCoachCustom();
+  }
+
   const title = "Level Complete!";
-  const bubble = "Nice work.\nYou cleared this level.";
+  const bubble = "";
   const lessons = [
+    "Nice work. You cleared this level.",
     "Spear phishing uses real context to feel believable.",
     "Clone phishing imitates trusted messages or services.",
     "Always verify the sender, domain, and destination before acting.",
@@ -94,13 +102,29 @@ function showLevelCompleteCoach() {
     "The safest habit is to slow down and verify through official channels."
   ];
 
+  setTimeout(() => {
+
   if (window.showFishCoachCustom) {
   window.showFishCoachCustom({
     title,
-    bubbleText: bubble,
+    bubble: "",
     lessons
   });
 }
+
+let forceRuns = 0;
+const forceBubbleText = setInterval(() => {
+  const fishTextEl = document.getElementById("fishText");
+  if (fishTextEl) {
+    fishTextEl.textContent = bubble;
+    fishTextEl.style.whiteSpace = "pre-line";
+  }
+
+  forceRuns += 1;
+  if (forceRuns >= 8) {
+    clearInterval(forceBubbleText);
+  }
+}, 20);
 
   const proofBox = document.getElementById("proofBox");
   const verificationResult = document.getElementById("verificationResult");
@@ -144,6 +168,7 @@ verificationPrompt.textContent =
       window.location.href = "./levelMap.html";
     });
   }
+}, 50);
 }
 
   function init() {
@@ -211,18 +236,24 @@ verificationPrompt.textContent =
     messageList.innerHTML = "";
 
     data.messages.forEach((msg, index) => {
+
+      const isResolved = completedMessages.has(msg.id);
+
       const item = document.createElement("div");
-      item.className = "message-item" + (index === 0 ? " active" : "");
+      item.className = "message-item" + (msg.id === activeMessage.id ? " active" : "");
       item.dataset.id = msg.id;
 
-      item.innerHTML = `
-        <div class="message-sender">${escapeHtml(msg.sender)}</div>
-        <div class="message-time">${escapeHtml(shortTime(msg.time))}</div>
-        <div class="message-subject">${escapeHtml(msg.previewTop)}</div>
-        <div class="message-preview ${msg.external ? "external-preview" : ""}">
-          ${escapeHtml(msg.previewBottom)}
-        </div>
-      `;
+item.innerHTML = `
+  <div class="message-sender">
+    ${escapeHtml(msg.sender)}
+    ${isResolved ? '<span class="resolved-badge">✓</span>' : ""}
+  </div>
+  <div class="message-time">${escapeHtml(shortTime(msg.time))}</div>
+  <div class="message-subject">${escapeHtml(msg.previewTop)}</div>
+  <div class="message-preview ${msg.external ? "external-preview" : ""}">
+    ${escapeHtml(msg.previewBottom)}
+  </div>
+`;
 
       item.addEventListener("click", () => {
         document.querySelectorAll(".message-item").forEach(el => el.classList.remove("active"));
@@ -249,7 +280,9 @@ verificationPrompt.textContent =
     if (toEmailEl) toEmailEl.textContent = msg.toEmail;
     if (emailTimeEl) emailTimeEl.textContent = msg.time;
     if (senderAvatarEl) senderAvatarEl.textContent = msg.senderInitials;
-    if (accountLinkEl) accountLinkEl.setAttribute("title", msg.inspector.linkPreview);
+    if (accountLinkEl && msg.inspector && msg.inspector.linkPreview) {
+  accountLinkEl.setAttribute("title", msg.inspector.linkPreview);
+}
 
     // NEW: Render email body if provided
   if (emailBodyEl && msg.bodyHtml) {
