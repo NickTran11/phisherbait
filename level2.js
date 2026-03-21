@@ -1107,12 +1107,12 @@ if (tasksBody) {
   const tryAgainBtn = document.getElementById("tryAgainBtn");
   const backToLevelMapBtn = document.getElementById("backToLevelMapBtn");
 
-  if (tryAgainBtn) {
-    tryAgainBtn.addEventListener("click", () => {
-      resetLevel2TasksProgress();
-      openTasksPanel(0);
-    });
-  }
+if (tryAgainBtn) {
+  tryAgainBtn.onclick = () => {
+    resetLevel2TasksProgress();
+    openTasksPanel(0);
+  };
+}
 
   if (backToLevelMapBtn) {
     backToLevelMapBtn.addEventListener("click", () => {
