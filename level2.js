@@ -878,8 +878,8 @@ function calculateFinalScore() {
   const q14 = Number(taskAnswers[13] ?? 0);
 
   if (q14 === 0) score += 3;
-  else if (q14 >= 1 && q14 <= 3) score += 2;
-  else score += 3;
+  else if (q14 >= 1 && q14 <= 3) score += 1;
+  else score += 0;
 
   finalScore = score;
   return score;
@@ -888,9 +888,9 @@ function calculateFinalScore() {
 function getQuestion14ScoreText() {
   const q14 = Number(taskAnswers[13] ?? 0);
 
-  if (q14 === 0) return "Q14: 0 → 3 points";
-  if (q14 >= 1 && q14 <= 3) return "Q14: 1–3 → 2 points";
-  return "Q14: 4+ → 3 points";
+  if (q14 === 0) return "Q14: 0 bait → 3 points";
+  if (q14 >= 1 && q14 <= 3) return "Q14: 1–3 bait → 1 point";
+  return "Q14: 4 or more baits → 0 point";
 }
 
 function getStarsFromScore(score) {
@@ -928,25 +928,74 @@ function renderScoreSummary() {
 function renderStarsScreen() {
   const stars = getStarsFromScore(finalScore);
 
-  let html = "";
+  let starsHtml = "";
   for (let i = 0; i < 3; i++) {
-    html += `<span class="result-star ${i < stars ? "filled" : ""}">★</span>`;
+    starsHtml += `
+      <img
+        class="result-star-img ${i < stars ? "filled" : "empty"}"
+        src="${i < stars ? "./star-filled.png" : "./star-empty.png"}"
+        alt="star"
+      />
+    `;
+  }
+
+  let message = "";
+  let themeClass = "";
+
+  if (stars === 0) {
+    message = "0 star - We Learn New Things Everyday";
+    themeClass = "stars-theme-0";
+  } else if (stars === 1) {
+    message = "1 star - Good Job!";
+    themeClass = "stars-theme-1";
+  } else if (stars === 2) {
+    message = "2 stars - Excellent!";
+    themeClass = "stars-theme-2";
+  } else {
+    message = "3 stars - Perfect!";
+    themeClass = "stars-theme-3";
   }
 
   taskQuestionNumber.textContent = "Stars";
-  taskQuestionText.textContent = "Your result";
+  taskQuestionText.textContent = "Mission Result";
+
+  taskHintBox.classList.add("hidden");
+  taskFeedback.classList.add("hidden");
 
   taskOptions.innerHTML = `
-    <div class="stars-screen stars-screen-enter">
-      <div class="stars-wrap">${html}</div>
-      <div class="stars-score">${finalScore} / 16</div>
+    <div class="stars-final-screen ${themeClass}">
+      <div class="stars-final-wrap stars-screen-enter">
+        <div class="stars-final-row">
+          ${starsHtml}
+        </div>
+
+        <div class="stars-final-message">${message}</div>
+
+        <div class="stars-final-buttons">
+          <button type="button" class="stars-action-btn" id="tryAgainBtn">Try Again</button>
+          <button type="button" class="stars-action-btn primary" id="backToLevelMapBtn">Go Back to Level Map</button>
+        </div>
+      </div>
     </div>
   `;
 
-  nextTaskBtn.textContent = "Go Back to Level Map";
-  nextTaskBtn.onclick = () => {
-    window.location.href = "levelMap.html";
-  };
+  nextTaskBtn.classList.add("hidden");
+
+  const tryAgainBtn = document.getElementById("tryAgainBtn");
+  const backToLevelMapBtn = document.getElementById("backToLevelMapBtn");
+
+  if (tryAgainBtn) {
+    tryAgainBtn.addEventListener("click", () => {
+      resetLevel2TasksProgress();
+      openTasksPanel(0);
+    });
+  }
+
+  if (backToLevelMapBtn) {
+    backToLevelMapBtn.addEventListener("click", () => {
+      window.location.href = "https://nicktran11.github.io/masterbait-3/levelMap.html";
+    });
+  }
 }
 
 function beginLevel2Mission() {
@@ -959,6 +1008,22 @@ function openLevel2Dossier() {
   if (!scenarioOverlay) return;
   scenarioOverlay.classList.remove("hidden");
   scenarioOverlay.setAttribute("aria-hidden", "false");
+}
+
+function resetLevel2TasksProgress() {
+  currentTaskIndex = 0;
+  answeredTaskIndexes.clear();
+  taskAnswers = new Array(level2Tasks.length).fill(null);
+  finalScore = 0;
+
+  level2Tasks.forEach((task) => {
+    if (task.type === "counter") {
+      task.currentValue = Number.isFinite(task.startValue) ? task.startValue : 0;
+    }
+  });
+
+  updateTasksBadge();
+  renderTaskQuestion();
 }
   
   function bindScenarioButtons() {
