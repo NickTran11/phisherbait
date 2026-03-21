@@ -374,6 +374,13 @@ const level2Tasks = [
 
 let currentTaskIndex = 0;
 const answeredTaskIndexes = new Set();
+
+function resetTaskProgress() {
+  taskAnswers = new Array(level2Tasks.length).fill(null);
+  currentTaskIndex = 0;
+  answeredTaskIndexes.clear();
+  finalScore = 0;
+}
   
   init();
 
