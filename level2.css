@@ -2073,3 +2073,7 @@ flex-wrap:wrap;
 .stars-final-screen{
   margin-top: -10px !important;
 }
+
+.task-question-shell{
+  display:none !important;
+}
