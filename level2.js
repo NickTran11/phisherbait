@@ -339,13 +339,13 @@ const level2Tasks = [
     feedback: "Messages from Best Friend suggest this account is just trolling. Reporting would be unnecessary. Blocking is the best option."
   },
   {
-    question: "Check message from Relationall. Should you collaborate with them?",
+    question: "Check message from Realationall. Should you collaborate with them?",
     hint: "Your choice 😄",
     options: [
       "a. Yes",
       "b. Yes"
     ],
-    correctIndex: 0,
+    correctIndex: [0,1],
     feedback: "This one is just for fun - it’s actually a real YouTube account."
   },
   {
