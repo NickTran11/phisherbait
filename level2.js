@@ -976,17 +976,25 @@ function renderStarsScreen() {
   taskHintBox.classList.add("hidden");
   taskFeedback.classList.add("hidden");
 
-  const tasksHeader = document.querySelector(".tasks-header");
-const tasksIntro = document.querySelector(".tasks-intro");
-const tasksProgress = document.querySelector(".tasks-progress");
+const tasksCardHeader = document.querySelector(".tasks-card-header");
+const tasksProgressBar = document.querySelector(".tasks-progress-bar");
+const tasksIntroNote = document.querySelector(".tasks-intro-note");
 const tasksFooter = document.querySelector(".tasks-footer");
-const backToFeedBtn = document.getElementById("exitTasksBtn");
+const taskQuestionShell = document.querySelector(".task-question-shell");
+const tasksBody = document.querySelector(".tasks-body");
 
-if (tasksHeader) tasksHeader.classList.add("hidden");
-if (tasksIntro) tasksIntro.classList.add("hidden");
-if (tasksProgress) tasksProgress.classList.add("hidden");
+if (tasksCardHeader) tasksCardHeader.classList.add("hidden");
+if (tasksProgressBar) tasksProgressBar.classList.add("hidden");
+if (tasksIntroNote) tasksIntroNote.classList.add("hidden");
 if (tasksFooter) tasksFooter.classList.add("hidden");
-if (backToFeedBtn) backToFeedBtn.classList.add("hidden");
+
+if (taskQuestionShell) {
+  taskQuestionShell.classList.add("stars-only-shell");
+}
+
+if (tasksBody) {
+  tasksBody.classList.add("stars-only-body");
+}
 
   taskOptions.innerHTML = `
     <div class="stars-final-screen ${themeClass}">
