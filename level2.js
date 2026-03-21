@@ -864,6 +864,90 @@ function bindTaskButtons() {
     });
   }
 }
+
+function calculateFinalScore() {
+  let score = 0;
+
+  for (let i = 0; i < 13; i++) {
+    const task = level2Tasks[i];
+    if (taskAnswers[i] === task.correctIndex) {
+      score += 1;
+    }
+  }
+
+  const q14 = Number(taskAnswers[13] ?? 0);
+
+  if (q14 === 0) score += 3;
+  else if (q14 >= 1 && q14 <= 3) score += 2;
+  else score += 3;
+
+  finalScore = score;
+  return score;
+}
+
+function getQuestion14ScoreText() {
+  const q14 = Number(taskAnswers[13] ?? 0);
+
+  if (q14 === 0) return "Q14: 0 → 3 points";
+  if (q14 >= 1 && q14 <= 3) return "Q14: 1–3 → 2 points";
+  return "Q14: 4+ → 3 points";
+}
+
+function getStarsFromScore(score) {
+  if (score <= 3) return 0;
+  if (score <= 9) return 1;
+  if (score <= 15) return 2;
+  return 3;
+}
+
+function renderScoreSummary() {
+  const score = calculateFinalScore();
+
+  taskQuestionNumber.textContent = "Mission Complete";
+  taskQuestionText.textContent = `Your score: ${score} / 16`;
+
+  taskHintBox.classList.remove("hidden");
+  taskHintBox.innerHTML = `
+    ${level2Tasks.slice(0,13).map((t,i)=>{
+      return `Q${i+1}: ${taskAnswers[i] === t.correctIndex ? "Correct ✅" : "Wrong ❌"}`
+    }).join("<br>")}
+    <br><br>${getQuestion14ScoreText()}
+  `;
+
+  taskOptions.innerHTML = `
+    <div class="score-card score-card-enter">
+      <div class="score-big">${score}<span>/16</span></div>
+      <div class="score-sub">Mission complete</div>
+    </div>
+  `;
+
+  nextTaskBtn.textContent = "Next";
+  nextTaskBtn.onclick = renderStarsScreen;
+}
+
+function renderStarsScreen() {
+  const stars = getStarsFromScore(finalScore);
+
+  let html = "";
+  for (let i = 0; i < 3; i++) {
+    html += `<span class="result-star ${i < stars ? "filled" : ""}">★</span>`;
+  }
+
+  taskQuestionNumber.textContent = "Stars";
+  taskQuestionText.textContent = "Your result";
+
+  taskOptions.innerHTML = `
+    <div class="stars-screen stars-screen-enter">
+      <div class="stars-wrap">${html}</div>
+      <div class="stars-score">${finalScore} / 16</div>
+    </div>
+  `;
+
+  nextTaskBtn.textContent = "Go Back to Level Map";
+  nextTaskBtn.onclick = () => {
+    window.location.href = "levelMap.html";
+  };
+}
   
   function bindScenarioButtons() {
     if (beginMissionBtn && scenarioOverlay) {
