@@ -653,6 +653,17 @@ function closeTasksPanel() {
 }
 
 function renderTaskQuestion() {
+  const tasksHeader = document.querySelector(".tasks-header");
+const tasksIntro = document.querySelector(".tasks-intro");
+const tasksProgress = document.querySelector(".tasks-progress");
+const tasksFooter = document.querySelector(".tasks-footer");
+const backToFeedBtn = document.getElementById("exitTasksBtn");
+
+if (tasksHeader) tasksHeader.classList.remove("hidden");
+if (tasksIntro) tasksIntro.classList.remove("hidden");
+if (tasksProgress) tasksProgress.classList.remove("hidden");
+if (tasksFooter) tasksFooter.classList.remove("hidden");
+if (backToFeedBtn) backToFeedBtn.classList.remove("hidden");
   nextTaskBtn.onclick = null;
   if (!taskQuestionText || !taskOptions || !taskQuestionNumber || !tasksProgressText || !tasksProgressFill) return;
 
