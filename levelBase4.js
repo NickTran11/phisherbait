@@ -29,10 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailTimeEl = document.getElementById("emailTime");
   const readingSubjectEl = document.getElementById("readingSubject");
   const senderAvatarEl = document.getElementById("senderAvatar");
-  const accountLinkEl = document.getElementById("accountLink");
   const emailBodyEl = document.getElementById("emailBody");
-
-  const inspectorValues = document.querySelectorAll(".inspector-value");
 
   const proofBox = document.getElementById("proofBox");
   const verificationPrompt = document.getElementById("verificationPrompt");
@@ -41,12 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const verificationResult = document.getElementById("verificationResult");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
 
+  const inspectorValues = document.querySelectorAll(".inspector-value");
+
   const inboxFolder = document.getElementById("inboxFolder");
   const junkFolder = document.getElementById("junkFolder");
   const inboxCount = document.getElementById("inboxCount");
   const junkCount = document.getElementById("junkCount");
   const listTitle = document.getElementById("listTitle");
   const accountEmailLabel = document.getElementById("accountEmailLabel");
+  const mailboxInboxCount = document.getElementById("mailboxInboxCount");
 
   const clueSet = new Set();
   let currentFolder = "Inbox";
@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let revealedHintCount = 0;
   let retryCount = 0;
   let waitingForProof = false;
-  let selectedAction = null;
 
   init();
 
@@ -139,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (inboxCount) inboxCount.textContent = String(inboxMessages.length);
     if (junkCount) junkCount.textContent = String(junkMessages.length);
+    if (mailboxInboxCount) mailboxInboxCount.textContent = String(inboxMessages.length);
   }
 
   function renderFolder(folderName) {
@@ -203,12 +203,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (emailTimeEl) emailTimeEl.textContent = msg.time || "";
     if (senderAvatarEl) senderAvatarEl.textContent = msg.senderInitials || "??";
 
-    if (accountLinkEl && msg.inspector?.linkPreview) {
-      accountLinkEl.setAttribute("title", msg.inspector.linkPreview);
-      accountLinkEl.setAttribute("href", "#");
-      accountLinkEl.textContent = msg.linkText || "Open link";
-    }
-
     if (inspectorValues.length >= 3) {
       inspectorValues[0].textContent = msg.inspector?.returnPath || "";
       inspectorValues[1].textContent = msg.inspector?.replyTo || "";
@@ -244,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
     revealedHintCount = 0;
     retryCount = 0;
     waitingForProof = false;
-    selectedAction = null;
     clearDecisionFeedback();
     hideProofBox();
     if (window.closeFishCoachCustom) window.closeFishCoachCustom();
@@ -268,6 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ${unlocked ? escapeHtml(hint) : "Locked. Reveal this hint if you need more help."}
         </div>
       `;
+
       hintList.appendChild(card);
     });
 
@@ -314,8 +308,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleAction(action) {
-    selectedAction = action;
-
     const isCorrect = action === activeMessage.correctAction;
     const isPartial = action === activeMessage.partialAction;
 
