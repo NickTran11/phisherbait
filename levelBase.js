@@ -312,12 +312,17 @@ function handleAction(action) {
     const coachPayload = activeMessage.coach[mode];
     window.showFishCoachCustom(coachPayload);
 
-    if (window.setFishCoachCloseHandler) {
-      window.setFishCoachCloseHandler(() => {
-        if (waitingForProof) return;
-        window.location.href = "./levelMap.html";
-      });
+  if (window.setFishCoachCloseHandler) {
+  window.setFishCoachCloseHandler(() => {
+    if (waitingForProof) return;
+
+    if (window.closeFishCoachCustom) {
+      window.closeFishCoachCustom();
     }
+
+    showStarsOverlay(selectedAction);
+  });
+}
 
     if (withProof) {
       waitingForProof = true;
@@ -372,13 +377,14 @@ function handleAction(action) {
       setDecisionFeedback("good", "Excellent. You chose the safest action and identified the correct official website.");
 
       if (window.setFishCoachCloseHandler) {
-        window.setFishCoachCloseHandler(() => {
-          window.location.href = "./levelMap.html";
-        });
-      }
-
-      return;
+  window.setFishCoachCloseHandler(() => {
+    if (window.closeFishCoachCustom) {
+      window.closeFishCoachCustom();
     }
+
+    showStarsOverlay(selectedAction);
+  });
+}
 
     const guidanceList = activeMessage.verification.retryGuidance || [];
     const guidance = guidanceList[Math.min(retryCount, guidanceList.length - 1)] || "Try again.";
