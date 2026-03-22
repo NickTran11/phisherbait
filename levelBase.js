@@ -395,11 +395,11 @@ function handleAction(action) {
   }
 
   function setDecisionFeedback(type, text) {
-    if (!decisionFeedback) return;
-    decisionFeedback.className = `decision-feedback ${type}`;
-    decisionFeedback.textContent = text;
-    decisionFeedback.classList.remove("hidden");
-  }
+  if (!decisionFeedback) return;
+  decisionFeedback.className = `decision-feedback ${type}`;
+  decisionFeedback.textContent = text;
+  decisionFeedback.classList.remove("hidden");
+}
 
   function clearDecisionFeedback() {
     if (!decisionFeedback) return;
