@@ -220,6 +220,53 @@ const starsContinueBtn = document.getElementById("starsContinueBtn");
     });
   }
 
+function getActionStars(action) {
+  if (action === "report") return 3;
+  if (action === "callit") return 2;
+  if (action === "reply") return 1;
+  return 0; // click or anything else
+}
+
+function getStarsMessage(stars) {
+  if (stars === 3) return "Excellent job. You chose the safest action and earned 3 stars.";
+  if (stars === 2) return "Good job. Verifying officially was safer, so you earned 2 stars.";
+  if (stars === 1) return "Replying was not the safest move. You earned 1 star.";
+  return "That was risky. Clicking the link earns 0 stars.";
+}
+
+function hideStarsOverlay() {
+  if (!starsOverlay) return;
+  starsOverlay.classList.add("hidden");
+  starsOverlay.setAttribute("aria-hidden", "true");
+}
+
+function showStarsOverlay(action = selectedAction) {
+  if (!starsOverlay || !starsRow || !starsText) {
+    window.location.href = "./levelMap.html";
+    return;
+  }
+
+  const stars = getActionStars(action);
+
+  starsRow.innerHTML = Array.from({ length: 3 }, (_, i) => {
+    const src = i < stars ? "./star-filled.png" : "./star-empty.png";
+    const alt = i < stars ? "Filled star" : "Empty star";
+    return `<img src="${src}" alt="${alt}" class="star-result-icon">`;
+  }).join("");
+
+  starsText.textContent = getStarsMessage(stars);
+
+  starsOverlay.classList.remove("hidden");
+  starsOverlay.setAttribute("aria-hidden", "false");
+}
+
+if (starsContinueBtn) {
+  starsContinueBtn.addEventListener("click", () => {
+    hideStarsOverlay();
+    window.location.href = "./levelMap.html";
+  });
+}
+  
   function bindProof() {
     if (verifySubmitBtn) {
       verifySubmitBtn.addEventListener("click", submitVerificationAnswer);
