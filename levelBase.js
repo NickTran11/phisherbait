@@ -218,6 +218,12 @@ const starsContinueBtn = document.getElementById("starsContinueBtn");
         handleAction(btn.dataset.action);
       });
     });
+
+    if (starsContinueBtn) {
+  starsContinueBtn.addEventListener("click", () => {
+    window.location.href = "https://nicktran11.github.io/masterbait-3/levelMap.html";
+  });
+}
   }
 
 function getActionStars(action) {
