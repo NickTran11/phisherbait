@@ -259,13 +259,6 @@ function showStarsOverlay(action = selectedAction) {
   starsOverlay.classList.remove("hidden");
   starsOverlay.setAttribute("aria-hidden", "false");
 }
-
-if (starsContinueBtn) {
-  starsContinueBtn.addEventListener("click", () => {
-    hideStarsOverlay();
-    window.location.href = "./levelMap.html";
-  });
-}
   
   function bindProof() {
     if (verifySubmitBtn) {
