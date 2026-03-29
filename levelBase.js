@@ -47,11 +47,21 @@ const starsContinueBtn = document.getElementById("starsContinueBtn");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
 
   const clueSet = new Set();
-  let activeMessage = data.messages[0];
-  let revealedHintCount = 0;
-  let retryCount = 0;
-  let waitingForProof = false;
-  let selectedAction = null;
+let activeMessage = data.messages[0];
+let revealedHintCount = 0;
+let retryCount = 0;
+let waitingForProof = false;
+let selectedAction = null;
+
+let saveBestLevelScoreFn = null;
+
+import("./scoreService.js")
+  .then((module) => {
+    saveBestLevelScoreFn = module.saveBestLevelScore;
+  })
+  .catch((error) => {
+    console.error("Failed to load scoreService.js:", error);
+  });
 
   function init() {
     renderScenario();
