@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAhUzDkvbcfp751T9hgvbzN2ZaAOZOxDG0",
@@ -12,11 +13,13 @@ const firebaseConfig = {
 
 let app;
 let auth;
+let db;
 
 if (firebaseConfig.apiKey) {
   try {
     app = initializeApp(firebaseConfig);
     auth = getAuth(app);
+    db = getFirestore(app);
   } catch (error) {
     console.error("Firebase initialization failed:", error);
   }
@@ -24,4 +27,4 @@ if (firebaseConfig.apiKey) {
   console.warn("Firebase API key is missing. Authentication will not work.");
 }
 
-export { auth };
+export { auth, db };
