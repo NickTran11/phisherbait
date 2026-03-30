@@ -317,12 +317,8 @@ function initParallax(){
 function initLevelMap() {
   placeNodesOnPath();
   applyLockStatesFromData();
+  startScoreSync();
   // DELETE LATER!! Demo ratings (0-3). Replace with localStorage later.
-setRodRating("1", 2);
-setRodRating("2", 0);
-setRodRating("3", 0);
-setRodRating("4", 0);
-setRodRating("5", 0);
   wireLevelClicks();
   initParallax();
 
