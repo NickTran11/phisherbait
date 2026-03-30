@@ -264,8 +264,23 @@ function showStarsOverlay(action = selectedAction) {
 
   const stars = getActionStars(action);
 
+  const pageMatch = window.location.pathname.match(/level(\d+)\.html$/i);
+  const currentLevelId = pageMatch ? pageMatch[1] : null;
+
+  if (saveBestLevelScoreFn && currentLevelId) {
+    saveBestLevelScoreFn(currentLevelId, stars);
+  }
+
   starsRow.innerHTML = Array.from({ length: 3 }, (_, i) => {
     const src = i < stars ? "./star-filled.png" : "./star-empty.png";
+    const alt = i < stars ? "Filled star" : "Empty star";
+    return `<img src="${src}" alt="${alt}" class="result-star" />`;
+  }).join("");
+
+  starsText.textContent = getStarsMessage(stars);
+  starsOverlay.classList.remove("hidden");
+  starsOverlay.setAttribute("aria-hidden", "false");
+}
     const alt = i < stars ? "Filled star" : "Empty star";
     return `<img src="${src}" alt="${alt}" class="star-result-icon">`;
   }).join("");
