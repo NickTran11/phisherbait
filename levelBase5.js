@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const verificationHelp = document.getElementById("verificationHelp");
   const verificationResult = document.getElementById("verificationResult");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
+  const goldenRodStars = document.getElementById("goldenRodStars");
 
   const callOverlay = document.getElementById("callOverlay");
 const callAvatar = document.getElementById("callAvatar");
@@ -96,6 +97,21 @@ function getGoldenRodsEarned() {
   if (wrongAnswerCount === 1) return 2;
   if (wrongAnswerCount === 2) return 1;
   return 0;
+}
+
+function renderGoldenRodStars(score) {
+  if (!goldenRodStars) return;
+
+  goldenRodStars.innerHTML = "";
+  goldenRodStars.classList.remove("hidden");
+
+  for (let i = 1; i <= 3; i++) {
+    const star = document.createElement("img");
+    star.src = i <= score ? "./star-filled.png" : "./star-empty.png";
+    star.alt = i <= score ? "Filled star" : "Empty star";
+    star.className = "golden-rod-star-icon";
+    goldenRodStars.appendChild(star);
+  }
 }
 
 function showLevelCompleteCoach() {
@@ -156,11 +172,13 @@ const forceBubbleText = setInterval(() => {
   const verificationHelp = document.getElementById("verificationHelp");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
 
-  if (verificationPrompt) {
-    const goldenRods = getGoldenRodsEarned();
-verificationPrompt.textContent =
-  `Review complete. Score: ${goldenRods} / 3 Golden Rods`;
-  }
+  const goldenRods = getGoldenRodsEarned();
+
+if (verificationPrompt) {
+  verificationPrompt.textContent = "Golden Stars Rating.";
+}
+
+renderGoldenRodStars(goldenRods);
 
   if (verificationInput) {
     verificationInput.style.display = "none";
@@ -168,7 +186,7 @@ verificationPrompt.textContent =
 
   if (verificationHelp) {
     verificationHelp.textContent =
-      "Golden Rod scoring can be connected here later.";
+      "";
   }
 
   if (verifySubmitBtn) {
@@ -547,6 +565,11 @@ item.innerHTML = `
     return;
   }
 
+  if (goldenRodStars) {
+  goldenRodStars.classList.add("hidden");
+  goldenRodStars.innerHTML = "";
+}
+
   proofBox.classList.remove("hidden");
   verificationPrompt.textContent = activeMessage.verification.prompt;
   verificationInput.value = "";
@@ -559,6 +582,11 @@ item.innerHTML = `
   function hideProofBox() {
     if (proofBox) proofBox.classList.add("hidden");
     waitingForProof = false;
+
+    if (goldenRodStars) {
+  goldenRodStars.classList.add("hidden");
+  goldenRodStars.innerHTML = "";
+}
   }
 
   function normalizeAnswer(value) {
