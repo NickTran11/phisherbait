@@ -13,7 +13,7 @@ window.LEVEL5_EMAIL = {
       "Trusts emails that reference recent work activity",
       "Occasionally click links directly instead of navigating manually"
     ],
-    context: "This final level tests everything learned so far. Some messages are legitimate. Some are regular phishing attempts. Others are more advanced and reference real emails you received earlier. Compare messages carefully before acting.",
+    context: "This final level tests everything learned so far. Some messages are legitimate. Some are regular phishing attempts. Others are more advanced and reference real emails you received earlier. Compare messages carefully before acting. This level introduces spear phishing:",
     initials: "CB"
   },
 
@@ -193,7 +193,7 @@ window.LEVEL5_EMAIL = {
   callerName: "Westwood Web IT Security",
   callerInitials: "IT",
   ringSeconds: 2,
-  audioSrc: "./audio/placeholder-it-report-followup.mp3",
+  audioSrc: "./audio/call2.mp3",
   transcriptPreview: "Caller says they saw your phishing report come in and claims the reported email is actually legitimate and still requires action.",
   choices: [
     {
