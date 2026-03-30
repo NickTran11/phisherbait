@@ -224,6 +224,34 @@ if (!LEVELS[levelId]?.unlocked || isLocked(node)) {
   }, 450);
 });
 }
+
+let watchAllLevelScoresFn = null;
+let stopWatchingScores = null;
+
+import("./scoreService.js")
+  .then((module) => {
+    watchAllLevelScoresFn = module.watchAllLevelScores;
+    startScoreSync();
+  })
+  .catch((error) => {
+    console.error("Failed to load scoreService.js:", error);
+  });
+
+function startScoreSync() {
+  if (!watchAllLevelScoresFn) return;
+
+  if (typeof stopWatchingScores === "function") {
+    stopWatchingScores();
+  }
+
+  stopWatchingScores = watchAllLevelScoresFn((scores) => {
+    ["1", "2", "3", "4", "5"].forEach((levelId) => {
+      const earned = Number(scores[levelId] ?? 0);
+      setRodRating(levelId, earned);
+    });
+  });
+}
+
 function setRodRating(levelId, earned) {
   const container = document.querySelector(`.level-rating[data-level="${levelId}"]`);
   if (!container) return;
