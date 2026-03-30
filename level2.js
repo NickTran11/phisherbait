@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+  let saveBestLevelScoreFn = null;
+
+import("./scoreService.js")
+  .then((module) => {
+    saveBestLevelScoreFn = module.saveBestLevelScore;
+  })
+  .catch((error) => {
+    console.error("Failed to load scoreService.js:", error);
+  });
   const data =
     window.LEVEL2_EMAIL ||
     window.LEVEL1_EMAIL ||
@@ -1030,6 +1039,9 @@ if (window.showFishCoachCustom) {
   
 function renderStarsScreen() {
   const stars = getStarsFromScore(finalScore);
+  if (saveBestLevelScoreFn) {
+  saveBestLevelScoreFn("2", stars);
+}
 
   let starsHtml = "";
   for (let i = 0; i < 3; i++) {
