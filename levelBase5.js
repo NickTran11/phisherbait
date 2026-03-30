@@ -42,6 +42,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const verificationResult = document.getElementById("verificationResult");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
 
+  const callOverlay = document.getElementById("callOverlay");
+const callAvatar = document.getElementById("callAvatar");
+const callCallerName = document.getElementById("callCallerName");
+const callStatus = document.getElementById("callStatus");
+const callAnswerBtn = document.getElementById("callAnswerBtn");
+const callActiveArea = document.getElementById("callActiveArea");
+const callAudio = document.getElementById("callAudio");
+const callTranscriptPreview = document.getElementById("callTranscriptPreview");
+const callChoices = document.getElementById("callChoices");
+const callFeedback = document.getElementById("callFeedback");
+const callContinueBtn = document.getElementById("callContinueBtn");
+const callCloseX = document.getElementById("callCloseX");
+
   const clueSet = new Set();
   let activeMessage = data.messages[0];
   let revealedHintCount = 0;
@@ -51,6 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let levelCompleted = false;
   let levelFailed = false;
   let wrongAnswerCount = 0;
+  let pendingCall = null;
+let callResolved = false;
 
   function currentMessageNeedsVerification() {
   return !!(
@@ -244,6 +259,16 @@ function updateInboxCount() {
     inboxCountAcc.textContent = remaining;
   }
 }
+
+function maybeQueueFollowupCall(triggerType) {
+  if (!activeMessage.followupCall) return;
+
+  const callData = activeMessage.followupCall;
+  if (callData.triggerOn !== triggerType) return;
+
+  pendingCall = callData;
+}
+
   function init() {
     renderScenario();
     renderMessageList();
@@ -451,6 +476,11 @@ item.innerHTML = `
     finishCurrentMessage();
   }
 
+  if (!needsProof) {
+  maybeQueueFollowupCall("correct");
+  finishCurrentMessage();
+}
+
   return;
 }
 
@@ -502,6 +532,11 @@ item.innerHTML = `
       if (window.closeFishCoachCustom) {
         window.closeFishCoachCustom();
       }
+
+      if (pendingCall) {
+      showFollowupCall(pendingCall);
+      pendingCall = null;
+    }
     });
   }
 }
@@ -534,6 +569,131 @@ item.innerHTML = `
       .replace(/^www\./, "www.")
       .replace(/\/+$/, "");
   }
+
+  function showFollowupCall(callData) {
+  if (!callOverlay) return;
+
+  callResolved = false;
+
+  callOverlay.classList.remove("hidden");
+  callOverlay.setAttribute("aria-hidden", "false");
+
+  if (callAvatar) callAvatar.textContent = callData.callerInitials || "??";
+  if (callCallerName) callCallerName.textContent = callData.callerName || "Unknown Caller";
+  if (callStatus) callStatus.textContent = "is calling you";
+
+  if (callActiveArea) callActiveArea.classList.add("hidden");
+  if (callAnswerBtn) callAnswerBtn.classList.remove("hidden");
+
+  if (callFeedback) {
+    callFeedback.textContent = "";
+    callFeedback.className = "call-feedback hidden";
+  }
+
+  if (callContinueBtn) {
+    callContinueBtn.classList.add("hidden");
+  }
+
+  if (callChoices) {
+    callChoices.innerHTML = "";
+  }
+
+  if (callTranscriptPreview) {
+    callTranscriptPreview.textContent = callData.transcriptPreview || "";
+  }
+
+  if (callAudio) {
+    callAudio.pause();
+    callAudio.currentTime = 0;
+    callAudio.src = "";
+  }
+
+  callAnswerBtn.onclick = () => startCall(callData);
+}
+
+function startCall(callData) {
+  if (callStatus) callStatus.textContent = "Call in progress";
+  if (callAnswerBtn) callAnswerBtn.classList.add("hidden");
+  if (callActiveArea) callActiveArea.classList.remove("hidden");
+
+  if (callAudio && callData.audioSrc) {
+    callAudio.src = callData.audioSrc;
+    callAudio.play().catch(() => {});
+  }
+
+  if (callChoices) {
+    callChoices.innerHTML = "";
+
+    (callData.choices || []).forEach(choice => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "call-choice-btn";
+      btn.textContent = choice.label;
+      btn.addEventListener("click", () => handleCallChoice(choice));
+      callChoices.appendChild(btn);
+    });
+  }
+}
+
+function handleCallChoice(choice) {
+  if (callResolved) return;
+  callResolved = true;
+
+  if (callChoices) {
+    callChoices.querySelectorAll("button").forEach(btn => {
+      btn.disabled = true;
+    });
+  }
+
+  if (choice.result === "wrong") {
+    wrongAnswerCount += 1;
+
+    if (callFeedback) {
+      callFeedback.textContent = choice.feedback;
+      callFeedback.className = "call-feedback bad";
+    }
+
+    if (wrongAnswerCount >= 4) {
+      if (callContinueBtn) {
+        callContinueBtn.classList.remove("hidden");
+        callContinueBtn.onclick = () => {
+          hideFollowupCall();
+          showLevelFailedCoach();
+        };
+      }
+      return;
+    }
+  } else if (choice.result === "partial") {
+    if (callFeedback) {
+      callFeedback.textContent = choice.feedback;
+      callFeedback.className = "call-feedback warn";
+    }
+  } else {
+    if (callFeedback) {
+      callFeedback.textContent = choice.feedback;
+      callFeedback.className = "call-feedback good";
+    }
+  }
+
+  if (callContinueBtn) {
+    callContinueBtn.classList.remove("hidden");
+    callContinueBtn.onclick = () => {
+      hideFollowupCall();
+    };
+  }
+}
+
+function hideFollowupCall() {
+  if (!callOverlay) return;
+
+  callOverlay.classList.add("hidden");
+  callOverlay.setAttribute("aria-hidden", "true");
+
+  if (callAudio) {
+    callAudio.pause();
+    callAudio.currentTime = 0;
+  }
+}
 
   function submitVerificationAnswer() {
     const raw = verificationInput ? verificationInput.value : "";

@@ -85,7 +85,37 @@ window.LEVEL5_EMAIL = {
             "The main value here is remembering the details for later comparison."
           ]
         }
-      }
+      },
+
+      followupCall: {
+  triggerOn: "correct",
+  title: "Microsoft Teams",
+  callerName: "Unknown IT Security",
+  callerInitials: "IT",
+  ringSeconds: 2,
+  audioSrc: "./audio/placeholder-fake-it-intro.mp3",
+  transcriptPreview: "Caller claims there is an urgent security issue and asks you to confirm your login details immediately.",
+  choices: [
+    {
+      id: "fake-it-report",
+      label: "Hang up and report the call",
+      result: "correct",
+      feedback: "Correct. This was an obvious vishing attempt using urgency and a vague identity."
+    },
+    {
+      id: "fake-it-verify",
+      label: "Ask them to verify who they are through official company channels",
+      result: "partial",
+      feedback: "Safer than sharing information, but reporting the suspicious call would be the strongest response."
+    },
+    {
+      id: "fake-it-share",
+      label: "Stay on the line and confirm your login details",
+      result: "wrong",
+      feedback: "Risky choice. Vishing attackers often try to collect credentials over the phone."
+    }
+  ]
+}
     },
 
     {
@@ -126,19 +156,7 @@ window.LEVEL5_EMAIL = {
         "Spear phishing often reuses real business context to seem trustworthy."
       ],
 
-      verification: {
-        prompt: `Which domain belongs to the legitimate Westwood Web IT email you saw earlier?
-Type A, B, or C.
-A) westwoodweb-vpnsecure.com
-B) westwoodweb.com
-C) westwoodweb-helpdesk-alert.net`,
-        acceptedAnswers: ["b"],
-        retryGuidance: [
-          "Compare this domain to the real IT message from earlier.",
-          "The correct answer is the real Westwood Web company domain.",
-          "Choose the option that matches the legitimate internal sender."
-        ]
-      },
+    
 
       coach: {
         perfect: {
@@ -168,7 +186,38 @@ C) westwoodweb-helpdesk-alert.net`,
             "Always compare sender domains carefully."
           ]
         }
-      }
+      },
+      followupCall: {
+  triggerOn: "correct",
+  title: "Microsoft Teams",
+  callerName: "Westwood Web IT Security",
+  callerInitials: "IT",
+  ringSeconds: 2,
+  audioSrc: "./audio/placeholder-it-report-followup.mp3",
+  transcriptPreview: "Caller says they saw your phishing report come in and claims the reported email is actually legitimate and still requires action.",
+  choices: [
+    {
+      id: "it-followup-yes",
+      label: "Yes, I will complete the verification process",
+      result: "wrong",
+      feedback: "Wrong. The caller is trying to undo your good decision by pushing you back into the phishing workflow."
+    },
+    {
+      id: "it-followup-no",
+      label: "No, I will not complete it from that email",
+      result: "correct",
+      feedback: "Correct. A suspicious follow-up call should not override your phishing judgment."
+    },
+    {
+      id: "it-followup-official",
+      label: "I will verify with IT through the official company directory first",
+      result: "partial",
+      feedback: "Good safety instinct. That is much safer, though reporting the suspicious follow-up call would be even better."
+    }
+  ]
+}
+
+    
     },
 
     {
@@ -236,7 +285,20 @@ C) westwoodweb-helpdesk-alert.net`,
             "You will need this baseline for comparison later."
           ]
         }
-      }
+      },
+      verification: {
+        prompt: `Which domain belongs to the legitimate Westwood Web IT email?
+Type A, B, or C.
+A) westwoodweb-vpnsecure.com
+B) westwoodweb.com
+C) westwoodweb-helpdesk-alert.net`,
+        acceptedAnswers: ["b"],
+        retryGuidance: [
+          "Compare this domain to the real IT message from earlier.",
+          "The correct answer is the real Westwood Web company domain.",
+          "Choose the option that matches the legitimate internal sender."
+        ]
+      },
     },
 
     {
@@ -305,7 +367,43 @@ C) westwoodweb-helpdesk-alert.net`,
             "Always compare similar emails before acting."
           ]
         }
-      }
+      },
+
+      followupCall: {
+  triggerOn: "correct",
+  title: "Microsoft Teams",
+  callerName: "Westwood Web HR Benefits",
+  callerInitials: "HR",
+  ringSeconds: 2,
+  audioSrc: "./audio/placeholder-legit-hr-call.mp3",
+  transcriptPreview: "Caller says they are from HR Benefits and wants to connect about updating your benefits information.",
+  choices: [
+    {
+      id: "hr-legit-report",
+      label: "Hang up and report the call to IT",
+      result: "partial",
+      feedback: "Overly cautious. Reporting is safer than sharing information blindly, but this appears to be a legitimate HR call."
+    },
+    {
+      id: "hr-legit-share",
+      label: "Yes, my current benefits are ...",
+      result: "wrong",
+      feedback: "Wrong. Even if the call may be legitimate, you should verify identity before sharing personal details."
+    },
+    {
+      id: "hr-legit-hostile",
+      label: "Leave me alone you filthy phisher",
+      result: "wrong",
+      feedback: "Wrong. This is not an appropriate or safe way to handle uncertainty."
+    },
+    {
+      id: "hr-legit-verify",
+      label: "I just received a suspicious email about this. Can you confirm who you are first?",
+      result: "correct",
+      feedback: "Correct. This is the best response: cautious, professional, and verification-focused."
+    }
+  ]
+}
     },
 
     {
@@ -346,13 +444,15 @@ C) westwoodweb-helpdesk-alert.net`,
       ],
 
       verification: {
-        prompt: `Should this email be reported as phishing?
-Type Yes or No.`,
-        acceptedAnswers: ["no"],
+        prompt: `What department does this email say you can contact to verify the document?
+        A) Legal
+        B) IT
+        C) HR`,
+        acceptedAnswers: ["a"],
         retryGuidance: [
-          "Look carefully: external does not always mean malicious.",
-          "The safest judgment here is that this is not automatically phishing.",
-          "Answer Yes or No only."
+          "Think who is this message from?.",
+          "What department would ask you to verify a document?.",
+          "Well it's not HR."
         ]
       },
 
@@ -425,19 +525,6 @@ Type Yes or No.`,
         "Clone phishing often copies trusted services, with slightly changed sender details and stronger urgency."
       ],
 
-      verification: {
-        prompt: `Which is the safest action for this email?
-Type A, B, or C.
-A) Open the resent document link
-B) Report phishing
-C) Reply and ask if it is real`,
-        acceptedAnswers: ["b"],
-        retryGuidance: [
-          "This message is imitating the earlier vendor email.",
-          "Think about clone phishing and the safest workplace response.",
-          "Choose A, B, or C only."
-        ]
-      },
 
       coach: {
         perfect: {
@@ -467,7 +554,36 @@ C) Reply and ask if it is real`,
             "Urgent 'resent' emails deserve extra scrutiny."
           ]
         }
-      }
+      },
+      followupCall: {
+  triggerOn: "correct",
+  title: "Microsoft Teams",
+  callerName: "Alyssa Grant",
+  callerInitials: "AG",
+  ringSeconds: 2,
+  audioSrc: "./audio/placeholder-real-boss-call.mp3",
+  transcriptPreview: "Alyssa says she is heading into a meeting and may send or ask about documents later today.",
+  choices: [
+    {
+      id: "boss1-ack",
+      label: "Okay, thanks for the heads up",
+      result: "correct",
+      feedback: "Correct. This sounds like a normal workplace call and does not ask for anything unusual."
+    },
+    {
+      id: "boss1-report",
+      label: "Hang up and report the call",
+      result: "partial",
+      feedback: "Overly cautious. Not every short work-related call is suspicious."
+    },
+    {
+      id: "boss1-hostile",
+      label: "Refuse to speak and accuse them of phishing",
+      result: "wrong",
+      feedback: "Wrong. This appears to be a legitimate coworker call and your response should stay professional."
+    }
+  ]
+}
     },
 
     {
@@ -534,7 +650,43 @@ C) Reply and ask if it is real`,
             "This is another baseline message to compare against more suspicious ones."
           ]
         }
-      }
+      },
+
+      followupCall: {
+  triggerOn: "correct",
+  title: "Microsoft Teams",
+  callerName: "Calgary Emergency Intake",
+  callerInitials: "ER",
+  ringSeconds: 2,
+  audioSrc: "./audio/placeholder-hospital-scam.mp3",
+  transcriptPreview: "Caller claims your daughter was in an accident and urgently asks for her Alberta Health number because she does not have it with her.",
+  choices: [
+    {
+      id: "hospital-report",
+      label: "Hang up and report phishing",
+      result: "partial",
+      feedback: "Cautious, but not the best first response in an emotional high-pressure scenario."
+    },
+    {
+      id: "hospital-give-info",
+      label: "Yes, here is her information ...",
+      result: "wrong",
+      feedback: "Wrong. The caller is using fear and urgency to pressure you into sharing sensitive information."
+    },
+    {
+      id: "hospital-dont-care",
+      label: "No, I don't care about my daughter",
+      result: "wrong",
+      feedback: "Wrong. This is not a safe or realistic response. The correct move is to verify the situation first."
+    },
+    {
+      id: "hospital-verify",
+      label: "Can you put my daughter on the phone so I can talk to her?",
+      result: "correct",
+      feedback: "Correct. Verification is critical before sharing sensitive personal information in an emotional-pressure call."
+    }
+  ]
+}
     },
 
     {
@@ -603,7 +755,36 @@ C) Reply and ask if it is real`,
             "Always inspect sender and destination details."
           ]
         }
-      }
+      },
+      followupCall: {
+  triggerOn: "correct",
+  title: "Microsoft Teams",
+  callerName: "Westwood Web IT Help Desk",
+  callerInitials: "IT",
+  ringSeconds: 2,
+  audioSrc: "./audio/placeholder-real-it-warning.mp3",
+  transcriptPreview: "Caller warns that phishing attempts related to VPN verification are circulating and says staff should only use the official Westwood Web portal.",
+  choices: [
+    {
+      id: "real-it-ignore",
+      label: "Ignore the warning because the earlier IT call was fake too",
+      result: "wrong",
+      feedback: "Wrong. Attackers use confusion, but not every later IT call is fake. You still have to evaluate each one carefully."
+    },
+    {
+      id: "real-it-understand",
+      label: "Acknowledge the warning and use only the official portal",
+      result: "correct",
+      feedback: "Correct. This call provides useful defensive guidance without asking for credentials or secret information."
+    },
+    {
+      id: "real-it-report",
+      label: "Hang up and report the call immediately",
+      result: "partial",
+      feedback: "Cautious, but not ideal. This call appears legitimate and is giving you helpful security information."
+    }
+  ]
+}
     },
 
     {
@@ -671,7 +852,37 @@ C) Reply and ask if it is real`,
             "Never trust the link in an email like this."
           ]
         }
-      }
+      },
+
+      followupCall: {
+  triggerOn: "correct",
+  title: "Microsoft Teams",
+  callerName: "Alyssa Grant",
+  callerInitials: "AG",
+  ringSeconds: 2,
+  audioSrc: "./audio/placeholder-fake-boss-clone.mp3",
+  transcriptPreview: "The caller sounds like Alyssa and urgently asks you to send a file immediately before a meeting.",
+  choices: [
+    {
+      id: "boss2-send",
+      label: "Send the file immediately",
+      result: "wrong",
+      feedback: "Wrong. Voice familiarity is not enough. This could be impersonation or AI voice cloning."
+    },
+    {
+      id: "boss2-verify",
+      label: "I'll confirm this request through Teams or email first",
+      result: "correct",
+      feedback: "Correct. Verification is the safest response when a caller requests sensitive work material."
+    },
+    {
+      id: "boss2-delay",
+      label: "I'll wait and deal with it later",
+      result: "partial",
+      feedback: "Safer than sending the file blindly, but verification is the stronger response."
+    }
+  ]
+}
     },
 
     {
@@ -712,13 +923,13 @@ C) Reply and ask if it is real`,
       ],
 
       verification: {
-        prompt: `Should this message be reported as phishing?
-Type Yes or No.`,
-        acceptedAnswers: ["no"],
+        prompt: `What indicates this email is safe even though it's from an external sender? 
+        A) No Urgency. B) domain seems normal. C) They know your name.`,
+        acceptedAnswers: ["a"],
         retryGuidance: [
-          "Carefully review whether there are actual red flags here.",
-          "This question tests whether you can avoid over-reporting.",
-          "Answer Yes or No only."
+          "Based on the email context what matters?",
+          "Could an attacker learn your name?",
+          "Could an attacker have a domain that seems legit?"
         ]
       },
 
@@ -833,7 +1044,9 @@ D) Smishing`,
         "Always inspect the full sender address, even when the request seems normal."
       ]
     }
-  }
+  },
+
+  
 },
 
 {
@@ -873,16 +1086,12 @@ D) Smishing`,
   ],
 
   verification: {
-    prompt: `What is the best action for this email?
-Type A, B, or C.
-A) Report phishing
-B) Reply to Alyssa
-C) Delete the email`,
-    acceptedAnswers: ["b"],
+    prompt: `If a previous email supposedly from Alyssa was actually a phishing attempt, can this email still be trusted? Yes or No`,
+    acceptedAnswers: ["yes"],
     retryGuidance: [
-      "This message is a normal internal work question.",
-      "Think about the action that best matches a legitimate coworker request.",
-      "Choose A, B, or C only."
+      "Are the email addresses the same?",
+      "Same name doesn't mean same email address.",
+      "Choose yes or no."
     ]
   },
 

@@ -189,6 +189,147 @@ html, body{
   filter: brightness(1.08);
 }
 
+/* CALL CSS */
+.call-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.call-overlay.hidden {
+  display: none;
+}
+
+.call-modal {
+  width: 420px;
+  max-width: 92vw;
+  border-radius: 18px;
+  background: rgba(230, 230, 235, 0.96);
+  color: #222;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+  padding: 18px 20px 22px;
+  text-align: center;
+}
+
+.call-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.call-app {
+  font-size: 1.1rem;
+}
+
+.call-close-x {
+  border: none;
+  background: transparent;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.call-avatar {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #7a5a4a;
+}
+
+.call-caller-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.call-status {
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+}
+
+.call-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.call-btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.call-btn.answer,
+.call-btn.continue {
+  background: linear-gradient(90deg, #8b5cf6, #38bdf8);
+  color: white;
+}
+
+#callActiveArea.hidden {
+  display: none;
+}
+
+.call-transcript {
+  margin: 14px 0;
+  text-align: left;
+}
+
+.call-choices {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.call-choice-btn {
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #d4d4d8;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.call-choice-btn:hover {
+  background: #f4f4f5;
+}
+
+.call-feedback {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.call-feedback.good {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.call-feedback.warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.call-feedback.bad {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
 /* ================= MAIN LEVEL ================= */
 .level-shell{
   min-height: 100vh;

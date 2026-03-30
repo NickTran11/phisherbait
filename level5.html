@@ -284,6 +284,34 @@
     </div>
   </div>
 
+  <div id="callOverlay" class="call-overlay hidden" aria-hidden="true">
+  <div class="call-modal">
+    <div class="call-topbar">
+      <div class="call-app">Microsoft Teams</div>
+      <button id="callCloseX" class="call-close-x" type="button">✕</button>
+    </div>
+
+    <div class="call-avatar" id="callAvatar">AD</div>
+
+    <div class="call-caller-name" id="callCallerName">AGSci IT Front Desk</div>
+    <div class="call-status" id="callStatus">is calling you</div>
+
+    <div class="call-actions" id="callIncomingActions">
+      <button id="callAnswerBtn" class="call-btn answer" type="button">Answer</button>
+    </div>
+
+    <div id="callActiveArea" class="hidden">
+      <audio id="callAudio" controls></audio>
+      <p id="callTranscriptPreview" class="call-transcript"></p>
+
+      <div id="callChoices" class="call-choices"></div>
+      <div id="callFeedback" class="call-feedback hidden"></div>
+
+      <button id="callContinueBtn" class="call-btn continue hidden" type="button">Continue</button>
+    </div>
+  </div>
+</div>
+
 <script>
   function beginLevelMission() {
     const overlay = document.getElementById("scenarioOverlay");
