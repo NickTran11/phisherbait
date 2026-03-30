@@ -189,6 +189,26 @@ html, body{
   filter: brightness(1.08);
 }
 
+/* GOLDEN STARS + */
+
+.golden-rod-stars {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0;
+  padding: 8px 0;
+}
+
+.golden-rod-stars.hidden {
+  display: none;
+}
+
+.golden-rod-star-icon {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+}
+
 /* CALL CSS */
 .call-overlay {
   position: fixed;
