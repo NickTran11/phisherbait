@@ -932,9 +932,14 @@ function getStarsFromScore(score) {
 function renderScoreSummary() {
   const score = calculateFinalScore();
 
+  const stars = getStarsFromScore(score);
+  if (saveBestLevelScoreFn) {
+    saveBestLevelScoreFn("2", stars);
+  }
+  
   taskQuestionNumber.textContent = "Mission Complete";
   taskQuestionText.textContent = `Your score: ${score} / 16`;
-
+  
   taskHintBox.classList.remove("hidden");
   taskHintBox.innerHTML = `
     ${level2Tasks.slice(0,13).map((t,i)=>{
