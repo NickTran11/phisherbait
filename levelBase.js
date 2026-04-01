@@ -231,7 +231,7 @@ import("./scoreService.js")
 
     if (starsContinueBtn) {
   starsContinueBtn.addEventListener("click", () => {
-    window.location.href = "https://nicktran11.github.io/masterbait-3/levelMap.html";
+    window.location.href = "https://nicktran11.github.io/phisherbait/levelMap.html";
   });
 }
   }
