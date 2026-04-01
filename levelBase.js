@@ -272,10 +272,10 @@ function showStarsOverlay(action = selectedAction) {
   }
 
   starsRow.innerHTML = Array.from({ length: 3 }, (_, i) => {
-    const src = i < stars ? "./star-filled.png" : "./star-empty.png";
-    const alt = i < stars ? "Filled star" : "Empty star";
-    return `<img src="${src}" alt="${alt}" class="result-star" />`;
-  }).join("");
+  const src = i < stars ? "./star-filled.png" : "./star-empty.png";
+  const alt = i < stars ? "Filled star" : "Empty star";
+  return `<img src="${src}" alt="${alt}" class="star-result-icon" />`;
+}).join("");
 
   starsText.textContent = getStarsMessage(stars);
   starsOverlay.classList.remove("hidden");
