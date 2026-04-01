@@ -281,15 +281,6 @@ function showStarsOverlay(action = selectedAction) {
   starsOverlay.classList.remove("hidden");
   starsOverlay.setAttribute("aria-hidden", "false");
 }
-    const alt = i < stars ? "Filled star" : "Empty star";
-    return `<img src="${src}" alt="${alt}" class="star-result-icon">`;
-  }).join("");
-
-  starsText.textContent = getStarsMessage(stars);
-
-  starsOverlay.classList.remove("hidden");
-  starsOverlay.setAttribute("aria-hidden", "false");
-}
   
   function bindProof() {
     if (verifySubmitBtn) {
