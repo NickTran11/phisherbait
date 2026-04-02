@@ -369,6 +369,41 @@ button {
     box-shadow: none;
 }
 
+.btn-danger {
+    position: relative;
+    width: 100%;
+    padding: 8px 12px;
+    background: linear-gradient(to bottom, #ef4444, #dc2626, #b91c1c);
+    color: white;
+    font-size: 0.875rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 2px;
+    border-top: 1px solid #f87171;
+    border-left: 1px solid #f87171;
+    border-right: 1px solid #f87171;
+    border-bottom: none;
+    box-shadow: 0 4px 0 rgb(127, 29, 29), 0 8px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.15s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-danger:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgb(127, 29, 29), 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-danger:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
 .btn-secondary {
     flex: 1;
     position: relative;

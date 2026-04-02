@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Master Bait - Phishing Tutorial</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tutorial-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 20px 40px;
+            overflow-y: auto;
+            height: 100%;
+            color: #e5e7eb;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(168, 85, 247, 0.5) rgba(0, 0, 0, 0.2);
+        }
+        .tutorial-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .tutorial-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        .tutorial-container::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.5);
+            border-radius: 4px;
+        }
+        .tutorial-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(168, 85, 247, 0.8);
+        }
+        .tutorial-card {
+            background-color: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .tutorial-card h2 {
+            color: #f97316;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(249, 115, 22, 0.3);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .tutorial-card h3 {
+            color: #d8b4fe;
+            margin-top: 24px;
+        }
+        .tutorial-card p, .tutorial-card ul {
+            line-height: 1.6;
+            color: #d1d5db;
+        }
+        .tutorial-card li {
+            margin-bottom: 8px;
+        }
+        
+        .quiz-section {
+            display: none;
+        }
+        .quiz-question {
+            margin-bottom: 24px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 6px;
+            border-left: 4px solid #a855f7;
+        }
+        .quiz-question h4 {
+            margin-top: 0;
+            color: #e9d5ff;
+            font-size: 1.1rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .quiz-option {
+            padding: 12px 16px;
+            background-color: rgba(31, 41, 55, 0.8);
+            border: 1px solid #4b5563;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .quiz-option:hover {
+            background-color: rgba(55, 65, 81, 0.8);
+            border-color: #6b7280;
+        }
+        .quiz-option.selected {
+            background-color: rgba(147, 51, 234, 0.2);
+            border-color: #a855f7;
+        }
+        .quiz-option.correct {
+            background-color: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+        }
+        .quiz-option.incorrect {
+            background-color: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+        .quiz-feedback {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 4px;
+            display: none;
+            font-weight: bold;
+        }
+        .quiz-feedback.correct {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            display: block;
+        }
+        .quiz-feedback.incorrect {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            display: block;
+        }
+        .quiz-score {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f97316;
+            margin-top: 32px;
+            padding: 24px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="app-root">
+        <div class="animated-bg"></div>
+        <div class="bg-overlay-pattern"></div>
+        <div class="bg-vignette"></div>
+
+        <div class="content-layer">
+            <div class="tutorial-container" id="tutorial-container">
+                <div class="dashboard-header" style="position: relative; margin-bottom: 24px; padding: 0;">
+                    <button onclick="window.location.href='levelMap.html'" class="btn-back">
+                        <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span style="font-weight: bold; text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.05em;">Map</span>
+                    </button>
+                    <h2 class="dashboard-title">Phishing Academy</h2>
+                    <div style="width: 80px;"></div> <!-- Spacer for centering -->
+                </div>
+
+                <!-- Educational Content -->
+                <div id="educational-content">
+                    <div class="tutorial-card">
+                        <h2>What is Phishing?</h2>
+                        <p>Phishing is a type of social engineering attack often used to steal user data, including login credentials and credit card numbers. It occurs when an attacker, masquerading as a trusted entity, dupes a victim into opening an email, instant message, or text message.</p>
+                        <p>The recipient is then tricked into clicking a malicious link, which can lead to the installation of malware, the freezing of the system as part of a ransomware attack, or the revealing of sensitive information.</p>
+                    </div>
+
+                    <div class="tutorial-card">
+                        <h2>Common Types of Phishing</h2>
+                        <ul>
+                            <li><strong>Email Phishing:</strong> The most common form, where attackers send emails pretending to be from legitimate organizations.</li>
+                            <li><strong>Spear Phishing:</strong> Targeted attacks aimed at specific individuals or companies, using personalized information to appear more credible.</li>
+                            <li><strong>Whaling:</strong> A form of spear phishing directed at high-profile targets like CEOs or CFOs.</li>
+                            <li><strong>Smishing (SMS Phishing):</strong> Phishing attempts delivered via text messages.</li>
+                            <li><strong>Vishing (Voice Phishing):</strong> Fraudulent phone calls designed to trick people into revealing personal information.</li>
+                        </ul>
+                    </div>
+
+                    <div class="tutorial-card">
+                        <h2>How to Spot a Phishing Attempt</h2>
+                        <ul>
+                            <li><strong>Urgent or Threatening Language:</strong> Phrases like "Immediate Action Required" or "Your account will be suspended."</li>
+                            <li><strong>Suspicious Sender Address:</strong> Check the actual email address, not just the display name (e.g., support@paypa1.com instead of support@paypal.com).</li>
+                            <li><strong>Generic Greetings:</strong> "Dear Customer" instead of your actual name.</li>
+                            <li><strong>Mismatched URLs:</strong> Hover over links to see the actual destination before clicking.</li>
+                            <li><strong>Unexpected Attachments:</strong> Be wary of unexpected invoices or documents, especially .zip or .exe files.</li>
+                            <li><strong>Requests for Personal Information:</strong> Legitimate companies rarely ask for passwords or full social security numbers via email.</li>
+                        </ul>
+                    </div>
+
+                    <button id="start-quiz-btn" class="btn-start" style="margin-top: 24px; padding: 16px; font-size: 1.1rem;">
+                        Take the Phishing Quiz
+                    </button>
+                </div>
+
+                <!-- Quiz Section -->
+                <div id="quiz-section" class="quiz-section">
+                    <div class="tutorial-card">
+                        <h2>Knowledge Check</h2>
+                        <p style="margin-bottom: 24px;">Test your ability to identify and respond to phishing threats.</p>
+                        
+                        <div id="quiz-questions-container"></div>
+                        
+                        <button id="submit-quiz-btn" class="btn-purple" style="margin-top: 24px; padding: 16px; font-size: 1.1rem;">
+                            Submit Answers
+                        </button>
+
+                        <div id="quiz-score" class="quiz-score"></div>
+
+                        <div id="quiz-actions" style="display: none; gap: 16px; margin-top: 24px;">
+                            <button id="retake-quiz-btn" class="btn-purple" style="padding: 12px 24px; font-size: 1rem; flex: 1;">
+                                Retake Quiz
+                            </button>
+                            <button id="quit-quiz-btn" class="btn-danger" style="padding: 12px 24px; font-size: 1rem; flex: 1;">
+                                Quit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="phishing-tutorial.js"></script>
+  </body>
+</html>
