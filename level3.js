@@ -18,7 +18,7 @@
                                     action: "reply",
                                     followUp: {
                                         sender: "+44 7700 900077",
-                                        text: "Stop joking around, this is an emergency! The cashier is waiting and I'm so embarrassed. Please just pay it: <a href='#'>http://urgent-bill-pay.com/pay</a>",
+                                        text: "Wait, what? I mean... I'm your nephew! Just help me out please! <a href='#'>http://urgent-bill-pay.com/pay</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Fine, let me check.", action: "reply" }
@@ -37,7 +37,7 @@
                                     action: "reply",
                                     followUp: {
                                         sender: "+44 7700 900077",
-                                        text: "Stop joking around, this is an emergency! The cashier is waiting and I'm so embarrassed. Please just pay it: <a href='#'>http://urgent-bill-pay.com/pay</a>",
+                                        text: "Your favorite one! Stop joking around, this is an emergency! The cashier is waiting. Please just pay it: <a href='#'>http://urgent-bill-pay.com/pay</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Fine, let me check.", action: "reply" }
@@ -59,15 +59,15 @@
                         action: "reply",
                         followUp: {
                             sender: "+44 7700 900077",
-                            text: "It's your oldest child! Please, I'm at the store and my card is declining. Just click the link and pay it, I'll explain later!",
+                            text: "What do you mean nice try? This is serious! I'm stuck at the register, please just help me out: <a href='#'>http://urgent-bill-pay.com/pay</a>",
                             isSmish: true,
                             choices: [
                                 { 
-                                    text: "Reply: I don't have kids", 
+                                    text: "Reply: I'm calling the police", 
                                     action: "reply",
                                     followUp: {
                                         sender: "+44 7700 900077",
-                                        text: "Stop joking around, this is an emergency! The cashier is waiting and I'm so embarrassed. Please just pay it: <a href='#'>http://urgent-bill-pay.com/pay</a>",
+                                        text: "Please don't! Just click the link, I promise I'll pay you back double! <a href='#'>http://urgent-bill-pay.com/pay</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Fine, let me check.", action: "reply" }
@@ -120,18 +120,18 @@
                         action: "reply",
                         followUp: {
                             sender: "Domino's",
-                            text: "Your driver, Dave, is 2 minutes away. Enjoy your meal!",
+                            text: "Your driver, Dave, is just pulling into your neighborhood now. Should be there in 2 minutes!",
                             isSmish: false,
                             choices: [
                                 { 
-                                    text: "Reply: Great!", 
+                                    text: "Reply: Awesome, I'm starving.", 
                                     action: "reply",
                                     followUp: {
                                         sender: "Domino's",
-                                        text: "If you need anything else, just call the store. Have a great day!",
+                                        text: "Get ready! He's walking up to your door now.",
                                         isSmish: false,
                                         choices: [
-                                            { text: "Reply: Will do.", action: "reply" }
+                                            { text: "Reply: Thanks!", action: "reply" }
                                         ]
                                     }
                                 }
@@ -183,7 +183,7 @@
                                     action: "reply",
                                     followUp: {
                                         sender: "USPS",
-                                        text: "A redelivery fee of $1.99 is required. Please process it here immediately: <a href='#'>usps-delivery-verify.top/fee</a>",
+                                        text: "The redelivery fee is $1.99. Please process it here immediately to release your package: <a href='#'>usps-delivery-verify.top/fee</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Okay, I'll pay it.", action: "reply" }
@@ -205,15 +205,15 @@
                         action: "reply",
                         followUp: {
                             sender: "USPS",
-                            text: "Your recent online order #89210. We cannot disclose the contents for security reasons. Update your address now to avoid return shipping fees.",
+                            text: "Our records show a package addressed to you. If you believe this is an error, you must cancel the delivery fee here: <a href='#'>usps-delivery-verify.top/cancel</a>",
                             isSmish: true,
                             choices: [
                                 { 
-                                    text: "Reply: Can I pick it up?", 
+                                    text: "Reply: Cancel it then.", 
                                     action: "reply",
                                     followUp: {
                                         sender: "USPS",
-                                        text: "In-person pickup is unavailable. A redelivery fee of $1.99 is required. Please process it here immediately: <a href='#'>usps-delivery-verify.top/fee</a>",
+                                        text: "To cancel, a processing fee of $1.99 is required. Please process it here immediately: <a href='#'>usps-delivery-verify.top/fee</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Okay, I'll pay it.", action: "reply" }
@@ -266,18 +266,18 @@
                         action: "reply",
                         followUp: {
                             sender: "Sarah",
-                            text: "Awesome! I got you a little something 😉 We're meeting at The Rusty Spoon.",
+                            text: "We're meeting at The Rusty Spoon at 7pm! Did you forget already? 😂",
                             isSmish: false,
                             choices: [
                                 { 
-                                    text: "Reply: Sounds good.", 
+                                    text: "Reply: Oh right, sorry!", 
                                     action: "reply",
                                     followUp: {
                                         sender: "Sarah",
-                                        text: "See ya! Don't be late!",
+                                        text: "No worries! See you there!",
                                         isSmish: false,
                                         choices: [
-                                            { text: "Reply: I won't be!", action: "reply" }
+                                            { text: "Reply: See ya!", action: "reply" }
                                         ]
                                     }
                                 }
@@ -324,7 +324,7 @@
                                     action: "reply",
                                     followUp: {
                                         sender: "BAnk-Alert",
-                                        text: "Cancellation request received. Please verify your identity by clicking the secure link to complete the cancellation: <a href='#'>bit.ly/secure-bank-99/cancel</a>",
+                                        text: "Command not recognized. To cancel the $450.00 transfer, you MUST click the secure link: <a href='#'>bit.ly/secure-bank-99/cancel</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Okay", action: "reply" }
@@ -346,7 +346,7 @@
                         action: "reply",
                         followUp: {
                             sender: "BAnk-Alert",
-                            text: "WARNING: Unauthorized transfer of $450.00 initiated. To cancel this transaction, reply 'CANCEL'.",
+                            text: "This is the Fraud Prevention Department for your primary checking account. A transfer of $450.00 is pending. Reply 'CANCEL' to stop it.",
                             isSmish: true,
                             choices: [
                                 { 
@@ -443,7 +443,38 @@
                                     action: "reply",
                                     followUp: {
                                         sender: "+1 (555) 019-8372",
-                                        text: "Nice! I'm an investor from New York, just moved here. I'm trying to expand my professional network. Are you on LinkedIn? Let's connect: <a href='#'>linkedin-connect-profile.com/alex-invest</a>",
+                                        text: "I'm Alex! I just moved here from New York. I'm an investor and always looking to meet new people. Let's connect on LinkedIn: <a href='#'>linkedin-connect-profile.com/alex-invest</a>",
+                                        isSmish: true,
+                                        choices: [
+                                            { text: "Reply: Sure, I'll add you.", action: "reply" },
+                                            { text: "Reply: That link looks weird.", action: "reply" }
+                                        ],
+                                        consequenceType: 'pig_butchering',
+                                        consequenceText: "You kept engaging! This is a 'Pig Butchering' scam. They build trust over time to steal your money through fake crypto investments.",
+                                        preview: {
+                                            title: "LinkedIn: Alex Investor",
+                                            domain: "linkedin-connect-profile.com",
+                                            image: "https://picsum.photos/seed/linkedin/400/200"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    { 
+                        text: "Reply: Who is this?", 
+                        action: "reply",
+                        followUp: {
+                            sender: "+1 (555) 019-8372",
+                            text: "It's Alex! We met at the networking event. My assistant must have mixed up the numbers. But honestly, you seem cool. Are you from around here?",
+                            isSmish: true,
+                            choices: [
+                                { 
+                                    text: "Reply: No, I'm not.", 
+                                    action: "reply",
+                                    followUp: {
+                                        sender: "+1 (555) 019-8372",
+                                        text: "Oh, well I travel a lot for my investing business anyway! Let's connect on LinkedIn, maybe we can do business: <a href='#'>linkedin-connect-profile.com/alex-invest</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Sure, I'll add you.", action: "reply" },
@@ -479,6 +510,31 @@
                             choices: [
                                 { 
                                     text: "Reply: Okay, waiting.", 
+                                    action: "reply",
+                                    followUp: {
+                                        sender: "GOOGLE SECURITY",
+                                        text: "Please reply with the 6-digit code you just received to finalize the block.",
+                                        isSmish: true,
+                                        choices: [
+                                            { text: "Reply: 123456", action: "reply" }
+                                        ],
+                                        consequenceType: '2fa_fatigue',
+                                        consequenceText: "You fell for it! The hacker triggered a real 2FA reset and tricked you into handing over the code. They now have access to your account."
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    { 
+                        text: "Reply: I didn't log in", 
+                        action: "reply",
+                        followUp: {
+                            sender: "GOOGLE SECURITY",
+                            text: "Security alert confirmed. We are sending a 6-digit verification code to your device to block the hacker.",
+                            isSmish: true,
+                            choices: [
+                                { 
+                                    text: "Reply: Send it.", 
                                     action: "reply",
                                     followUp: {
                                         sender: "GOOGLE SECURITY",
@@ -534,7 +590,7 @@
                                     action: "reply",
                                     followUp: {
                                         sender: "Amazon Recruitment",
-                                        text: "Great! To set up your payroll account, we just need a fully refundable $50 verification deposit. Click here to pay and start earning: <a href='#'>work-at-amzn-portal.io/pay</a>",
+                                        text: "It's simple! You just click links and rate products. But first, to set up your payroll, we need a $50 verification deposit. Click here: <a href='#'>work-at-amzn-portal.io/pay</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Seems sketchy", action: "reply" }
@@ -556,15 +612,15 @@
                         action: "reply",
                         followUp: {
                             sender: "Amazon Recruitment",
-                            text: "Yes, this is the official Amazon Remote Task program. You just rate products and get paid daily. We have 3 spots left. Can you start today?",
+                            text: "100% real! We are an authorized Amazon partner. Our top earners make $1000/week. We only have 1 spot left, do you want it?",
                             isSmish: true,
                             choices: [
                                 { 
-                                    text: "Reply: Yes, I can start.", 
+                                    text: "Reply: Yes, I want it.", 
                                     action: "reply",
                                     followUp: {
                                         sender: "Amazon Recruitment",
-                                        text: "Great! To set up your payroll account, we just need a fully refundable $50 verification deposit. Click here to pay and start earning: <a href='#'>work-at-amzn-portal.io/pay</a>",
+                                        text: "Perfect! To secure your spot and set up payroll, we require a fully refundable $50 deposit. Click here to pay: <a href='#'>work-at-amzn-portal.io/pay</a>",
                                         isSmish: true,
                                         choices: [
                                             { text: "Reply: Seems sketchy", action: "reply" }
@@ -714,58 +770,72 @@
         function processReply(choiceText) {
             const msg = messages[currentCardIndex];
             
-            // Initialize history if it doesn't exist
+            // 1. Prevent double-clicks while the "bot" is typing
+            if (msg.isTyping) return;
+
+            // 2. Initialize history if it's the first reply
             if (!msg.history) {
                 msg.history = [{ sender: msg.sender, text: msg.text }];
             }
             
-            // Add user's reply
+            // 3. Add user's selected reply to the chat history
             const cleanReply = choiceText.replace(/^Reply:\s*/i, '');
             msg.history.push({ sender: 'Me', text: cleanReply });
             
-            // Temporarily hide choices while waiting
+            // 4. Identify which choice was clicked to find its specific follow-up
             const originalChoices = msg.choices;
-            msg.choices = null;
+            const selectedChoice = originalChoices ? originalChoices.find(c => 
+                c.text === choiceText || c.text.replace(/'/g, "\\'") === choiceText
+            ) : null;
             
-            // Find the selected choice to see if it has a specific followUp
-            const selectedChoice = originalChoices ? originalChoices.find(c => c.text === choiceText || c.text.replace(/'/g, "\\'") === choiceText) : null;
-            const nextFollowUp = (selectedChoice && selectedChoice.followUp) ? selectedChoice.followUp : msg.followUp;
-            
+            // 5. Determine the next step
+            const nextFollowUp = (selectedChoice && selectedChoice.followUp) ? selectedChoice.followUp : null;
+
+            // 6. Logic for a Follow-Up Message
             if (nextFollowUp) {
                 msg.isTyping = true;
+                msg.choices = null; // Hide buttons while "typing"
                 renderCards();
                 scrollToBottom();
 
                 msg.typingTimeout = setTimeout(() => {
                     msg.isTyping = false;
-                    // Add follow-up message
+                    
+                    // Push the new message into history
                     msg.history.push({ sender: nextFollowUp.sender, text: nextFollowUp.text });
                     
-                    // Update message properties with follow-up properties
+                    // Update the card's properties with the new data from the follow-up
                     msg.choices = nextFollowUp.choices;
                     if (nextFollowUp.isSmish !== undefined) msg.isSmish = nextFollowUp.isSmish;
                     if (nextFollowUp.consequenceType) msg.consequenceType = nextFollowUp.consequenceType;
                     if (nextFollowUp.consequenceText) msg.consequenceText = nextFollowUp.consequenceText;
                     
-                    if (nextFollowUp.preview !== undefined) {
+                    // Update preview if it exists
+                    if (nextFollowUp.preview) {
                         msg.preview = nextFollowUp.preview;
-                    } else {
-                        delete msg.preview;
                     }
 
-                    msg.followUp = nextFollowUp.followUp; // Move to next follow up if any (fallback)
-                    
-                    // Re-render to show updated history
                     renderCards();
                     scrollToBottom();
-                }, 3000);
-            } else {
+                }, 2000); // Reduced to 2s for better gameplay feel
+            } 
+            // 7. Logic for the END of a thread (where the bug was)
+            else {
+                msg.choices = null; // Remove buttons because the conversation is over
                 renderCards();
-                scrollToBottom();
-                // No follow up. The user must now swipe left or right to decide.
+                
+                // If the conversation ends on a scam link/message, trigger the consequence
+                if (msg.isSmish && msg.consequenceType) {
+                    // Small delay so the user can read the last message before the "Game Over" screen
+                    setTimeout(() => {
+                        evaluateChoice('right', msg); // 'right' simulates "keeping" or "falling for" the message
+                    }, 1000);
+                } else {
+                    // If it's a safe message (like Sarah's), just let it sit so the user can swipe right
+                    scrollToBottom();
+                }
             }
         }
-
         function scrollToBottom() {
             const cardBody = document.querySelector('.swipe-card[data-index="' + currentCardIndex + '"] .card-body');
             if (cardBody) {
@@ -776,8 +846,9 @@
         function setupDragEvents(card) {
             activeCard = card;
             
-            card.addEventListener('mousedown', dragStart);
-            card.addEventListener('touchstart', dragStart, {passive: true});
+            // REMOVE OR COMMENT OUT THESE LINES:
+            //card.addEventListener('mousedown', dragStart);
+            //card.addEventListener('touchstart', dragStart, {passive: true});
             
             document.addEventListener('mousemove', dragMove);
             document.addEventListener('touchmove', dragMove, {passive: false});
