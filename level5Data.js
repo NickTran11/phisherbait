@@ -93,7 +93,7 @@ window.LEVEL5_EMAIL = {
   callerName: "Unknown IT Security",
   callerInitials: "IT",
   ringSeconds: 2,
-  audioSrc: "./audio/placeholder-fake-it-intro.mp3",
+  audioSrc: "./audio/call1.mp3",
   transcriptPreview: "Caller claims there is an urgent security issue and asks you to confirm your login details immediately.",
   choices: [
     {
@@ -375,7 +375,7 @@ C) westwoodweb-helpdesk-alert.net`,
   callerName: "Westwood Web HR Benefits",
   callerInitials: "HR",
   ringSeconds: 2,
-  audioSrc: "./audio/placeholder-legit-hr-call.mp3",
+  audioSrc: "./audio/call3.mp3",
   transcriptPreview: "Caller says they are from HR Benefits and wants to connect about updating your benefits information.",
   choices: [
     {
@@ -561,7 +561,7 @@ C) westwoodweb-helpdesk-alert.net`,
   callerName: "Alyssa Grant",
   callerInitials: "AG",
   ringSeconds: 2,
-  audioSrc: "./audio/placeholder-real-boss-call.mp3",
+  audioSrc: "./audio/call4.mp3",
   transcriptPreview: "Alyssa says she is heading into a meeting and may send or ask about documents later today.",
   choices: [
     {
@@ -658,7 +658,7 @@ C) westwoodweb-helpdesk-alert.net`,
   callerName: "Calgary Emergency Intake",
   callerInitials: "ER",
   ringSeconds: 2,
-  audioSrc: "./audio/placeholder-hospital-scam.mp3",
+  audioSrc: "./audio/call5.mp3",
   transcriptPreview: "Caller claims your daughter was in an accident and urgently asks for her Alberta Health number because she does not have it with her.",
   choices: [
     {
@@ -762,7 +762,7 @@ C) westwoodweb-helpdesk-alert.net`,
   callerName: "Westwood Web IT Help Desk",
   callerInitials: "IT",
   ringSeconds: 2,
-  audioSrc: "./audio/placeholder-real-it-warning.mp3",
+  audioSrc: "./audio/call6.mp3",
   transcriptPreview: "Caller warns that phishing attempts related to VPN verification are circulating and says staff should only use the official Westwood Web portal.",
   choices: [
     {
@@ -860,7 +860,7 @@ C) westwoodweb-helpdesk-alert.net`,
   callerName: "Alyssa Grant",
   callerInitials: "AG",
   ringSeconds: 2,
-  audioSrc: "./audio/placeholder-fake-boss-clone.mp3",
+  audioSrc: "./audio/call7.mp3",
   transcriptPreview: "The caller sounds like Alyssa and urgently asks you to send a file immediately before a meeting.",
   choices: [
     {
