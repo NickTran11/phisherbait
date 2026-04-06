@@ -269,39 +269,6 @@
     </footer>
   </div>
 
-
-  <div id="brandChallengeOverlay" class="brand-challenge-overlay hidden" aria-hidden="true">
-    <div class="brand-challenge-card">
-      <div class="brand-challenge-top">
-        <div>
-          <div class="brand-challenge-kicker">Mini Game</div>
-          <h2 class="brand-challenge-title">Spot the real company brand</h2>
-        </div>
-        <div class="brand-challenge-scorebox">
-          <div id="brandChallengeProgress" class="brand-challenge-progress">Round 1 / 5</div>
-          <div id="brandChallengeScore" class="brand-challenge-score">Score: 0</div>
-        </div>
-      </div>
-
-      <p class="brand-challenge-intro">
-        Clone phishing often copies a trusted logo, changes one letter, or swaps to a fake lookalike.
-        Pick the real brand each round. You need at least <strong>4 / 5</strong> correct to unlock Level 4.
-      </p>
-
-      <div id="brandChallengePrompt" class="brand-challenge-prompt"></div>
-
-      <div id="brandChallengeChoices" class="brand-challenge-choices"></div>
-
-      <div id="brandChallengeFeedback" class="brand-challenge-feedback hidden"></div>
-
-      <div class="brand-challenge-actions">
-        <button id="brandChallengeContinueBtn" type="button" class="brand-challenge-btn hidden">Next round</button>
-        <button id="brandChallengeRestartBtn" type="button" class="brand-challenge-btn secondary hidden">Try again</button>
-        <button id="brandChallengeUnlockBtn" type="button" class="brand-challenge-btn hidden">Open Level 4 emails</button>
-      </div>
-    </div>
-  </div>
-
   <div id="fishCoachOverlay" class="fish-overlay hidden" aria-hidden="true">
     <div class="fish-fullscreen">
       <div class="fish-image-wrapper">
@@ -342,9 +309,16 @@
 
   <script>
     function beginLevelMission() {
-      if (window.startLevel4MiniGame) {
-        window.startLevel4MiniGame();
-      }
+      const overlay = document.getElementById("scenarioOverlay");
+      if (!overlay) return;
+
+      overlay.style.opacity = "0";
+      overlay.style.transition = "opacity 0.25s ease";
+
+      setTimeout(() => {
+        overlay.style.display = "none";
+        overlay.setAttribute("aria-hidden", "true");
+      }, 250);
     }
 
     function openLevelDossier() {
