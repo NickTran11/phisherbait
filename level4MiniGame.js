@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const rounds = [
     {
       company: "Microsoft",
-      prompt: "Choose the authentic official icon.",
+      prompt: "Choose the authentic official Microsoft icon.",
       options: [
         { img: "./microsoft-real.png", correct: true },
         { img: "./microsoft-fake-1.png", correct: false },
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       company: "Google",
-      prompt: "Choose the authentic official icon.",
+      prompt: "Choose the authentic official Google icon.",
       options: [
         { img: "./google-fake-1.png", correct: false },
         { img: "./google-real.png", correct: true },
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       company: "Apple",
-      prompt: "Choose the authentic official icon.",
+      prompt: "Choose the authentic official Apple icon.",
       options: [
         { img: "./apple-fake-1.png", correct: false },
         { img: "./apple-fake-2.png", correct: false },
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       company: "Amazon",
-      prompt: "Choose the authentic official icon.",
+      prompt: "Choose the authentic official Amazon icon.",
       options: [
         { img: "./amazon-real.png", correct: true },
         { img: "./amazon-fake-1.png", correct: false },
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       company: "PayPal",
-      prompt: "Choose the authentic official icon.",
+      prompt: "Choose the authentic official Paypal icon.",
       options: [
         { img: "./paypal-fake-1.png", correct: false },
         { img: "./paypal-real.png", correct: true },
