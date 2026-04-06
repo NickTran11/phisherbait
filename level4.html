@@ -6,6 +6,102 @@
   <title>Phisher Bait - Level 4</title>
   <link rel="stylesheet" href="./level4.css" />
   <link rel="stylesheet" href="./fishCoach.css" />
+
+  <style>
+    .auth-gate-box{
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid #b5a78b;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.35);
+    }
+
+    .auth-gate-title{
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .auth-gate-top{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .auth-status-badge{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 96px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .auth-status-badge.locked{
+      background: #fff0e8;
+      color: #9a3412;
+      border: 1px solid #f3c5ad;
+    }
+
+    .auth-status-badge.unlocked{
+      background: #dff6ee;
+      color: #0f8a5f;
+      border: 1px solid #a9e3ca;
+    }
+
+    .auth-status-text{
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    .auth-actions{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .auth-btn{
+      border: none;
+      background: #2f2a24;
+      color: #f6efe2;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .auth-btn:hover{
+      filter: brightness(1.08);
+    }
+
+    .begin-mission-btn[disabled]{
+      opacity: 0.55;
+      cursor: not-allowed;
+      filter: grayscale(0.15);
+    }
+
+    .begin-mission-note{
+      margin-top: 8px;
+      font-size: 13px;
+      color: #5c5247;
+    }
+
+    @media (max-width: 700px){
+      .scenario-card{
+        transform: none;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="scenarioOverlay" class="scenario-overlay" aria-hidden="false">
@@ -67,8 +163,32 @@
         </p>
       </div>
 
+      <div class="scenario-divider"></div>
+
+      <div class="auth-gate-box">
+        <div class="auth-gate-title">LEVEL 4 AUTHENTICATION</div>
+
+        <div class="auth-gate-top">
+          <div id="authStatusBadge" class="auth-status-badge locked">Locked</div>
+        </div>
+
+        <div id="authStatusText" class="auth-status-text">
+          Before entering Level 4, complete the logo authentication mini game and get at least 4 out of 5 correct.
+        </div>
+
+        <div class="auth-actions">
+          <button id="openMiniGameBtn" type="button" class="auth-btn">Open Authentication Mini Game</button>
+        </div>
+      </div>
+
       <div class="scenario-actions">
-        <button id="beginMissionBtn" type="button" class="begin-mission-btn" onclick="beginLevelMission()">Begin Mission</button>
+        <button id="beginMissionBtn" type="button" class="begin-mission-btn" onclick="beginLevelMission()" disabled>
+          Begin Mission
+        </button>
+      </div>
+
+      <div id="beginMissionNote" class="begin-mission-note">
+        Complete authentication first to unlock this mission.
       </div>
     </div>
   </div>
@@ -333,6 +453,7 @@
 
   <script src="./fishCoach.js"></script>
   <script src="./level4Data.js"></script>
+  <script src="./level4Auth.js"></script>
   <script src="./levelBase4.js"></script>
 </body>
 </html>
