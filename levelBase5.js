@@ -59,6 +59,9 @@ const callCloseX = document.getElementById("callCloseX");
 const bgMusic = document.getElementById("bgMusic");
 const levelCompleteSfx = document.getElementById("levelCompleteSfx");
 const levelFailSfx = document.getElementById("levelFailSfx");
+const callRingSfx = document.getElementById("callRingSfx");
+const correctAnswerSfx = document.getElementById("correctAnswerSfx");
+const wrongAnswerSfx = document.getElementById("wrongAnswerSfx");
 
 let musicVolume = 0.35;
 let duckedMusicVolume = 0.12;
@@ -343,6 +346,33 @@ function playLevelFailSfx() {
   levelFailSfx.play().catch(() => {});
 }
 
+function playCallRingSfx() {
+  if (!callRingSfx) return;
+  callRingSfx.pause();
+  callRingSfx.currentTime = 0;
+  callRingSfx.play().catch(() => {});
+}
+
+function stopCallRingSfx() {
+  if (!callRingSfx) return;
+  callRingSfx.pause();
+  callRingSfx.currentTime = 0;
+}
+
+function playCorrectAnswerSfx() {
+  if (!correctAnswerSfx) return;
+  correctAnswerSfx.pause();
+  correctAnswerSfx.currentTime = 0;
+  correctAnswerSfx.play().catch(() => {});
+}
+
+function playWrongAnswerSfx() {
+  if (!wrongAnswerSfx) return;
+  wrongAnswerSfx.pause();
+  wrongAnswerSfx.currentTime = 0;
+  wrongAnswerSfx.play().catch(() => {});
+}
+
   function init() {
     renderScenario();
     renderMessageList();
@@ -550,6 +580,7 @@ item.innerHTML = `
 
     if (isCorrect) {
   const needsProof = currentMessageNeedsVerification();
+  playCorrectAnswerSfx();
 
   addClue("Correct action chosen: Report phishing.");
   setDecisionFeedback("good", "Correct. Reporting phishing is the best action here.");
@@ -576,6 +607,7 @@ item.innerHTML = `
 }
 
     wrongAnswerCount += 1;
+    playWrongAnswerSfx();
 
     if (wrongAnswerCount >= 3) {
   setDecisionFeedback("bad", "Too much bait taken. Level failed.");
@@ -672,6 +704,8 @@ item.innerHTML = `
   callOverlay.classList.remove("hidden");
   callOverlay.setAttribute("aria-hidden", "false");
 
+  playCallRingSfx();
+
   if (callAvatar) callAvatar.textContent = callData.callerInitials || "??";
   if (callCallerName) callCallerName.textContent = callData.callerName || "Unknown Caller";
   if (callStatus) callStatus.textContent = "is calling you";
@@ -706,6 +740,8 @@ item.innerHTML = `
 }
 
 function startCall(callData) {
+  stopCallRingSfx();
+
   if (callStatus) callStatus.textContent = "Call in progress";
   if (callAnswerBtn) callAnswerBtn.classList.add("hidden");
   if (callActiveArea) callActiveArea.classList.remove("hidden");
@@ -743,6 +779,7 @@ function handleCallChoice(choice) {
 
   if (choice.result === "wrong") {
     wrongAnswerCount += 1;
+    playWrongAnswerSfx();
 
     if (callFeedback) {
       callFeedback.textContent = choice.feedback;
@@ -765,6 +802,7 @@ function handleCallChoice(choice) {
       callFeedback.className = "call-feedback warn";
     }
   } else {
+    playCorrectAnswerSfx();
     if (callFeedback) {
       callFeedback.textContent = choice.feedback;
       callFeedback.className = "call-feedback good";
@@ -784,6 +822,8 @@ function hideFollowupCall() {
 
   callOverlay.classList.add("hidden");
   callOverlay.setAttribute("aria-hidden", "true");
+
+  stopCallRingSfx();
 
   if (callAudio) {
     callAudio.pause();
