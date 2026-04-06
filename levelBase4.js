@@ -48,6 +48,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const accountEmailLabel = document.getElementById("accountEmailLabel");
   const mailboxInboxCount = document.getElementById("mailboxInboxCount");
 
+  const brandChallengeOverlay = document.getElementById("brandChallengeOverlay");
+  const brandChallengeProgress = document.getElementById("brandChallengeProgress");
+  const brandChallengeScore = document.getElementById("brandChallengeScore");
+  const brandChallengePrompt = document.getElementById("brandChallengePrompt");
+  const brandChallengeChoices = document.getElementById("brandChallengeChoices");
+  const brandChallengeFeedback = document.getElementById("brandChallengeFeedback");
+  const brandChallengeContinueBtn = document.getElementById("brandChallengeContinueBtn");
+  const brandChallengeRestartBtn = document.getElementById("brandChallengeRestartBtn");
+  const brandChallengeUnlockBtn = document.getElementById("brandChallengeUnlockBtn");
+
   const clueSet = new Set();
   let currentFolder = "Inbox";
   let activeMessage = null;
@@ -55,19 +65,90 @@ document.addEventListener("DOMContentLoaded", () => {
   let retryCount = 0;
   let waitingForProof = false;
 
+  let challengeRoundIndex = 0;
+  let challengeScoreValue = 0;
+  let challengeLocked = false;
+  let brandChallengePassed = false;
+
+  const BRAND_CHALLENGE_ROUNDS = [
+    {
+      company: "Microsoft",
+      prompt: "Choose the official Microsoft brand card.",
+      explanation: "The real Microsoft mark keeps the correct spelling and the clean four-square window.",
+      options: [
+        { displayName: "Microsoft", logoType: "microsoft", domain: "microsoft.com", isReal: true },
+        { displayName: "Micr0soft", logoType: "microsoft-fake-zero", domain: "micr0soft-login.com", isReal: false },
+        { displayName: "Microsofft", logoType: "microsoft-fake-double", domain: "microsoft-secure-check.co", isReal: false }
+      ]
+    },
+    {
+      company: "PayPal",
+      prompt: "Pick the real PayPal sign-in brand.",
+      explanation: "Clone phishing often swaps a lowercase l with an uppercase I, like PayPaI.",
+      options: [
+        { displayName: "PayPal", logoType: "paypal", domain: "paypal.com", isReal: true },
+        { displayName: "PayPaI", logoType: "paypal-fake-i", domain: "paypaI-security.net", isReal: false },
+        { displayName: "PayPal Secure", logoType: "paypal-fake-secure", domain: "paypal-alerts-pay.com", isReal: false }
+      ]
+    },
+    {
+      company: "Google",
+      prompt: "Which card matches the official Google look?",
+      explanation: "A fake can keep similar colors but still change the spelling or add a suspicious support domain.",
+      options: [
+        { displayName: "Google", logoType: "google", domain: "google.com", isReal: true },
+        { displayName: "Go0gle", logoType: "google-fake-zero", domain: "go0gle-support.org", isReal: false },
+        { displayName: "Goggle", logoType: "google-fake-goggle", domain: "goggle-accounts.net", isReal: false }
+      ]
+    },
+    {
+      company: "Netflix",
+      prompt: "Select the official Netflix identity.",
+      explanation: "Fake landing pages often keep the red theme but hide a letter swap like NetfIix.",
+      options: [
+        { displayName: "Netflix", logoType: "netflix", domain: "netflix.com", isReal: true },
+        { displayName: "NetfIix", logoType: "netflix-fake-i", domain: "netfIix-billing.help", isReal: false },
+        { displayName: "Neflix", logoType: "netflix-fake-neflix", domain: "neflix-reset.co", isReal: false }
+      ]
+    },
+    {
+      company: "Adobe",
+      prompt: "Choose the real Adobe brand card.",
+      explanation: "Attackers often keep the same red box but change one letter or add a fake creative portal.",
+      options: [
+        { displayName: "Adobe", logoType: "adobe", domain: "adobe.com", isReal: true },
+        { displayName: "Ad0be", logoType: "adobe-fake-zero", domain: "ad0be-cloud-login.com", isReal: false },
+        { displayName: "Abode Creative", logoType: "adobe-fake-abode", domain: "abode-creative-suite.net", isReal: false }
+      ]
+    }
+  ];
+
   init();
 
   function init() {
     renderScenario();
+
     if (accountEmailLabel && data.accountEmail) {
       accountEmailLabel.textContent = data.accountEmail;
     }
+
     bindScenarioButtons();
     bindFolderButtons();
     bindActions();
     bindProof();
+    bindBrandChallenge();
+
     refreshFolderCounts();
     renderFolder("Inbox");
+    lockMissionUntilMiniGameStarts();
+  }
+
+  function lockMissionUntilMiniGameStarts() {
+    brandChallengePassed = false;
+    if (brandChallengeOverlay) {
+      brandChallengeOverlay.classList.add("hidden");
+      brandChallengeOverlay.setAttribute("aria-hidden", "true");
+    }
   }
 
   function renderScenario() {
@@ -103,15 +184,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function bindScenarioButtons() {
-    if (beginMissionBtn && scenarioOverlay) {
-      beginMissionBtn.addEventListener("click", () => {
-        scenarioOverlay.style.opacity = "0";
-        scenarioOverlay.style.transition = "opacity 0.25s ease";
-        setTimeout(() => {
-          scenarioOverlay.style.display = "none";
-          scenarioOverlay.setAttribute("aria-hidden", "true");
-        }, 250);
-      });
+    if (beginMissionBtn) {
+      beginMissionBtn.type = "button";
     }
 
     if (openDossierBtn && scenarioOverlay) {
@@ -127,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inboxFolder) {
       inboxFolder.addEventListener("click", () => renderFolder("Inbox"));
     }
+
     if (junkFolder) {
       junkFolder.addEventListener("click", () => renderFolder("Junk Email"));
     }
@@ -240,6 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
     waitingForProof = false;
     clearDecisionFeedback();
     hideProofBox();
+
     if (window.closeFishCoachCustom) window.closeFishCoachCustom();
     renderHints();
   }
@@ -278,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (revealHintBtn) {
       revealHintBtn.addEventListener("click", () => {
         if (!activeMessage) return;
+
         if (revealedHintCount < activeMessage.orderedHints.length) {
           const nextHint = activeMessage.orderedHints[revealedHintCount];
           revealedHintCount += 1;
@@ -338,14 +415,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.showFishCoachCustom(coachPayload);
 
-    if (window.setFishCoachCloseHandler) {
-      window.setFishCoachCloseHandler(() => {
-        if (waitingForProof) return;
-        if (window.closeFishCoachCustom) window.closeFishCoachCustom();
-        window.location.href = "./levelMap.html";
-      });
-    }
-
     if (withProof) {
       waitingForProof = true;
       showProofBox();
@@ -359,14 +428,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!proofBox || !activeMessage?.verification) return;
 
     proofBox.classList.remove("hidden");
+
     if (verificationPrompt) verificationPrompt.textContent = activeMessage.verification.prompt || "";
     if (verificationInput) verificationInput.value = "";
     if (verificationHelp) verificationHelp.textContent = "Type the real official domain only.";
+
     if (verificationResult) {
       verificationResult.textContent = "";
       verificationResult.className = "proof-result";
     }
-    setTimeout(() => verificationInput && verificationInput.focus(), 50);
+
+    setTimeout(() => {
+      if (verificationInput) verificationInput.focus();
+    }, 50);
   }
 
   function hideProofBox() {
@@ -386,7 +460,11 @@ document.addEventListener("DOMContentLoaded", () => {
         verificationResult.textContent = "Correct. Use the official site manually instead of the email link.";
         verificationResult.className = "proof-result good";
       }
-      if (verificationHelp) verificationHelp.textContent = "Nice work. You identified the trusted domain.";
+
+      if (verificationHelp) {
+        verificationHelp.textContent = "Nice work. You identified the trusted domain.";
+      }
+
       addClue("Player correctly identified the official domain to visit manually.");
       waitingForProof = false;
       setDecisionFeedback("good", "Excellent. You chose the safest action and identified the correct official website.");
@@ -408,10 +486,254 @@ document.addEventListener("DOMContentLoaded", () => {
       verificationResult.textContent = "Not correct yet. Try again.";
       verificationResult.className = "proof-result bad";
     }
+
     if (verificationHelp) verificationHelp.textContent = guidance;
+
     if (verificationInput) {
       verificationInput.focus();
       verificationInput.select();
+    }
+  }
+
+  function bindBrandChallenge() {
+    if (brandChallengeContinueBtn) {
+      brandChallengeContinueBtn.addEventListener("click", () => {
+        if (challengeLocked) return;
+        goToNextBrandRound();
+      });
+    }
+
+    if (brandChallengeRestartBtn) {
+      brandChallengeRestartBtn.addEventListener("click", () => {
+        restartBrandChallenge();
+      });
+    }
+
+    if (brandChallengeUnlockBtn) {
+      brandChallengeUnlockBtn.addEventListener("click", () => {
+        hideBrandChallenge();
+      });
+    }
+
+    window.startLevel4MiniGame = startLevel4MiniGame;
+  }
+
+  function startLevel4MiniGame() {
+    hideScenarioOverlay();
+    restartBrandChallenge();
+  }
+
+  function restartBrandChallenge() {
+    challengeRoundIndex = 0;
+    challengeScoreValue = 0;
+    brandChallengePassed = false;
+    challengeLocked = false;
+
+    if (brandChallengeOverlay) {
+      brandChallengeOverlay.classList.remove("hidden");
+      brandChallengeOverlay.setAttribute("aria-hidden", "false");
+    }
+
+    renderBrandRound();
+  }
+
+  function hideScenarioOverlay() {
+    if (!scenarioOverlay) return;
+
+    scenarioOverlay.style.opacity = "0";
+    scenarioOverlay.style.transition = "opacity 0.25s ease";
+
+    setTimeout(() => {
+      scenarioOverlay.style.display = "none";
+      scenarioOverlay.setAttribute("aria-hidden", "true");
+    }, 250);
+  }
+
+  function hideBrandChallenge() {
+    brandChallengePassed = true;
+
+    if (brandChallengeOverlay) {
+      brandChallengeOverlay.classList.add("hidden");
+      brandChallengeOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    addClue("Mini game cleared: player recognized official brand identities before opening Level 4 email.");
+    clearDecisionFeedback();
+  }
+
+  function renderBrandRound() {
+    const round = BRAND_CHALLENGE_ROUNDS[challengeRoundIndex];
+    if (!round || !brandChallengeChoices) return;
+
+    challengeLocked = false;
+
+    if (brandChallengeProgress) {
+      brandChallengeProgress.textContent = `Round ${challengeRoundIndex + 1} / ${BRAND_CHALLENGE_ROUNDS.length}`;
+    }
+
+    if (brandChallengeScore) {
+      brandChallengeScore.textContent = `Score: ${challengeScoreValue}`;
+    }
+
+    if (brandChallengePrompt) {
+      brandChallengePrompt.textContent = round.prompt;
+    }
+
+    if (brandChallengeFeedback) {
+      brandChallengeFeedback.textContent = "";
+      brandChallengeFeedback.className = "brand-challenge-feedback hidden";
+    }
+
+    if (brandChallengeContinueBtn) brandChallengeContinueBtn.classList.add("hidden");
+    if (brandChallengeRestartBtn) brandChallengeRestartBtn.classList.add("hidden");
+    if (brandChallengeUnlockBtn) brandChallengeUnlockBtn.classList.add("hidden");
+
+    brandChallengeChoices.innerHTML = "";
+
+    round.options.forEach((option, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "brand-option-card";
+      button.dataset.index = String(index);
+
+      button.innerHTML = `
+        <div class="brand-logo-shell ${escapeHtml(option.logoType)}">
+          ${createBrandVisual(option)}
+        </div>
+        <div class="brand-option-name">${escapeHtml(option.displayName)}</div>
+        <div class="brand-option-domain">${escapeHtml(option.domain)}</div>
+      `;
+
+      button.addEventListener("click", () => {
+        chooseBrandOption(index);
+      });
+
+      brandChallengeChoices.appendChild(button);
+    });
+  }
+
+  function chooseBrandOption(optionIndex) {
+    if (challengeLocked) return;
+
+    const round = BRAND_CHALLENGE_ROUNDS[challengeRoundIndex];
+    if (!round) return;
+
+    challengeLocked = true;
+    const selected = round.options[optionIndex];
+    const allButtons = Array.from(document.querySelectorAll(".brand-option-card"));
+
+    allButtons.forEach((button, idx) => {
+      const option = round.options[idx];
+      button.disabled = true;
+
+      if (option.isReal) {
+        button.classList.add("correct");
+      }
+
+      if (idx === optionIndex && !selected.isReal) {
+        button.classList.add("wrong");
+      }
+    });
+
+    if (selected.isReal) {
+      challengeScoreValue += 1;
+      if (brandChallengeScore) {
+        brandChallengeScore.textContent = `Score: ${challengeScoreValue}`;
+      }
+
+      if (brandChallengeFeedback) {
+        brandChallengeFeedback.textContent = `Correct. ${round.explanation}`;
+        brandChallengeFeedback.className = "brand-challenge-feedback good";
+      }
+    } else {
+      if (brandChallengeFeedback) {
+        brandChallengeFeedback.textContent = `Not quite. ${round.explanation}`;
+        brandChallengeFeedback.className = "brand-challenge-feedback bad";
+      }
+    }
+
+    const isLastRound = challengeRoundIndex === BRAND_CHALLENGE_ROUNDS.length - 1;
+
+    if (isLastRound) {
+      showBrandChallengeFinalState();
+    } else if (brandChallengeContinueBtn) {
+      brandChallengeContinueBtn.classList.remove("hidden");
+      brandChallengeContinueBtn.textContent = "Next round";
+    }
+  }
+
+  function goToNextBrandRound() {
+    challengeRoundIndex += 1;
+    renderBrandRound();
+  }
+
+  function showBrandChallengeFinalState() {
+    const passed = challengeScoreValue >= 4;
+
+    if (!brandChallengeFeedback) return;
+
+    if (passed) {
+      brandChallengeFeedback.textContent = `Passed. You scored ${challengeScoreValue} / ${BRAND_CHALLENGE_ROUNDS.length}. Level 4 email investigation is now unlocked.`;
+      brandChallengeFeedback.className = "brand-challenge-feedback good";
+      if (brandChallengeUnlockBtn) brandChallengeUnlockBtn.classList.remove("hidden");
+      addClue(`Mini game passed with ${challengeScoreValue} / ${BRAND_CHALLENGE_ROUNDS.length}.`);
+      return;
+    }
+
+    brandChallengeFeedback.textContent = `You scored ${challengeScoreValue} / ${BRAND_CHALLENGE_ROUNDS.length}. You need at least 4 / 5 to unlock Level 4, so try again and watch for tiny spelling swaps.`;
+    brandChallengeFeedback.className = "brand-challenge-feedback bad";
+
+    if (brandChallengeRestartBtn) brandChallengeRestartBtn.classList.remove("hidden");
+    addClue(`Mini game attempt finished below the pass mark: ${challengeScoreValue} / ${BRAND_CHALLENGE_ROUNDS.length}.`);
+  }
+
+  function createBrandVisual(option) {
+    switch (option.logoType) {
+      case "microsoft":
+      case "microsoft-fake-zero":
+      case "microsoft-fake-double":
+        return `
+          <div class="brand-visual brand-visual-microsoft">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        `;
+
+      case "paypal":
+      case "paypal-fake-i":
+      case "paypal-fake-secure":
+        return `
+          <div class="brand-visual brand-visual-paypal">
+            <span class="brand-letter back">P</span>
+            <span class="brand-letter front">P</span>
+          </div>
+        `;
+
+      case "google":
+      case "google-fake-zero":
+      case "google-fake-goggle":
+        return `
+          <div class="brand-visual brand-visual-google">G</div>
+        `;
+
+      case "netflix":
+      case "netflix-fake-i":
+      case "netflix-fake-neflix":
+        return `
+          <div class="brand-visual brand-visual-netflix">N</div>
+        `;
+
+      case "adobe":
+      case "adobe-fake-zero":
+      case "adobe-fake-abode":
+        return `
+          <div class="brand-visual brand-visual-adobe">
+            <span class="adobe-left"></span>
+            <span class="adobe-right"></span>
+          </div>
+        `;
+
+      default:
+        return `<div class="brand-visual brand-visual-generic">${escapeHtml(option.displayName.charAt(0) || "?")}</div>`;
     }
   }
 
