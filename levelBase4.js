@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const scenarioOverlay = document.getElementById("scenarioOverlay");
   const beginMissionBtn = document.getElementById("beginMissionBtn");
   const openDossierBtn = document.getElementById("openDossierBtn");
+  const openMiniGameBtn = document.getElementById("openMiniGameBtn");
+  const authStatusBadge = document.getElementById("authStatusBadge");
+  const authStatusText = document.getElementById("authStatusText");
+  const beginMissionNote = document.getElementById("beginMissionNote");
 
   const scenarioName = document.getElementById("scenarioName");
   const scenarioTitle = document.getElementById("scenarioTitle");
@@ -37,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const verificationHelp = document.getElementById("verificationHelp");
   const verificationResult = document.getElementById("verificationResult");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
+  const goldenRodStars = document.getElementById("goldenRodStars");
 
   const inspectorValues = document.querySelectorAll(".inspector-value");
 
@@ -58,17 +63,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const brandChallengeRestartBtn = document.getElementById("brandChallengeRestartBtn");
   const brandChallengeUnlockBtn = document.getElementById("brandChallengeUnlockBtn");
 
+  const bgMusic = document.getElementById("bgMusic");
+  const levelCompleteSfx = document.getElementById("levelCompleteSfx");
+  const levelFailSfx = document.getElementById("levelFailSfx");
+  const correctAnswerSfx = document.getElementById("correctAnswerSfx");
+  const wrongAnswerSfx = document.getElementById("wrongAnswerSfx");
+
+  const inboxMessages = data.messages.filter((msg) => (msg.folder || "Inbox") === "Inbox");
+
   const clueSet = new Set();
+  const inboxResults = new Map();
+
   let currentFolder = "Inbox";
   let activeMessage = null;
   let revealedHintCount = 0;
   let retryCount = 0;
   let waitingForProof = false;
+  let missionCompleted = false;
+  let musicStarted = false;
+  let brandChallengePassed = false;
 
   let challengeRoundIndex = 0;
   let challengeScoreValue = 0;
   let challengeLocked = false;
-  let brandChallengePassed = false;
 
   const BRAND_CHALLENGE_ROUNDS = [
     {
@@ -132,22 +149,38 @@ document.addEventListener("DOMContentLoaded", () => {
       accountEmailLabel.textContent = data.accountEmail;
     }
 
+    refreshFolderCounts();
+    updateAuthGate(false);
     bindScenarioButtons();
     bindFolderButtons();
     bindActions();
     bindProof();
     bindBrandChallenge();
-
-    refreshFolderCounts();
     renderFolder("Inbox");
-    lockMissionUntilMiniGameStarts();
   }
 
-  function lockMissionUntilMiniGameStarts() {
-    brandChallengePassed = false;
-    if (brandChallengeOverlay) {
-      brandChallengeOverlay.classList.add("hidden");
-      brandChallengeOverlay.setAttribute("aria-hidden", "true");
+  function updateAuthGate(isUnlocked) {
+    brandChallengePassed = isUnlocked;
+
+    if (authStatusBadge) {
+      authStatusBadge.textContent = isUnlocked ? "Unlocked" : "Locked";
+      authStatusBadge.className = `auth-status-badge ${isUnlocked ? "unlocked" : "locked"}`;
+    }
+
+    if (authStatusText) {
+      authStatusText.textContent = isUnlocked
+        ? "Authentication complete. Level 4 is unlocked. Review the inbox carefully and finish all 4 scored emails."
+        : "Before entering Level 4, complete the logo authentication mini game and get at least 4 out of 5 correct.";
+    }
+
+    if (beginMissionBtn) {
+      beginMissionBtn.disabled = !isUnlocked;
+    }
+
+    if (beginMissionNote) {
+      beginMissionNote.textContent = isUnlocked
+        ? "Authentication cleared. You can start the mission now."
+        : "Complete authentication first to unlock this mission.";
     }
   }
 
@@ -166,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (scenarioProfile) {
       scenarioProfile.innerHTML = "";
-      (data.scenario.profile || []).forEach(item => {
+      (data.scenario.profile || []).forEach((item) => {
         const li = document.createElement("li");
         li.textContent = item;
         scenarioProfile.appendChild(li);
@@ -175,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (scenarioHabits) {
       scenarioHabits.innerHTML = "";
-      (data.scenario.habits || []).forEach(item => {
+      (data.scenario.habits || []).forEach((item) => {
         const li = document.createElement("li");
         li.textContent = item;
         scenarioHabits.appendChild(li);
@@ -186,6 +219,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function bindScenarioButtons() {
     if (beginMissionBtn) {
       beginMissionBtn.type = "button";
+      beginMissionBtn.addEventListener("click", () => {
+        startBackgroundMusic();
+      });
     }
 
     if (openDossierBtn && scenarioOverlay) {
@@ -193,6 +229,12 @@ document.addEventListener("DOMContentLoaded", () => {
         scenarioOverlay.style.display = "grid";
         scenarioOverlay.style.opacity = "1";
         scenarioOverlay.setAttribute("aria-hidden", "false");
+      });
+    }
+
+    if (openMiniGameBtn) {
+      openMiniGameBtn.addEventListener("click", () => {
+        startLevel4MiniGame();
       });
     }
   }
@@ -208,31 +250,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function refreshFolderCounts() {
-    const inboxMessages = data.messages.filter(msg => (msg.folder || "Inbox") === "Inbox");
-    const junkMessages = data.messages.filter(msg => (msg.folder || "Inbox") === "Junk Email");
+    const totalInbox = inboxMessages.length;
+    const junkMessages = data.messages.filter((msg) => (msg.folder || "Inbox") === "Junk Email");
 
-    if (inboxCount) inboxCount.textContent = String(inboxMessages.length);
+    if (inboxCount) inboxCount.textContent = String(totalInbox);
     if (junkCount) junkCount.textContent = String(junkMessages.length);
-    if (mailboxInboxCount) mailboxInboxCount.textContent = String(inboxMessages.length);
+    if (mailboxInboxCount) mailboxInboxCount.textContent = String(totalInbox);
   }
 
-  function renderFolder(folderName) {
+  function renderFolder(folderName, preferredMessageId = null) {
     currentFolder = folderName;
     if (listTitle) listTitle.textContent = folderName;
 
     if (inboxFolder) inboxFolder.classList.toggle("active", folderName === "Inbox");
     if (junkFolder) junkFolder.classList.toggle("active", folderName === "Junk Email");
 
-    const folderMessages = data.messages.filter(msg => (msg.folder || "Inbox") === folderName);
+    const folderMessages = data.messages.filter((msg) => (msg.folder || "Inbox") === folderName);
 
     if (!folderMessages.length) {
-      messageList.innerHTML = `<div class="message-item"><div class="message-preview">No messages in ${escapeHtml(folderName)}.</div></div>`;
+      if (messageList) {
+        messageList.innerHTML = `<div class="message-item"><div class="message-preview">No messages in ${escapeHtml(folderName)}.</div></div>`;
+      }
       activeMessage = null;
       clearReadingPane();
       return;
     }
 
-    activeMessage = folderMessages[0];
+    const preferred = preferredMessageId
+      ? folderMessages.find((msg) => msg.id === preferredMessageId)
+      : null;
+    const keepCurrent = activeMessage
+      ? folderMessages.find((msg) => msg.id === activeMessage.id)
+      : null;
+
+    activeMessage = preferred || keepCurrent || folderMessages[0];
     renderMessageList(folderMessages);
     renderReadingPane(activeMessage);
     resetStateForMessage();
@@ -242,9 +293,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!messageList) return;
     messageList.innerHTML = "";
 
-    folderMessages.forEach((msg, index) => {
+    folderMessages.forEach((msg) => {
+      const status = inboxResults.get(msg.id) || null;
+      const activeClass = activeMessage && msg.id === activeMessage.id ? " active" : "";
+      const statusClass = status ? ` resolved-${status}` : "";
+      const statusMarkup = getMessageStatusMarkup(status);
+
       const item = document.createElement("div");
-      item.className = "message-item" + (index === 0 ? " active" : "");
+      item.className = `message-item${activeClass}${statusClass}`;
       item.dataset.id = msg.id;
 
       item.innerHTML = `
@@ -254,18 +310,33 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="message-preview ${msg.external ? "external-preview" : ""}">
           ${escapeHtml(msg.previewBottom)}
         </div>
+        ${statusMarkup}
       `;
 
       item.addEventListener("click", () => {
-        document.querySelectorAll(".message-item").forEach(el => el.classList.remove("active"));
-        item.classList.add("active");
         activeMessage = msg;
+        renderMessageList(folderMessages);
         renderReadingPane(msg);
         resetStateForMessage();
       });
 
       messageList.appendChild(item);
     });
+  }
+
+  function getMessageStatusMarkup(status) {
+    if (!status) return "";
+
+    const map = {
+      good: { label: "All Good", className: "result-good" },
+      warn: { label: "Not Good", className: "result-warn" },
+      bad: { label: "Worst", className: "result-bad" }
+    };
+
+    const meta = map[status];
+    if (!meta) return "";
+
+    return `<div class="message-status-badge ${meta.className}">${meta.label}</div>`;
   }
 
   function renderReadingPane(msg) {
@@ -317,6 +388,13 @@ document.addEventListener("DOMContentLoaded", () => {
     hideProofBox();
 
     if (window.closeFishCoachCustom) window.closeFishCoachCustom();
+    if (window.setFishCoachCloseHandler) {
+      window.setFishCoachCloseHandler(() => {
+        if (waitingForProof) return;
+        if (window.closeFishCoachCustom) window.closeFishCoachCustom();
+      });
+    }
+
     renderHints();
   }
 
@@ -364,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    document.querySelectorAll("[data-action]").forEach(btn => {
+    document.querySelectorAll("[data-action]").forEach((btn) => {
       btn.addEventListener("click", () => {
         if (!activeMessage) return;
         handleAction(btn.dataset.action);
@@ -384,33 +462,63 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function currentMessageNeedsVerification() {
+    return !!(
+      activeMessage &&
+      activeMessage.verification &&
+      activeMessage.verification.prompt &&
+      Array.isArray(activeMessage.verification.acceptedAnswers)
+    );
+  }
+
   function handleAction(action) {
+    if (!activeMessage || missionCompleted) return;
+
+    if ((activeMessage.folder || "Inbox") !== "Inbox") {
+      setDecisionFeedback("warn", "Junk Email is for comparison only. Use it as a clue for the 4 Inbox emails.");
+      return;
+    }
+
+    if (inboxResults.has(activeMessage.id)) {
+      setDecisionFeedback("warn", "This Inbox email is already completed. Open another one to continue.");
+      return;
+    }
+
     const isCorrect = action === activeMessage.correctAction;
     const isPartial = action === activeMessage.partialAction;
 
     if (isCorrect) {
-      addClue("Correct action chosen.");
-      setDecisionFeedback("good", "Correct. That is the best action here.");
-      showCoach("perfect", true);
+      playCorrectAnswerSfx();
+      addClue("Best action chosen for this Inbox email.");
+      setDecisionFeedback("good", "Correct. That is the safest action here.");
+      showCoach("perfect", currentMessageNeedsVerification());
+
+      if (!currentMessageNeedsVerification()) {
+        configureCoachContinue(activeMessage.id, "good");
+      }
       return;
     }
 
     if (isPartial) {
-      addClue("Partial credit: safer than clicking, but not the best answer.");
-      setDecisionFeedback("warn", "Safer than clicking, but not the best answer for this scenario.");
+      playWrongAnswerSfx();
+      addClue("Not the worst move, but still not the safest response.");
+      setDecisionFeedback("warn", "Not the best answer. It is safer than the worst choice, but still not ideal.");
       showCoach("good", false);
+      configureCoachContinue(activeMessage.id, "warn");
       return;
     }
 
-    addClue("Incorrect action chosen. Re-check sender details, urgency language, and the previewed link.");
-    setDecisionFeedback("bad", "That action is risky. Reveal another hint and try again.");
+    playWrongAnswerSfx();
+    addClue("Worst action chosen. Slow down and inspect the sender, domain, and link preview more carefully.");
+    setDecisionFeedback("bad", "That was the riskiest action for this email.");
     showCoach("bad", false);
+    configureCoachContinue(activeMessage.id, "bad");
   }
 
   function showCoach(mode, withProof) {
     if (!window.showFishCoachCustom) return;
 
-    const coachPayload = activeMessage.coach?.[mode];
+    const coachPayload = activeMessage?.coach?.[mode];
     if (!coachPayload) return;
 
     window.showFishCoachCustom(coachPayload);
@@ -424,14 +532,145 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function configureCoachContinue(messageId, outcome) {
+    if (!window.setFishCoachCloseHandler) return;
+
+    window.setFishCoachCloseHandler(() => {
+      if (waitingForProof) return;
+      if (window.closeFishCoachCustom) window.closeFishCoachCustom();
+      finalizeInboxMessage(messageId, outcome);
+    });
+  }
+
+  function finalizeInboxMessage(messageId, outcome) {
+    if (missionCompleted || inboxResults.has(messageId)) return;
+
+    inboxResults.set(messageId, outcome);
+
+    if (allInboxMessagesResolved()) {
+      renderFolder("Inbox", messageId);
+      showMissionResult();
+      return;
+    }
+
+    const nextMessage = getNextUnresolvedInboxMessage();
+    renderFolder("Inbox", nextMessage ? nextMessage.id : messageId);
+  }
+
+  function allInboxMessagesResolved() {
+    return inboxMessages.every((msg) => inboxResults.has(msg.id));
+  }
+
+  function getNextUnresolvedInboxMessage() {
+    return inboxMessages.find((msg) => !inboxResults.has(msg.id)) || null;
+  }
+
+  function getMissionStars() {
+    const outcomes = inboxMessages.map((msg) => inboxResults.get(msg.id));
+    const allGood = outcomes.every((result) => result === "good");
+    const allBad = outcomes.every((result) => result === "bad");
+
+    if (allGood) return 3;
+    if (allBad) return 0;
+    return 1;
+  }
+
+  function showMissionResult() {
+    missionCompleted = true;
+    waitingForProof = false;
+    hideProofBox();
+    pauseBackgroundMusic();
+
+    const stars = getMissionStars();
+    if (stars === 3) {
+      playLevelCompleteSfx();
+    } else {
+      playLevelFailSfx();
+    }
+
+    if (window.showFishCoachCustom) {
+      window.showFishCoachCustom({
+        title: "Mission Result",
+        bubble: "",
+        lessons: []
+      });
+    }
+
+    if (proofBox) {
+      proofBox.classList.remove("hidden");
+      proofBox.classList.add("level-result-box");
+    }
+
+    if (verificationPrompt) {
+      verificationPrompt.textContent = stars === 3 ? "Excellent job." : stars === 0 ? "Mission failed." : "Mission complete.";
+    }
+
+    renderGoldenRodStars(stars);
+
+    if (verificationInput) {
+      verificationInput.style.display = "none";
+      verificationInput.value = "";
+    }
+
+    if (verificationHelp) {
+      verificationHelp.textContent = "";
+    }
+
+    if (verifySubmitBtn) {
+      verifySubmitBtn.style.display = "none";
+    }
+
+    if (verificationResult) {
+      if (stars === 3) {
+        verificationResult.textContent = "You chose the safest action on all 4 scored emails and earned 3 stars.";
+      } else if (stars === 0) {
+        verificationResult.textContent = "You picked the worst action on all 4 scored emails and earned 0 stars.";
+      } else {
+        verificationResult.textContent = "You made a mix of strong and weak choices, so you earned 1 star.";
+      }
+      verificationResult.className = "proof-result";
+    }
+
+    if (window.setFishCoachCloseHandler) {
+      window.setFishCoachCloseHandler(() => {
+        window.location.href = "./levelMap.html";
+      });
+    }
+  }
+
+  function renderGoldenRodStars(score) {
+    if (!goldenRodStars) return;
+
+    goldenRodStars.innerHTML = "";
+    goldenRodStars.classList.remove("hidden");
+
+    for (let i = 1; i <= 3; i += 1) {
+      const star = document.createElement("img");
+      star.src = i <= score ? "./star-filled.png" : "./star-empty.png";
+      star.alt = i <= score ? "Filled star" : "Empty star";
+      star.className = "golden-rod-star-icon";
+      goldenRodStars.appendChild(star);
+    }
+  }
+
   function showProofBox() {
     if (!proofBox || !activeMessage?.verification) return;
 
     proofBox.classList.remove("hidden");
+    proofBox.classList.remove("level-result-box");
+
+    if (goldenRodStars) {
+      goldenRodStars.classList.add("hidden");
+      goldenRodStars.innerHTML = "";
+    }
 
     if (verificationPrompt) verificationPrompt.textContent = activeMessage.verification.prompt || "";
-    if (verificationInput) verificationInput.value = "";
+    if (verificationInput) {
+      verificationInput.style.display = "block";
+      verificationInput.value = "";
+    }
     if (verificationHelp) verificationHelp.textContent = "Type the real official domain only.";
+    if (verifySubmitBtn) verifySubmitBtn.style.display = "inline-flex";
 
     if (verificationResult) {
       verificationResult.textContent = "";
@@ -444,7 +683,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function hideProofBox() {
-    if (proofBox) proofBox.classList.add("hidden");
+    if (proofBox) {
+      proofBox.classList.add("hidden");
+      proofBox.classList.remove("level-result-box");
+    }
+
+    if (goldenRodStars) {
+      goldenRodStars.classList.add("hidden");
+      goldenRodStars.innerHTML = "";
+    }
+
+    if (verificationInput) verificationInput.style.display = "block";
+    if (verifySubmitBtn) verifySubmitBtn.style.display = "inline-flex";
     waitingForProof = false;
   }
 
@@ -462,19 +712,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (verificationHelp) {
-        verificationHelp.textContent = "Nice work. You identified the trusted domain.";
+        verificationHelp.textContent = "Nice work. Click Continue to move to the next Inbox email.";
       }
 
       addClue("Player correctly identified the official domain to visit manually.");
       waitingForProof = false;
       setDecisionFeedback("good", "Excellent. You chose the safest action and identified the correct official website.");
-
-      if (window.setFishCoachCloseHandler) {
-        window.setFishCoachCloseHandler(() => {
-          if (window.closeFishCoachCustom) window.closeFishCoachCustom();
-          window.location.href = "./levelMap.html";
-        });
-      }
+      configureCoachContinue(activeMessage.id, "good");
       return;
     }
 
@@ -498,7 +742,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function bindBrandChallenge() {
     if (brandChallengeContinueBtn) {
       brandChallengeContinueBtn.addEventListener("click", () => {
-        if (challengeLocked) return;
         goToNextBrandRound();
       });
     }
@@ -526,8 +769,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function restartBrandChallenge() {
     challengeRoundIndex = 0;
     challengeScoreValue = 0;
-    brandChallengePassed = false;
     challengeLocked = false;
+    brandChallengePassed = false;
+    updateAuthGate(false);
 
     if (brandChallengeOverlay) {
       brandChallengeOverlay.classList.remove("hidden");
@@ -550,7 +794,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function hideBrandChallenge() {
-    brandChallengePassed = true;
+    updateAuthGate(true);
 
     if (brandChallengeOverlay) {
       brandChallengeOverlay.classList.add("hidden");
@@ -663,13 +907,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function goToNextBrandRound() {
+    if (challengeRoundIndex >= BRAND_CHALLENGE_ROUNDS.length - 1) return;
     challengeRoundIndex += 1;
     renderBrandRound();
   }
 
   function showBrandChallengeFinalState() {
     const passed = challengeScoreValue >= 4;
-
     if (!brandChallengeFeedback) return;
 
     if (passed) {
@@ -784,5 +1028,50 @@ document.addEventListener("DOMContentLoaded", () => {
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#39;");
+  }
+
+  function startBackgroundMusic() {
+    if (!bgMusic || musicStarted) return;
+
+    bgMusic.volume = 0.35;
+    bgMusic.loop = true;
+    bgMusic.play().then(() => {
+      musicStarted = true;
+    }).catch(() => {
+      // Browser may block autoplay until user interaction.
+    });
+  }
+
+  function pauseBackgroundMusic() {
+    if (!bgMusic) return;
+    bgMusic.pause();
+  }
+
+  function playLevelCompleteSfx() {
+    if (!levelCompleteSfx) return;
+    levelCompleteSfx.pause();
+    levelCompleteSfx.currentTime = 0;
+    levelCompleteSfx.play().catch(() => {});
+  }
+
+  function playLevelFailSfx() {
+    if (!levelFailSfx) return;
+    levelFailSfx.pause();
+    levelFailSfx.currentTime = 0;
+    levelFailSfx.play().catch(() => {});
+  }
+
+  function playCorrectAnswerSfx() {
+    if (!correctAnswerSfx) return;
+    correctAnswerSfx.pause();
+    correctAnswerSfx.currentTime = 0;
+    correctAnswerSfx.play().catch(() => {});
+  }
+
+  function playWrongAnswerSfx() {
+    if (!wrongAnswerSfx) return;
+    wrongAnswerSfx.pause();
+    wrongAnswerSfx.currentTime = 0;
+    wrongAnswerSfx.play().catch(() => {});
   }
 });
