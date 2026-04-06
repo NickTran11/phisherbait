@@ -38,6 +38,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const verificationResult = document.getElementById("verificationResult");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
 
+  const starsOverlay = document.getElementById("starsOverlay");
+  const starsRow = document.getElementById("starsRow");
+  const starsText = document.getElementById("starsText");
+  const starsContinueBtn = document.getElementById("starsContinueBtn");
+
+  const bgMusic = document.getElementById("bgMusic");
+  const levelCompleteSfx = document.getElementById("levelCompleteSfx");
+  const levelFailSfx = document.getElementById("levelFailSfx");
+  const correctAnswerSfx = document.getElementById("correctAnswerSfx");
+  const wrongAnswerSfx = document.getElementById("wrongAnswerSfx");
+
   const inspectorValues = document.querySelectorAll(".inspector-value");
 
   const inboxFolder = document.getElementById("inboxFolder");
@@ -69,6 +80,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let challengeScoreValue = 0;
   let challengeLocked = false;
   let brandChallengePassed = false;
+
+  const inboxMissionMessages = data.messages.filter(msg => (msg.folder || "Inbox") === "Inbox");
+  const scoredMessageIds = new Set();
+  const messageRatings = new Map();
+
+  let musicStarted = false;
+  const musicVolume = 0.35;
 
   const BRAND_CHALLENGE_ROUNDS = [
     {
@@ -137,6 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
     bindActions();
     bindProof();
     bindBrandChallenge();
+    bindMissionResultOverlay();
+    bindGlobalMusicStart();
 
     refreshFolderCounts();
     renderFolder("Inbox");
@@ -149,6 +169,196 @@ document.addEventListener("DOMContentLoaded", () => {
       brandChallengeOverlay.classList.add("hidden");
       brandChallengeOverlay.setAttribute("aria-hidden", "true");
     }
+  }
+
+  function bindMissionResultOverlay() {
+    if (starsContinueBtn) {
+      starsContinueBtn.addEventListener("click", () => {
+        window.location.href = "./levelMap.html";
+      });
+    }
+  }
+
+  function bindGlobalMusicStart() {
+    document.addEventListener("pointerdown", startBackgroundMusic, { once: true });
+  }
+
+  function isInboxMessage(msg) {
+    return !!msg && (msg.folder || "Inbox") === "Inbox";
+  }
+
+  function isMessageResolved(messageId) {
+    return scoredMessageIds.has(messageId);
+  }
+
+  function getMessageRating(messageId) {
+    return messageRatings.get(messageId) || "";
+  }
+
+  function getRatingLabel(rating) {
+    if (rating === "good") return "All Good";
+    if (rating === "warn") return "Not good";
+    if (rating === "bad") return "Worst";
+    return "";
+  }
+
+  function allInboxMessagesResolved() {
+    return scoredMessageIds.size === inboxMissionMessages.length;
+  }
+
+  function getNextUnresolvedInboxMessage(excludeId = "") {
+    return inboxMissionMessages.find(msg => !scoredMessageIds.has(msg.id) && msg.id !== excludeId) || null;
+  }
+
+  function updateActionAvailability() {
+    const disableActions = !activeMessage || (isInboxMessage(activeMessage) && isMessageResolved(activeMessage.id));
+    document.querySelectorAll("[data-action]").forEach(btn => {
+      btn.disabled = disableActions;
+    });
+  }
+
+  function startBackgroundMusic() {
+    if (!bgMusic || musicStarted) return;
+
+    bgMusic.volume = musicVolume;
+    bgMusic.loop = true;
+
+    bgMusic.play().then(() => {
+      musicStarted = true;
+    }).catch(() => {
+      // Browser autoplay policies may require another interaction.
+    });
+  }
+
+  function stopBackgroundMusic() {
+    if (!bgMusic) return;
+    bgMusic.pause();
+  }
+
+  function playSound(audioEl) {
+    if (!audioEl) return;
+    audioEl.pause();
+    audioEl.currentTime = 0;
+    audioEl.play().catch(() => {});
+  }
+
+  function playCorrectAnswerSfx() {
+    playSound(correctAnswerSfx);
+  }
+
+  function playWrongAnswerSfx() {
+    playSound(wrongAnswerSfx);
+  }
+
+  function playLevelCompleteSfx() {
+    playSound(levelCompleteSfx);
+  }
+
+  function playLevelFailSfx() {
+    playSound(levelFailSfx);
+  }
+
+  function setCoachContinueHandler(message, resultType, requiresProof) {
+    if (!window.setFishCoachCloseHandler) return;
+
+    const messageId = message?.id || "";
+    const shouldFinalize = isInboxMessage(message);
+
+    window.setFishCoachCloseHandler(() => {
+      if (requiresProof && waitingForProof) {
+        if (verificationHelp) {
+          verificationHelp.textContent = "Finish the proof of understanding first.";
+        }
+        if (verificationInput) {
+          verificationInput.focus();
+          verificationInput.select();
+        }
+        return;
+      }
+
+      if (window.closeFishCoachCustom) {
+        window.closeFishCoachCustom();
+      }
+
+      if (shouldFinalize && messageId && resultType && !isMessageResolved(messageId)) {
+        finalizeInboxMessage(messageId, resultType);
+      }
+    });
+  }
+
+  function finalizeInboxMessage(messageId, resultType) {
+    if (!messageId || isMessageResolved(messageId)) return;
+
+    scoredMessageIds.add(messageId);
+    messageRatings.set(messageId, resultType);
+
+    const nextInboxMessage = getNextUnresolvedInboxMessage(messageId);
+    renderFolder("Inbox", nextInboxMessage ? nextInboxMessage.id : messageId);
+
+    if (allInboxMessagesResolved()) {
+      setTimeout(() => {
+        showMissionResult();
+      }, 120);
+    }
+  }
+
+  function getMissionStarCount() {
+    const ratings = inboxMissionMessages.map(msg => getMessageRating(msg.id));
+
+    const allGood = ratings.length === inboxMissionMessages.length && ratings.every(rating => rating === "good");
+    const allBad = ratings.length === inboxMissionMessages.length && ratings.every(rating => rating === "bad");
+
+    if (allGood) return 3;
+    if (allBad) return 0;
+    return 1;
+  }
+
+  function renderMissionStars(score) {
+    if (!starsRow) return;
+
+    starsRow.innerHTML = "";
+
+    for (let i = 1; i <= 3; i += 1) {
+      const star = document.createElement("img");
+      star.src = i <= score ? "./star-filled.png" : "./star-empty.png";
+      star.alt = i <= score ? "Filled star" : "Empty star";
+      star.className = "star-result-icon";
+      starsRow.appendChild(star);
+    }
+  }
+
+  function showMissionResult() {
+    if (!starsOverlay) return;
+
+    const starCount = getMissionStarCount();
+
+    hideProofBox();
+    if (window.closeFishCoachCustom) {
+      window.closeFishCoachCustom();
+    }
+
+    stopBackgroundMusic();
+
+    if (starCount === 0) {
+      playLevelFailSfx();
+    } else {
+      playLevelCompleteSfx();
+    }
+
+    renderMissionStars(starCount);
+
+    if (starsText) {
+      if (starCount === 3) {
+        starsText.textContent = "Excellent job. You chose the safest action and earned 3 stars.";
+      } else if (starCount === 0) {
+        starsText.textContent = "Mission failed. Every inbox email was handled with the riskiest action, so you earned 0 stars.";
+      } else {
+        starsText.textContent = "You completed the mission and earned 1 star. Slow down and verify more carefully next time.";
+      }
+    }
+
+    starsOverlay.classList.remove("hidden");
+    starsOverlay.setAttribute("aria-hidden", "false");
   }
 
   function renderScenario() {
@@ -186,6 +396,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function bindScenarioButtons() {
     if (beginMissionBtn) {
       beginMissionBtn.type = "button";
+      beginMissionBtn.addEventListener("click", () => {
+        startBackgroundMusic();
+      });
     }
 
     if (openDossierBtn && scenarioOverlay) {
@@ -216,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mailboxInboxCount) mailboxInboxCount.textContent = String(inboxMessages.length);
   }
 
-  function renderFolder(folderName) {
+  function renderFolder(folderName, preferredMessageId = "") {
     currentFolder = folderName;
     if (listTitle) listTitle.textContent = folderName;
 
@@ -229,10 +442,28 @@ document.addEventListener("DOMContentLoaded", () => {
       messageList.innerHTML = `<div class="message-item"><div class="message-preview">No messages in ${escapeHtml(folderName)}.</div></div>`;
       activeMessage = null;
       clearReadingPane();
+      updateActionAvailability();
       return;
     }
 
-    activeMessage = folderMessages[0];
+    const preferredMessage = preferredMessageId
+      ? folderMessages.find(msg => msg.id === preferredMessageId) || null
+      : null;
+
+    const firstUnresolvedInboxMessage = folderName === "Inbox"
+      ? folderMessages.find(msg => !isMessageResolved(msg.id)) || null
+      : null;
+
+    const currentFolderActiveMessage = activeMessage
+      ? folderMessages.find(msg => msg.id === activeMessage.id) || null
+      : null;
+
+    activeMessage =
+      preferredMessage ||
+      firstUnresolvedInboxMessage ||
+      currentFolderActiveMessage ||
+      folderMessages[0];
+
     renderMessageList(folderMessages);
     renderReadingPane(activeMessage);
     resetStateForMessage();
@@ -242,13 +473,23 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!messageList) return;
     messageList.innerHTML = "";
 
-    folderMessages.forEach((msg, index) => {
+    folderMessages.forEach(msg => {
+      const isActive = !!activeMessage && activeMessage.id === msg.id;
+      const rating = getMessageRating(msg.id);
+      const ratingLabel = getRatingLabel(rating);
+
       const item = document.createElement("div");
-      item.className = "message-item" + (index === 0 ? " active" : "");
+      item.className = "message-item"
+        + (isActive ? " active" : "")
+        + (rating ? ` resolved-${rating}` : "")
+        + (rating ? " resolved" : "");
       item.dataset.id = msg.id;
 
       item.innerHTML = `
-        <div class="message-sender">${escapeHtml(msg.sender)}</div>
+        <div class="message-sender-row">
+          <div class="message-sender">${escapeHtml(msg.sender)}</div>
+          ${ratingLabel ? `<span class="message-status-badge ${rating}">${escapeHtml(ratingLabel)}</span>` : ""}
+        </div>
         <div class="message-time">${escapeHtml(shortTime(msg.time))}</div>
         <div class="message-subject">${escapeHtml(msg.previewTop)}</div>
         <div class="message-preview ${msg.external ? "external-preview" : ""}">
@@ -318,6 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (window.closeFishCoachCustom) window.closeFishCoachCustom();
     renderHints();
+    updateActionAvailability();
   }
 
   function renderHints() {
@@ -367,6 +609,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-action]").forEach(btn => {
       btn.addEventListener("click", () => {
         if (!activeMessage) return;
+        startBackgroundMusic();
         handleAction(btn.dataset.action);
       });
     });
@@ -385,29 +628,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleAction(action) {
+    if (!activeMessage) return;
+
+    if (isInboxMessage(activeMessage) && isMessageResolved(activeMessage.id)) {
+      setDecisionFeedback("warn", "This inbox email is already marked.");
+      return;
+    }
+
     const isCorrect = action === activeMessage.correctAction;
     const isPartial = action === activeMessage.partialAction;
+    const resultType = isCorrect ? "good" : isPartial ? "warn" : "bad";
 
     if (isCorrect) {
+      playCorrectAnswerSfx();
       addClue("Correct action chosen.");
       setDecisionFeedback("good", "Correct. That is the best action here.");
-      showCoach("perfect", true);
+      showCoach("perfect", true, resultType);
       return;
     }
 
     if (isPartial) {
+      playWrongAnswerSfx();
       addClue("Partial credit: safer than clicking, but not the best answer.");
       setDecisionFeedback("warn", "Safer than clicking, but not the best answer for this scenario.");
-      showCoach("good", false);
+      showCoach("good", false, resultType);
       return;
     }
 
+    playWrongAnswerSfx();
     addClue("Incorrect action chosen. Re-check sender details, urgency language, and the previewed link.");
     setDecisionFeedback("bad", "That action is risky. Reveal another hint and try again.");
-    showCoach("bad", false);
+    showCoach("bad", false, resultType);
   }
 
-  function showCoach(mode, withProof) {
+  function showCoach(mode, withProof, resultType) {
     if (!window.showFishCoachCustom) return;
 
     const coachPayload = activeMessage.coach?.[mode];
@@ -422,6 +676,8 @@ document.addEventListener("DOMContentLoaded", () => {
       waitingForProof = false;
       hideProofBox();
     }
+
+    setCoachContinueHandler(activeMessage, resultType, withProof);
   }
 
   function showProofBox() {
@@ -451,6 +707,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function submitVerificationAnswer() {
     if (!activeMessage?.verification) return;
 
+    startBackgroundMusic();
+
     const raw = verificationInput ? verificationInput.value : "";
     const answer = normalizeAnswer(raw);
     const accepted = (activeMessage.verification.acceptedAnswers || []).map(normalizeAnswer);
@@ -462,21 +720,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (verificationHelp) {
-        verificationHelp.textContent = "Nice work. You identified the trusted domain.";
+        verificationHelp.textContent = "Correct. Press Continue to mark this email.";
       }
 
       addClue("Player correctly identified the official domain to visit manually.");
       waitingForProof = false;
       setDecisionFeedback("good", "Excellent. You chose the safest action and identified the correct official website.");
-
-      if (window.setFishCoachCloseHandler) {
-        window.setFishCoachCloseHandler(() => {
-          if (window.closeFishCoachCustom) window.closeFishCoachCustom();
-          window.location.href = "./levelMap.html";
-        });
-      }
       return;
     }
+
+    playWrongAnswerSfx();
 
     const guidanceList = activeMessage.verification.retryGuidance || [];
     const guidance = guidanceList[Math.min(retryCount, guidanceList.length - 1)] || "Try again.";

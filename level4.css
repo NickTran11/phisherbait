@@ -898,3 +898,85 @@ html, body{
 .stars-continue-btn:hover{
   transform: translateY(-1px);
 }
+
+
+
+/* ===== LEVEL 4 EMAIL RESULT MARKS ===== */
+.message-item{
+  position: relative;
+}
+
+.message-sender-row{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.message-status-badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.message-status-badge.good{
+  background: #dff6ee;
+  color: #0f8a5f;
+  border: 1px solid #a9e3ca;
+}
+
+.message-status-badge.warn{
+  background: #fff0e8;
+  color: #c2410c;
+  border: 1px solid #f3c5ad;
+}
+
+.message-status-badge.bad{
+  background: #ffe8e8;
+  color: #b42318;
+  border: 1px solid #f1b9b6;
+}
+
+.message-item.resolved-good{
+  background: linear-gradient(180deg, #f4fcf8 0%, #ebf8f1 100%);
+  border-left: 4px solid #0f8a5f;
+  padding-left: 12px;
+}
+
+.message-item.resolved-warn{
+  background: linear-gradient(180deg, #fff8f1 0%, #fff2e5 100%);
+  border-left: 4px solid #c2410c;
+  padding-left: 12px;
+}
+
+.message-item.resolved-bad{
+  background: linear-gradient(180deg, #fff3f3 0%, #ffeaea 100%);
+  border-left: 4px solid #b42318;
+  padding-left: 12px;
+}
+
+.message-item.resolved-good .message-preview{
+  color: #0f8a5f;
+}
+
+.message-item.resolved-warn .message-preview{
+  color: #c2410c;
+}
+
+.message-item.resolved-bad .message-preview{
+  color: #b42318;
+}
+
+.action-card[disabled]{
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(0.12);
+  transform: none !important;
+  box-shadow: none !important;
+}
