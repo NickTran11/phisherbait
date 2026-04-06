@@ -15,54 +15,51 @@ document.addEventListener("DOMContentLoaded", () => {
   const retryBtn = document.getElementById("retryBtn");
   const returnBtn = document.getElementById("returnBtn");
 
-  /*
-    Replace only the img paths below with your real GitHub image files later.
-    Keep 1 correct logo and 2 clone/fake logos in each round.
-  */
+  // All icon files are now loaded from the repo root (main), not a folder.
   const rounds = [
     {
       company: "Microsoft",
-      prompt: "Choose the authentic official Microsoft icon.",
+      prompt: "Choose the authentic official icon.",
       options: [
-        { img: "./icons/level4-auth/microsoft-real.png", correct: true },
-        { img: "./icons/level4-auth/microsoft-fake-1.png", correct: false },
-        { img: "./icons/level4-auth/microsoft-fake-2.png", correct: false }
+        { img: "./microsoft-real.png", correct: true },
+        { img: "./microsoft-fake-1.png", correct: false },
+        { img: "./microsoft-fake-2.png", correct: false }
       ]
     },
     {
       company: "Google",
-      prompt: "Choose the authentic official Google icon.",
+      prompt: "Choose the authentic official icon.",
       options: [
-        { img: "./icons/level4-auth/google-fake-1.png", correct: false },
-        { img: "./icons/level4-auth/google-real.png", correct: true },
-        { img: "./icons/level4-auth/google-fake-2.png", correct: false }
+        { img: "./google-fake-1.png", correct: false },
+        { img: "./google-real.png", correct: true },
+        { img: "./google-fake-2.png", correct: false }
       ]
     },
     {
       company: "Apple",
-      prompt: "Choose the authentic official Apple icon.",
+      prompt: "Choose the authentic official icon.",
       options: [
-        { img: "./icons/level4-auth/apple-fake-1.png", correct: false },
-        { img: "./icons/level4-auth/apple-fake-2.png", correct: false },
-        { img: "./icons/level4-auth/apple-real.png", correct: true }
+        { img: "./apple-fake-1.png", correct: false },
+        { img: "./apple-fake-2.png", correct: false },
+        { img: "./apple-real.png", correct: true }
       ]
     },
     {
       company: "Amazon",
-      prompt: "Choose the authentic official Amazon icon.",
+      prompt: "Choose the authentic official icon.",
       options: [
-        { img: "./icons/level4-auth/amazon-real.png", correct: true },
-        { img: "./icons/level4-auth/amazon-fake-1.png", correct: false },
-        { img: "./icons/level4-auth/amazon-fake-2.png", correct: false }
+        { img: "./amazon-real.png", correct: true },
+        { img: "./amazon-fake-1.png", correct: false },
+        { img: "./amazon-fake-2.png", correct: false }
       ]
     },
     {
       company: "PayPal",
-      prompt: "Choose the authentic official PayPal icon.",
+      prompt: "Choose the authentic official icon.",
       options: [
-        { img: "./icons/level4-auth/paypal-fake-1.png", correct: false },
-        { img: "./icons/level4-auth/paypal-real.png", correct: true },
-        { img: "./icons/level4-auth/paypal-fake-2.png", correct: false }
+        { img: "./paypal-fake-1.png", correct: false },
+        { img: "./paypal-real.png", correct: true },
+        { img: "./paypal-fake-2.png", correct: false }
       ]
     }
   ];
@@ -169,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showResult() {
     optionGrid.innerHTML = "";
     promptText.textContent = "Authentication complete.";
-    roundCounter.textContent = `Finished`;
+    roundCounter.textContent = "Finished";
     scoreCounter.textContent = `Score: ${score}/${rounds.length}`;
     clearFeedback();
 
