@@ -68,11 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let challengeRoundIndex = 0;
   let challengeScoreValue = 0;
   let challengeLocked = false;
-  let brandChallengePassed = false;
 
   const BRAND_CHALLENGE_ROUNDS = [
     {
-      company: "Microsoft",
       prompt: "Choose the official Microsoft brand card.",
       explanation: "The real Microsoft mark keeps the correct spelling and the clean four-square window.",
       options: [
@@ -82,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      company: "PayPal",
       prompt: "Pick the real PayPal sign-in brand.",
       explanation: "Clone phishing often swaps a lowercase l with an uppercase I, like PayPaI.",
       options: [
@@ -92,9 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      company: "Google",
-      prompt: "Which card matches the official Google look?",
-      explanation: "A fake can keep a similar look but still change the color balance or shape style.",
+      prompt: "Which icon matches the official Google look?",
+      explanation: "A fake can keep a familiar style but still distort the color or shape balance.",
       options: [
         { displayName: "Google", logoType: "google", isReal: true },
         { displayName: "Go0gle", logoType: "google-fake-zero", isReal: false },
@@ -102,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      company: "Netflix",
       prompt: "Select the official Netflix identity.",
       explanation: "Fake landing pages often keep the red theme but distort the brand shape or letter style.",
       options: [
@@ -112,7 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ]
     },
     {
-      company: "Adobe",
       prompt: "Choose the real Adobe brand card.",
       explanation: "Attackers often keep the same red feel but alter the shape or spacing.",
       options: [
@@ -140,11 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     refreshFolderCounts();
     renderFolder("Inbox");
-    lockMissionUntilMiniGameStarts();
-  }
 
-  function lockMissionUntilMiniGameStarts() {
-    brandChallengePassed = false;
     if (brandChallengeOverlay) {
       brandChallengeOverlay.classList.add("hidden");
       brandChallengeOverlay.setAttribute("aria-hidden", "true");
@@ -195,6 +185,16 @@ document.addEventListener("DOMContentLoaded", () => {
         scenarioOverlay.setAttribute("aria-hidden", "false");
       });
     }
+
+    window.startLevel4MiniGame = () => {
+      if (!brandChallengeOverlay || !brandChallengeChoices) {
+        hideScenarioOverlay();
+        return;
+      }
+
+      hideScenarioOverlay();
+      restartBrandChallenge();
+    };
   }
 
   function bindFolderButtons() {
@@ -417,6 +417,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.showFishCoachCustom(coachPayload);
 
+    if (window.setFishCoachCloseHandler) {
+      window.setFishCoachCloseHandler(() => {
+        if (waitingForProof) return;
+        if (window.closeFishCoachCustom) window.closeFishCoachCustom();
+        window.location.href = "./levelMap.html";
+      });
+    }
+
     if (withProof) {
       waitingForProof = true;
       showProofBox();
@@ -430,11 +438,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!proofBox || !activeMessage?.verification) return;
 
     proofBox.classList.remove("hidden");
-
     if (verificationPrompt) verificationPrompt.textContent = activeMessage.verification.prompt || "";
     if (verificationInput) verificationInput.value = "";
     if (verificationHelp) verificationHelp.textContent = "Type the real official domain only.";
-
     if (verificationResult) {
       verificationResult.textContent = "";
       verificationResult.className = "proof-result";
@@ -516,19 +522,11 @@ document.addEventListener("DOMContentLoaded", () => {
         hideBrandChallenge();
       });
     }
-
-    window.startLevel4MiniGame = startLevel4MiniGame;
-  }
-
-  function startLevel4MiniGame() {
-    hideScenarioOverlay();
-    restartBrandChallenge();
   }
 
   function restartBrandChallenge() {
     challengeRoundIndex = 0;
     challengeScoreValue = 0;
-    brandChallengePassed = false;
     challengeLocked = false;
 
     if (brandChallengeOverlay) {
@@ -552,8 +550,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function hideBrandChallenge() {
-    brandChallengePassed = true;
-
     if (brandChallengeOverlay) {
       brandChallengeOverlay.classList.add("hidden");
       brandChallengeOverlay.setAttribute("aria-hidden", "true");
@@ -601,7 +597,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       button.innerHTML = `
         <div class="brand-logo-shell">
-          ${createBrandVisual(option)}
+          ${createBrandVisual(option.logoType)}
         </div>
       `;
 
@@ -681,15 +677,15 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    brandChallengeFeedback.textContent = `You scored ${challengeScoreValue} / ${BRAND_CHALLENGE_ROUNDS.length}. You need at least 4 / 5 to unlock Level 4, so try again and watch for tiny phishing tricks.`;
+    brandChallengeFeedback.textContent = `You scored ${challengeScoreValue} / ${BRAND_CHALLENGE_ROUNDS.length}. You need at least 4 / 5 to unlock Level 4, so try again.`;
     brandChallengeFeedback.className = "brand-challenge-feedback bad";
 
     if (brandChallengeRestartBtn) brandChallengeRestartBtn.classList.remove("hidden");
     addClue(`Mini game attempt finished below the pass mark: ${challengeScoreValue} / ${BRAND_CHALLENGE_ROUNDS.length}.`);
   }
 
-  function createBrandVisual(option) {
-    switch (option.logoType) {
+  function createBrandVisual(logoType) {
+    switch (logoType) {
       case "microsoft":
         return `
           <svg viewBox="0 0 100 100" width="96" height="96" aria-hidden="true">
