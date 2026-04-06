@@ -56,6 +56,13 @@ const callFeedback = document.getElementById("callFeedback");
 const callContinueBtn = document.getElementById("callContinueBtn");
 const callCloseX = document.getElementById("callCloseX");
 
+const bgMusic = document.getElementById("bgMusic");
+const levelCompleteSfx = document.getElementById("levelCompleteSfx");
+const levelFailSfx = document.getElementById("levelFailSfx");
+
+let musicVolume = 0.35;
+let duckedMusicVolume = 0.12;
+let musicStarted = false;
   const clueSet = new Set();
   let activeMessage = data.messages[0];
   let revealedHintCount = 0;
@@ -119,6 +126,8 @@ function showLevelCompleteCoach() {
   waitingForProof = false;
 
   hideProofBox();
+  bgMusic.pause();
+playLevelCompleteSfx();
 
    // Reset any currently open coach popup first
   if (window.closeFishCoachCustom) {
@@ -213,6 +222,9 @@ function showLevelFailedCoach() {
 
   hideProofBox();
 
+  bgMusic.pause();
+  playLevelFailSfx();
+
   const title = "Level Failed";
   const lessons = [
     "You made too many risky choices in this level.",
@@ -287,6 +299,50 @@ function maybeQueueFollowupCall(triggerType) {
   pendingCall = callData;
 }
 
+function startBackgroundMusic() {
+  if (!bgMusic || musicStarted) return;
+
+  bgMusic.volume = musicVolume;
+  bgMusic.loop = true;
+
+  bgMusic.play().then(() => {
+    musicStarted = true;
+  }).catch(() => {
+    // Browser may block autoplay until user interaction
+  });
+}
+
+function setBackgroundMusicVolume(volume) {
+  if (!bgMusic) return;
+  bgMusic.volume = Math.max(0, Math.min(1, volume));
+}
+
+function duckBackgroundMusic() {
+  if (!bgMusic) return;
+  setBackgroundMusicVolume(duckedMusicVolume);
+}
+
+function restoreBackgroundMusic() {
+  if (!bgMusic) return;
+  setBackgroundMusicVolume(musicVolume);
+}
+
+function playLevelCompleteSfx() {
+  if (!levelCompleteSfx) return;
+
+  levelCompleteSfx.pause();
+  levelCompleteSfx.currentTime = 0;
+  levelCompleteSfx.play().catch(() => {});
+}
+
+function playLevelFailSfx() {
+  if (!levelFailSfx) return;
+
+  levelFailSfx.pause();
+  levelFailSfx.currentTime = 0;
+  levelFailSfx.play().catch(() => {});
+}
+
   function init() {
     renderScenario();
     renderMessageList();
@@ -295,6 +351,12 @@ function maybeQueueFollowupCall(triggerType) {
     bindActions();
     bindProof();
     bindScenarioButtons();
+
+    if (callAudio) {
+  callAudio.addEventListener("ended", () => {
+    restoreBackgroundMusic();
+  });
+}
   }
 
   function renderScenario() {
@@ -328,8 +390,12 @@ function maybeQueueFollowupCall(triggerType) {
   function bindScenarioButtons() {
     if (beginMissionBtn && scenarioOverlay) {
       beginMissionBtn.addEventListener("click", () => {
+
+        startBackgroundMusic();
         scenarioOverlay.style.opacity = "0";
         scenarioOverlay.style.transition = "opacity 0.25s ease";
+
+        
 
         setTimeout(() => {
           scenarioOverlay.style.display = "none";
@@ -644,6 +710,8 @@ function startCall(callData) {
   if (callAnswerBtn) callAnswerBtn.classList.add("hidden");
   if (callActiveArea) callActiveArea.classList.remove("hidden");
 
+  duckBackgroundMusic();
+
   if (callAudio && callData.audioSrc) {
     callAudio.src = callData.audioSrc;
     callAudio.play().catch(() => {});
@@ -721,6 +789,8 @@ function hideFollowupCall() {
     callAudio.pause();
     callAudio.currentTime = 0;
   }
+
+  restoreBackgroundMusic();
 }
 
   function submitVerificationAnswer() {

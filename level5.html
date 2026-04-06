@@ -312,6 +312,18 @@
   </div>
 </div>
 
+<audio id="bgMusic" loop preload="auto">
+  <source src="./audio/capstoneLevels.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="levelCompleteSfx" preload="auto">
+  <source src="./audio/levelWin.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="levelFailSfx" preload="auto">
+  <source src="./audio/levelFail.mp3" type="audio/mpeg">
+</audio>
+
 <script>
   function beginLevelMission() {
     const overlay = document.getElementById("scenarioOverlay");
