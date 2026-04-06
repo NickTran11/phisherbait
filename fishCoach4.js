@@ -11,9 +11,9 @@
 
   async function typeText(text) {
     fishText.textContent = "";
-    for (let i = 0; i < text.length; i++) {
+    for (let i = 0; i < text.length; i += 1) {
       fishText.textContent += text[i];
-      await new Promise((r) => setTimeout(r, 16));
+      await new Promise(resolve => setTimeout(resolve, 16));
     }
   }
 
@@ -22,7 +22,7 @@
 
     fishTitle.textContent = payload.title || "Feedback";
     fishLessons.innerHTML = Array.isArray(payload.lessons)
-      ? payload.lessons.map((x) => `• ${escapeHtml(x)}`).join("<br>")
+      ? payload.lessons.map(item => `• ${escapeHtml(item)}`).join("<br>")
       : "";
 
     overlay.classList.remove("hidden");
@@ -40,7 +40,19 @@
     closeHandler = typeof fn === "function" ? fn : null;
   }
 
+  function clearFishCoachCloseHandler() {
+    closeHandler = null;
+  }
+
   fishCloseBtn.addEventListener("click", () => {
+    const evt = new CustomEvent("fishcoach4:continue", {
+      bubbles: true,
+      cancelable: true
+    });
+
+    const notCancelled = overlay.dispatchEvent(evt);
+    if (!notCancelled) return;
+
     if (typeof closeHandler === "function") {
       closeHandler();
       return;
@@ -61,4 +73,5 @@
   window.showFishCoachCustom = showFishCoachCustom;
   window.closeFishCoachCustom = closeFishCoachCustom;
   window.setFishCoachCloseHandler = setFishCoachCloseHandler;
+  window.clearFishCoachCloseHandler = clearFishCoachCloseHandler;
 })();

@@ -6,6 +6,7 @@
   <title>Phisher Bait - Level 4</title>
   <link rel="stylesheet" href="./level4.css" />
   <link rel="stylesheet" href="./fishCoach.css" />
+  <link rel="stylesheet" href="./level4Progress.css" />
 
   <style>
     .auth-gate-box{
@@ -405,6 +406,7 @@
         <div id="proofBox" class="proof-box hidden">
           <div class="proof-title">Proof of understanding</div>
           <div id="verificationPrompt" class="proof-text"></div>
+          <div id="goldenRodStars" class="golden-rod-stars hidden"></div>
 
           <input
             id="verificationInput"
@@ -426,6 +428,36 @@
       </div>
     </div>
   </div>
+
+
+  <div id="starsOverlay" class="stars-overlay hidden" aria-hidden="true">
+    <div class="stars-card">
+      <div class="stars-title">Mission Result</div>
+      <div id="starsResultRow" class="stars-row"></div>
+      <div id="starsResultText" class="stars-text">You completed the investigation.</div>
+      <button id="starsContinueBtn" class="stars-continue-btn" type="button">Go Back To Level Map</button>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="./audio/capstoneLevels.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="levelCompleteSfx" preload="auto">
+    <source src="./audio/levelWin.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="levelFailSfx" preload="auto">
+    <source src="./audio/levelFail.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="correctAnswerSfx" preload="auto">
+    <source src="./audio/CorrectAnswer.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="wrongAnswerSfx" preload="auto">
+    <source src="./audio/wrongAnswer.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     function beginLevelMission() {
@@ -451,9 +483,10 @@
     }
   </script>
 
-  <script src="./fishCoach.js"></script>
+  <script src="./fishCoach4.js"></script>
   <script src="./level4Data.js"></script>
   <script src="./level4Auth.js"></script>
   <script src="./levelBase4.js"></script>
+  <script src="./level4Progress.js"></script>
 </body>
 </html>
