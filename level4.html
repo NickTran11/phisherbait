@@ -101,110 +101,6 @@
         transform: none;
       }
     }
-
-
-    .message-item.resolved-good{
-      border-left: 6px solid #22c55e;
-      padding-left: 10px;
-      background: #f0fdf4;
-    }
-
-    .message-item.resolved-warn{
-      border-left: 6px solid #f59e0b;
-      padding-left: 10px;
-      background: #fff7ed;
-    }
-
-    .message-item.resolved-bad{
-      border-left: 6px solid #ef4444;
-      padding-left: 10px;
-      background: #fef2f2;
-    }
-
-    .message-item.active.resolved-good{
-      border-left-color: #22c55e;
-      background: #dcfce7;
-    }
-
-    .message-item.active.resolved-warn{
-      border-left-color: #f59e0b;
-      background: #ffedd5;
-    }
-
-    .message-item.active.resolved-bad{
-      border-left-color: #ef4444;
-      background: #fee2e2;
-    }
-
-    .message-status-badge{
-      grid-column: 1 / -1;
-      justify-self: start;
-      margin-top: 2px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-
-    .message-status-badge.result-good{
-      background: #dcfce7;
-      color: #166534;
-      border: 1px solid #86efac;
-    }
-
-    .message-status-badge.result-warn{
-      background: #ffedd5;
-      color: #9a3412;
-      border: 1px solid #fdba74;
-    }
-
-    .message-status-badge.result-bad{
-      background: #fee2e2;
-      color: #b91c1c;
-      border: 1px solid #fca5a5;
-    }
-
-    .golden-rod-stars{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 22px;
-      margin: 18px 0 16px;
-      flex-wrap: wrap;
-    }
-
-    .golden-rod-star-icon{
-      width: 110px;
-      height: 110px;
-      object-fit: contain;
-      filter: drop-shadow(0 8px 22px rgba(59,130,246,0.35));
-    }
-
-    .proof-box.level-result-box{
-      text-align: center;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .proof-box.level-result-box .proof-title{
-      display: none;
-    }
-
-    .proof-box.level-result-box .proof-text{
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 0;
-    }
-
-    .proof-box.level-result-box .proof-result{
-      color: #dbeafe;
-      font-size: 18px;
-      line-height: 1.55;
-      max-width: 620px;
-      margin: 0 auto;
-    }
-
   </style>
 </head>
 <body>
@@ -509,7 +405,6 @@
         <div id="proofBox" class="proof-box hidden">
           <div class="proof-title">Proof of understanding</div>
           <div id="verificationPrompt" class="proof-text"></div>
-          <div id="goldenRodStars" class="golden-rod-stars hidden"></div>
 
           <input
             id="verificationInput"
@@ -531,28 +426,6 @@
       </div>
     </div>
   </div>
-
-
-
-  <audio id="bgMusic" loop preload="auto">
-    <source src="./audio/capstoneLevels.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="levelCompleteSfx" preload="auto">
-    <source src="./audio/levelWin.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="levelFailSfx" preload="auto">
-    <source src="./audio/levelFail.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="correctAnswerSfx" preload="auto">
-    <source src="./audio/CorrectAnswer.mp3" type="audio/mpeg">
-  </audio>
-
-  <audio id="wrongAnswerSfx" preload="auto">
-    <source src="./audio/wrongAnswer.mp3" type="audio/mpeg">
-  </audio>
 
   <script>
     function beginLevelMission() {
@@ -578,7 +451,7 @@
     }
   </script>
 
-  <script src="./fishCoach4.js"></script>
+  <script src="./fishCoach.js"></script>
   <script src="./level4Data.js"></script>
   <script src="./level4Auth.js"></script>
   <script src="./levelBase4.js"></script>
