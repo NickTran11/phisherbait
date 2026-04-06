@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Phisher Bait - Level 4 Authentication</title>
+  <link rel="stylesheet" href="./level4MiniGame.css" />
+</head>
+<body>
+  <main class="mini-shell">
+    <section class="mini-card">
+      <div class="mini-topbar">
+        <a class="back-link" href="./level4.html">← Back to Level 4</a>
+        <div class="mini-badge">Authentication</div>
+      </div>
+
+      <h1 class="mini-title">Logo Authentication Mini Game</h1>
+      <p class="mini-subtitle">
+        Pick the authentic official logo. You need at least 4 out of 5 correct to unlock Level 4.
+      </p>
+
+      <div class="progress-wrap">
+        <div id="roundCounter" class="round-counter">Round 1 / 5</div>
+        <div id="scoreCounter" class="score-counter">Score: 0</div>
+      </div>
+
+      <div id="promptText" class="prompt-text">Choose the authentic official icon.</div>
+
+      <div id="optionGrid" class="option-grid"></div>
+
+      <div id="feedbackText" class="feedback-text"></div>
+
+      <div id="resultPanel" class="result-panel hidden">
+        <div id="resultTitle" class="result-title"></div>
+        <div id="resultBody" class="result-body"></div>
+
+        <div class="result-actions">
+          <button id="retryBtn" type="button" class="result-btn secondary-btn">Try Again</button>
+          <button id="returnBtn" type="button" class="result-btn primary-btn">Return to Level 4</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./level4MiniGame.js"></script>
+</body>
+</html>
