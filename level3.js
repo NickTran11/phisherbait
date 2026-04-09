@@ -1213,9 +1213,9 @@
         btnStart.addEventListener('click', () => {
             startOverlay.classList.remove('active');
             initGame();
-            if (musicToggle.checked) {
-                bgMusic.play().catch(e => console.log("Audio play failed:", e));
-            }
+            if (window.PhisherBaitSettings) {
+  window.PhisherBaitSettings.tryPlayBackgroundMusic();
+}
         });
 
         btnLearn.addEventListener('click', () => {
@@ -1224,20 +1224,11 @@
         });
 
         // Settings logic
-        const settingsOverlay = document.getElementById('settings-overlay');
         const bgMusic = document.getElementById('bg-music');
-        const musicToggle = document.getElementById('music-toggle');
 
-        window.toggleSettings = function() {
-            settingsOverlay.classList.toggle('active');
-        };
-
-        window.updateVolume = function() {
-            const volumeSlider = document.getElementById('volume-slider');
-            if (bgMusic && volumeSlider) {
-                bgMusic.volume = volumeSlider.value / 100;
-            }
-        };
+if (window.PhisherBaitSettings && bgMusic) {
+  window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 1 });
+}
 
         // Initialize volume
         window.updateVolume();
