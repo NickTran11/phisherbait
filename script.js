@@ -15,9 +15,7 @@ const levels = [
     { id: 5, title: "Deep Ocean", status: 'locked', yOffset: 0 },
 ];
 
-const state = {
-    isSettingsOpen: false,
-};
+
 
 // Auth Service (Firebase Wrapper)
 const AuthService = {
@@ -78,10 +76,7 @@ const AuthService = {
 };
 
 // DOM Elements
-const settingsOverlay = document.getElementById('settings-overlay');
-const settingsBackdrop = document.getElementById('settings-backdrop');
-const settingsCloseBtn = document.getElementById('settings-close-btn');
-const settingsCloseFooter = document.getElementById('settings-close-footer');
+
 const settingsLogoutBtn = document.getElementById('settings-logout-btn');
 const headerSettingsBtn = document.getElementById('header-settings-btn');
 const startBtn = document.getElementById('start-btn');
@@ -165,10 +160,7 @@ function updateUIForLoggedInUser(user) {
 }
 
 // Event Listeners
-if (headerSettingsBtn) headerSettingsBtn.addEventListener('click', toggleSettings);
-if (settingsBackdrop) settingsBackdrop.addEventListener('click', toggleSettings);
-if (settingsCloseBtn) settingsCloseBtn.addEventListener('click', toggleSettings);
-if (settingsCloseFooter) settingsCloseFooter.addEventListener('click', toggleSettings);
+
 if (settingsLogoutBtn) settingsLogoutBtn.addEventListener('click', () => AuthService.logout());
 
 if (startBtn) {
@@ -259,16 +251,7 @@ if (dashboardContent) {
 }
 
 // Functions
-function toggleSettings() {
-    state.isSettingsOpen = !state.isSettingsOpen;
-    if (state.isSettingsOpen) {
-        settingsOverlay.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-    } else {
-        settingsOverlay.classList.add('hidden');
-        document.body.style.overflow = '';
-    }
-}
+
 
 function renderDashboard() {
     // Configuration for layout
