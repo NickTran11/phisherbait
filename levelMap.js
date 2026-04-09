@@ -199,6 +199,7 @@ function unlockLevel(levelId) {
   LEVELS[levelId].unlocked = true;
 
   // Play animation on node (even if it currently has locked class)
+  playUnlockSfx();
   node.classList.add("unlocking");
 
   // After sparkle, switch to available and remove locked visuals
@@ -244,6 +245,7 @@ if (!LEVELS[levelId]?.unlocked || isLocked(node)) {
   }
 
   // Trigger launch animation
+    playStartLevelSfx();
   document.body.classList.add("launching");
   selectedNode.classList.add("launching");
 
