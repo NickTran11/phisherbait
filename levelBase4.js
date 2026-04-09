@@ -222,17 +222,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startBackgroundMusic() {
-    if (!bgMusic || musicStarted) return;
+  if (!bgMusic || musicStarted) return;
 
-    bgMusic.volume = musicVolume;
-    bgMusic.loop = true;
+  bgMusic.loop = true;
 
-    bgMusic.play().then(() => {
-      musicStarted = true;
-    }).catch(() => {
-      // Browser autoplay policies may require another interaction.
-    });
+  if (window.PhisherBaitSettings) {
+    window.PhisherBaitSettings.tryPlayBackgroundMusic();
+    musicStarted = true;
+    return;
   }
+
+  bgMusic.volume = musicVolume;
+  bgMusic.play().then(() => {
+    musicStarted = true;
+  }).catch(() => {
+    // Browser autoplay policies may require another interaction.
+  });
+}
 
   function stopBackgroundMusic() {
     if (!bgMusic) return;
