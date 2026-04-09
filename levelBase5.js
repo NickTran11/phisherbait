@@ -62,6 +62,16 @@ const levelFailSfx = document.getElementById("levelFailSfx");
 const callRingSfx = document.getElementById("callRingSfx");
 const correctAnswerSfx = document.getElementById("correctAnswerSfx");
 const wrongAnswerSfx = document.getElementById("wrongAnswerSfx");
+  if (window.PhisherBaitSettings) {
+  window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 0.35 });
+
+  window.PhisherBaitSettings.registerAudioElement(callAudio, { type: "sfx", baseVolume: 1 });
+  window.PhisherBaitSettings.registerAudioElement(callRingSfx, { type: "sfx", baseVolume: 1 });
+  window.PhisherBaitSettings.registerAudioElement(correctAnswerSfx, { type: "sfx", baseVolume: 1 });
+  window.PhisherBaitSettings.registerAudioElement(wrongAnswerSfx, { type: "sfx", baseVolume: 1 });
+  window.PhisherBaitSettings.registerAudioElement(levelCompleteSfx, { type: "sfx", baseVolume: 1 });
+  window.PhisherBaitSettings.registerAudioElement(levelFailSfx, { type: "sfx", baseVolume: 1 });
+}
 
 let musicVolume = 0.35;
 let duckedMusicVolume = 0.12;
@@ -421,7 +431,11 @@ function playWrongAnswerSfx() {
     if (beginMissionBtn && scenarioOverlay) {
       beginMissionBtn.addEventListener("click", () => {
 
-        startBackgroundMusic();
+        if (window.PhisherBaitSettings) {
+  window.PhisherBaitSettings.tryPlayBackgroundMusic();
+} else {
+  startBackgroundMusic();
+}
         scenarioOverlay.style.opacity = "0";
         scenarioOverlay.style.transition = "opacity 0.25s ease";
 
