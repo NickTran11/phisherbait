@@ -69,6 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const brandChallengeRestartBtn = document.getElementById("brandChallengeRestartBtn");
   const brandChallengeUnlockBtn = document.getElementById("brandChallengeUnlockBtn");
 
+  if (window.PhisherBaitSettings && bgMusic) {
+  window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 0.35 });
+}
+
   const clueSet = new Set();
   let currentFolder = "Inbox";
   let activeMessage = null;
@@ -397,7 +401,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (beginMissionBtn) {
       beginMissionBtn.type = "button";
       beginMissionBtn.addEventListener("click", () => {
-        startBackgroundMusic();
+        if (window.PhisherBaitSettings) {
+      window.PhisherBaitSettings.tryPlayBackgroundMusic();
+    }
       });
     }
 
