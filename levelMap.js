@@ -44,18 +44,16 @@ const LEVELS = {
 
 // ----- AUDIO STUFF
 
+// ----- AUDIO STUFF
 const startLevelSfx = document.getElementById("startLevelSfx");
 const unlockSfx = document.getElementById("unlockSfx");
 
 if (window.PhisherBaitSettings) {
-  //window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 0.35 });
-
   window.PhisherBaitSettings.registerAudioElement(startLevelSfx, { type: "sfx", baseVolume: 1 });
   window.PhisherBaitSettings.registerAudioElement(unlockSfx, { type: "sfx", baseVolume: 1 });
-  
 }
 
-function playsStartLevelSfx() {
+function playStartLevelSfx() {
   if (!startLevelSfx) return;
 
   startLevelSfx.pause();
@@ -64,7 +62,7 @@ function playsStartLevelSfx() {
 }
 
 function playUnlockSfx() {
-  if (!levelFailSfx) return;
+  if (!unlockSfx) return;
 
   unlockSfx.pause();
   unlockSfx.currentTime = 0;
