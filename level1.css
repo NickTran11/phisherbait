@@ -160,6 +160,129 @@ html, body{
     border: none;
 }
 
+/* Custom Toggle Switch */
+.settings-switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+}
+
+.settings-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.settings-slider-toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #374151;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.settings-slider-toggle:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.settings-switch input:checked + .settings-slider-toggle {
+    background-color: #ea580c;
+}
+
+.settings-switch input:checked + .settings-slider-toggle:before {
+    transform: translateX(24px);
+}
+
+.settings-divider {
+    height: 1px;
+    background-color: #374151;
+    margin: 8px 0;
+}
+
+.settings-logout-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px;
+    transition: opacity 0.2s;
+}
+
+.settings-logout-btn:hover {
+    opacity: 0.8;
+}
+
+.settings-logout-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.settings-footer {
+    background-color: #0f172a;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #374151;
+}
+
+.settings-close-btn {
+    background: none;
+    border: none;
+    color: #f97316;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.settings-close-btn:hover {
+    opacity: 0.8;
+}
+
+.btn-settings {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(10, 10, 10, 0.8);
+    color: #facc15;
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    padding: 10px 20px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-settings:hover {
+    background-color: rgba(20, 20, 20, 0.95);
+    border-color: rgba(250, 204, 21, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+
 
 /* ================= DOSSIER ================= */
 .scenario-overlay{
