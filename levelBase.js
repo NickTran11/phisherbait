@@ -46,6 +46,12 @@ const starsText = document.getElementById("starsText");
 const starsContinueBtn = document.getElementById("starsContinueBtn");
   const verifySubmitBtn = document.getElementById("verifySubmitBtn");
 
+  const bgMusic = document.getElementById("bgMusic");
+
+if (window.PhisherBaitSettings && bgMusic) {
+  window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 0.35 });
+}
+
   const clueSet = new Set();
 let activeMessage = data.messages[0];
 let revealedHintCount = 0;
@@ -103,16 +109,20 @@ import("./scoreService.js")
 
   function bindScenarioButtons() {
     if (beginMissionBtn && scenarioOverlay) {
-      beginMissionBtn.addEventListener("click", () => {
-        scenarioOverlay.style.opacity = "0";
-        scenarioOverlay.style.transition = "opacity 0.25s ease";
-
-        setTimeout(() => {
-          scenarioOverlay.style.display = "none";
-          scenarioOverlay.setAttribute("aria-hidden", "true");
-        }, 250);
-      });
+  beginMissionBtn.addEventListener("click", () => {
+    if (window.PhisherBaitSettings) {
+      window.PhisherBaitSettings.tryPlayBackgroundMusic();
     }
+
+    scenarioOverlay.style.opacity = "0";
+    scenarioOverlay.style.transition = "opacity 0.25s ease";
+
+    setTimeout(() => {
+      scenarioOverlay.style.display = "none";
+      scenarioOverlay.setAttribute("aria-hidden", "true");
+    }, 250);
+  });
+}
 
     if (openDossierBtn && scenarioOverlay) {
       openDossierBtn.addEventListener("click", () => {
