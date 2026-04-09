@@ -250,7 +250,7 @@ if (!LEVELS[levelId]?.unlocked || isLocked(node)) {
   // Navigate after animation finishes
   setTimeout(() => {
     window.location.href = `level${levelId}.html`;
-  }, 450);
+  }, 2000);
 });
 }
 
