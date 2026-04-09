@@ -1216,37 +1216,18 @@ if (window.PhisherBaitSettings && bgMusic) {
         const btnLearn = document.getElementById('btn-learn');
 
         btnStart.addEventListener('click', () => {
-            startOverlay.classList.remove('active');
-            initGame();
-            if (window.PhisherBaitSettings) {
-  window.PhisherBaitSettings.tryPlayBackgroundMusic();
-}
-        });
+    startOverlay.classList.remove('active');
+
+    if (window.PhisherBaitSettings) {
+        window.PhisherBaitSettings.tryPlayBackgroundMusic();
+    }
+
+    initGame();
+});
 
         btnLearn.addEventListener('click', () => {
             endOverlay.classList.remove('active');
             learnOverlay.classList.add('active');
         });
 
-        // Settings logic
-        const bgMusic = document.getElementById('bg-music');
-
-if (window.PhisherBaitSettings && bgMusic) {
-  window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 1 });
-}
-
-        // Initialize volume
-        window.updateVolume();
-
-        window.toggleMusic = function() {
-            if (musicToggle.checked) {
-                bgMusic.play().catch(e => console.log("Audio play failed:", e));
-            } else {
-                bgMusic.pause();
-            }
-        };
-
-        window.logout = function() {
-            // Simple logout behavior
-            window.location.href = 'level3.html';
-        };
+      
