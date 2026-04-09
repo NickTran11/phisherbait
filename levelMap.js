@@ -42,6 +42,35 @@ const LEVELS = {
   }
 };
 
+// ----- AUDIO STUFF
+
+const startLevelSfx = document.getElementById("startLevelSfx");
+const unlockSfx = document.getElementById("unlockSfx");
+
+if (window.PhisherBaitSettings) {
+  //window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 0.35 });
+
+  window.PhisherBaitSettings.registerAudioElement(startLevelSfx, { type: "sfx", baseVolume: 1 });
+  window.PhisherBaitSettings.registerAudioElement(unlockSfx, { type: "sfx", baseVolume: 1 });
+  
+}
+
+function playsStartLevelSfx() {
+  if (!startLevelSfx) return;
+
+  startLevelSfx.pause();
+  startLevelSfx.currentTime = 0;
+  startLevelSfx.play().catch(() => {});
+}
+
+function playUnlockSfx() {
+  if (!levelFailSfx) return;
+
+  unlockSfx.pause();
+  unlockSfx.currentTime = 0;
+  unlockSfx.play().catch(() => {});
+}
+
 // ---------- Placement on path ----------
 function placeNodesOnPath() {
   const map = document.getElementById("map");
