@@ -283,6 +283,10 @@ body{
   cursor: pointer;
 }
 
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+}
 
 /* ---- Main layout ---- */
 .main-container{
