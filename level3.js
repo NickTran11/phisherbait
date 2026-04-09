@@ -666,6 +666,11 @@
         const endTitle = document.getElementById('end-title');
         const endMessage = document.getElementById('end-message');
 
+const bgMusic = document.getElementById('bgMusic');
+if (window.PhisherBaitSettings && bgMusic) {
+    window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 0.35 });
+}
+
         function initGame() {
             renderCards();
             startTimer();
