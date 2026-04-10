@@ -829,14 +829,14 @@ if (window.PhisherBaitSettings && bgMusic) {
                 msg.choices = null; // Remove buttons because the conversation is over
                 renderCards();
                 
-                // If the conversation ends on a scam link/message, trigger the consequence
-                if (msg.isSmish && msg.consequenceType) {
+                // Only auto-fail if it's the 2FA scam, since replying with the code IS the failure
+                if (msg.isSmish && msg.consequenceType === '2fa_fatigue') {
                     // Small delay so the user can read the last message before the "Game Over" screen
                     setTimeout(() => {
                         evaluateChoice('right', msg); // 'right' simulates "keeping" or "falling for" the message
                     }, 1000);
                 } else {
-                    // If it's a safe message (like Sarah's), just let it sit so the user can swipe right
+                    // For other messages, let it sit so the user can swipe left or right
                     scrollToBottom();
                 }
             }
@@ -1010,6 +1010,14 @@ if (window.PhisherBaitSettings && bgMusic) {
             mistakes++;
             updateBattery();
             
+            const baitedSound = document.getElementById('sfx-baited');
+            if (baitedSound) {
+                baitedSound.currentTime = 0;
+                const slider = document.getElementById('volume-slider');
+                baitedSound.volume = slider ? slider.value / 100 : 0.5;
+                baitedSound.play().catch(e => console.log(e));
+            }
+            
             consequenceTitle.innerText = "YOU GOT BAITED!";
             let extraHtml = '';
 
@@ -1022,7 +1030,8 @@ if (window.PhisherBaitSettings && bgMusic) {
                 `;
             }
 
-            consequenceText.innerHTML = msg.consequenceText + extraHtml;
+            const text = msg.consequenceText || "You fell for a scam! Your personal information might be at risk. Always be careful with unexpected messages or links.";
+            consequenceText.innerHTML = text + extraHtml;
             consequenceOverlay.classList.add('active');
 
             if (msg.consequenceType === 'glitch') {
@@ -1033,6 +1042,15 @@ if (window.PhisherBaitSettings && bgMusic) {
         function triggerMinorPenalty() {
             mistakes++;
             updateBattery();
+            
+            const wrongSound = document.getElementById('sfx-wrong');
+            if (wrongSound) {
+                wrongSound.currentTime = 0;
+                const slider = document.getElementById('volume-slider');
+                wrongSound.volume = slider ? slider.value / 100 : 0.5;
+                wrongSound.play().catch(e => console.log(e));
+            }
+            
             consequenceTitle.innerText = "OOPS!";
             consequenceText.innerHTML = "You just marked a safe message as a scam! Your friend/service might be blocked now.";
             consequenceOverlay.classList.add('active');
@@ -1128,6 +1146,18 @@ if (window.PhisherBaitSettings && bgMusic) {
                     const dimClass = isEarned ? '' : 'star-dim';
                     const delay = (i * 0.2) + 0.3; // Stagger animation
                     starsHtml += `<span class="star-anim ${dimClass}" style="animation-delay: ${delay}s;">⭐</span>`;
+                    
+                    if (isEarned) {
+                        setTimeout(() => {
+                            const starSound = document.getElementById('sfx-star');
+                            if (starSound) {
+                                starSound.currentTime = 0;
+                                const slider = document.getElementById('volume-slider');
+                                starSound.volume = slider ? slider.value / 100 : 0.5;
+                                starSound.play().catch(e => console.log(e));
+                            }
+                        }, delay * 1000);
+                    }
                 }
                 endStars.innerHTML = starsHtml;
             }
@@ -1137,10 +1167,27 @@ if (window.PhisherBaitSettings && bgMusic) {
         document.addEventListener('click', (e) => {
             if (e.target.tagName.toLowerCase() === 'a' && e.target.closest('.swipe-card')) {
                 e.preventDefault();
-                // Treat clicking a link as "Keeping" the message (swiping right)
-                if (activeCard && !isDragging) {
-                    currentX = 150;
-                    handleSwipe('right');
+                const msg = messages[currentCardIndex];
+                
+                if (msg && msg.isSmish) {
+                    // Treat clicking a scam link as "Keeping" the message (swiping right)
+                    if (activeCard && !isDragging) {
+                        currentX = 150;
+                        handleSwipe('right');
+                    }
+                } else {
+                    // For legit links, don't advance the game. Just show the preview.
+                    if (msg && msg.preview) {
+                        iosPreviewImg.src = msg.preview.image;
+                        iosPreviewTitle.innerText = msg.preview.title;
+                        iosPreviewDomain.innerText = msg.preview.domain;
+                    } else {
+                        // Fallback if no preview data
+                        iosPreviewImg.src = "https://picsum.photos/seed/safe/400/200";
+                        iosPreviewTitle.innerText = "Safe Link";
+                        iosPreviewDomain.innerText = e.target.innerText || "safe.com";
+                    }
+                    iosPreviewOverlay.classList.add('active');
                 }
             }
         });
