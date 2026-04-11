@@ -58,12 +58,17 @@ window.LEVEL4_EMAIL = {
         "The link preview is not an official Microsoft domain."
       ],
       verification: {
-        prompt: "What is the real official Microsoft base domain?",
-        acceptedAnswers: ["microsoft.com", "www.microsoft.com"],
+        prompt: "What should you check first to spot the scam in this invoice email?",
+        acceptedAnswers: [
+          "sender domain",
+          "the sender domain",
+          "domain",
+          "email domain"
+        ],
         retryGuidance: [
-          "Look for the official Microsoft base domain.",
-          "Do not copy the fake sender domain.",
-          "Use only the real company domain."
+          "Focus on the sender details, not the branding.",
+          "A tiny domain change is the biggest clue here.",
+          "Check the email domain first."
         ]
       },
       coach: {
@@ -134,12 +139,17 @@ window.LEVEL4_EMAIL = {
         "Legitimate messages can look boring, and that is normal."
       ],
       verification: {
-        prompt: "What is the official Microsoft base domain?",
-        acceptedAnswers: ["microsoft.com", "www.microsoft.com"],
+        prompt: "Does this legitimate billing email require urgent action?",
+        acceptedAnswers: [
+          "no",
+          "no urgent action",
+          "no immediate action",
+          "not urgent"
+        ],
         retryGuidance: [
-          "Use the real official Microsoft domain.",
-          "Not the altered domains from the phishing emails.",
-          "Try the base domain only."
+          "Read the tone carefully.",
+          "This message says Theo can review it during the normal workflow.",
+          "The correct answer is not 'yes'."
         ]
       },
       coach: {
@@ -210,12 +220,18 @@ window.LEVEL4_EMAIL = {
         "This is classic clone phishing: same style, malicious domain."
       ],
       verification: {
-        prompt: "What is the real official Microsoft base domain?",
-        acceptedAnswers: ["microsoft.com", "www.microsoft.com"],
+        prompt: "What is the main red flag in this reply-style invoice email?",
+        acceptedAnswers: [
+          "fake domain",
+          "sender domain mismatch",
+          "domain mismatch",
+          "micosoft",
+          "fake sender domain"
+        ],
         retryGuidance: [
-          "Use the real Microsoft domain only.",
-          "Do not use the fake reply-style domain.",
-          "Try the official base domain."
+          "Do not trust the 'RE:' subject by itself.",
+          "Look at the spelling in the sender domain.",
+          "The biggest clue is the fake domain."
         ]
       },
       coach: {
@@ -286,12 +302,17 @@ window.LEVEL4_EMAIL = {
         "Legitimate business email can vary in topic and still be safe."
       ],
       verification: {
-        prompt: "What is the trusted company base domain used in this level?",
-        acceptedAnswers: ["microsoft.com", "www.microsoft.com"],
+        prompt: "How should Theo safely open this shared document?",
+        acceptedAnswers: [
+          "through the normal microsoft 365 workspace",
+          "microsoft 365 workspace",
+          "normal microsoft 365 workspace",
+          "official microsoft 365 workspace"
+        ],
         retryGuidance: [
-          "Use the official company base domain used throughout this level.",
-          "Do not use altered domains.",
-          "Try again with the real base domain."
+          "Use the normal trusted work portal.",
+          "Do not answer with a fake domain.",
+          "The email itself tells Theo where to access the file safely."
         ]
       },
       coach: {
