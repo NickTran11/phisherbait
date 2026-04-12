@@ -793,6 +793,8 @@ function handleTaskAnswer(selectedIndex) {
   const correctIndexes = Array.isArray(task.correctIndex) ? task.correctIndex : [task.correctIndex];
 const isCorrect = correctIndexes.includes(selectedIndex);
 
+  playSfx(isCorrect ? correctAnswerSfx : wrongAnswerSfx);
+
   optionButtons.forEach((btn, index) => {
     btn.disabled = true;
     btn.classList.add("is-disabled");
@@ -833,7 +835,10 @@ function handleCounterTaskAnswer(selectedValue) {
   taskFeedback.classList.remove("correct", "wrong");
 
   let feedbackText = "";
-
+  
+const isCorrect = selectedValue === 0;
+playSfx(isCorrect ? correctAnswerSfx : wrongAnswerSfx);
+  
   if (selectedValue === 0) {
     taskFeedback.classList.add("correct");
     feedbackText = `0 - ${task.feedbackZero}`;
