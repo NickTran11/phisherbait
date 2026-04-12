@@ -297,9 +297,17 @@ function showStarsOverlay(action = selectedAction) {
   return `<img src="${src}" alt="${alt}" class="star-result-icon" />`;
 }).join("");
 
-  starsText.textContent = getStarsMessage(stars);
-  starsOverlay.classList.remove("hidden");
-  starsOverlay.setAttribute("aria-hidden", "false");
+ starsText.textContent = getStarsMessage(stars);
+
+if (stars >= 1) {
+  playSfx(levelWinSfx);
+} else {
+  playSfx(levelFailSfx);
+}
+
+starsOverlay.classList.remove("hidden");
+
+starsOverlay.setAttribute("aria-hidden", "false");
 }
   
   function bindProof() {
@@ -315,28 +323,30 @@ function showStarsOverlay(action = selectedAction) {
 
 function handleAction(action) {
   selectedAction = action;
-
   const isCorrect = action === activeMessage.correctAction;
-    const isPartial = action === activeMessage.partialAction;
+  const isPartial = action === activeMessage.partialAction;
 
-    if (isCorrect) {
-      addClue("Correct action chosen.");
-      setDecisionFeedback("good", "Correct. That is the best action here.");
-      showCoach("perfect", true);
-      return;
-    }
-
-    if (isPartial) {
-      addClue("Partial credit: safer than clicking, but not the best answer.");
-      setDecisionFeedback("warn", "Safer than clicking, but not the best answer for this scenario.");
-      showCoach("good", false);
-      return;
-    }
-
-    addClue("Incorrect action chosen. Re-check sender details, urgency language, and the previewed link.");
-    setDecisionFeedback("bad", "That action is risky. Reveal another hint and try again.");
-    showCoach("bad", false);
+  if (isCorrect) {
+    playSfx(correctAnswerSfx);
+    addClue("Correct action chosen.");
+    setDecisionFeedback("good", "Correct. That is the best action here.");
+    showCoach("perfect", true);
+    return;
   }
+
+  if (isPartial) {
+    playSfx(correctAnswerSfx);
+    addClue("Partial credit: safer than clicking, but not the best answer.");
+    setDecisionFeedback("warn", "Safer than clicking, but not the best answer for this scenario.");
+    showCoach("good", false);
+    return;
+  }
+
+  playSfx(wrongAnswerSfx);
+  addClue("Incorrect action chosen. Re-check sender details, urgency language, and the previewed link.");
+  setDecisionFeedback("bad", "That action is risky. Reveal another hint and try again.");
+  showCoach("bad", false);
+}
 
   function showCoach(mode, withProof) {
     if (!window.showFishCoachCustom) {
