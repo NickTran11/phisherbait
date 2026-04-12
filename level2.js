@@ -787,6 +787,53 @@ function lockTaskOptions() {
   });
 }
 
+function restoreAnsweredTaskState(task) {
+  const savedAnswer = taskAnswers[currentTaskIndex];
+
+  if (savedAnswer === undefined) return;
+
+  if (task.type === "counter") {
+    taskFeedback.classList.remove("hidden");
+    taskFeedback.classList.remove("correct", "wrong");
+
+    let feedbackText = "";
+
+    if (savedAnswer === 0) {
+      taskFeedback.classList.add("correct");
+      feedbackText = `0 - ${task.feedbackZero}`;
+    } else if (savedAnswer >= 1 && savedAnswer <= 3) {
+      taskFeedback.classList.add("wrong");
+      feedbackText = `${savedAnswer} - ${task.feedbackLow}`;
+    } else {
+      taskFeedback.classList.add("wrong");
+      feedbackText = `${savedAnswer} - ${task.feedbackHigh}`;
+    }
+
+    taskFeedback.textContent = feedbackText;
+  } else {
+    const optionButtons = [...taskOptions.querySelectorAll(".task-option-btn")];
+    const correctIndexes = Array.isArray(task.correctIndex) ? task.correctIndex : [task.correctIndex];
+    const isCorrect = correctIndexes.includes(savedAnswer);
+
+    optionButtons.forEach((btn, index) => {
+      if (correctIndexes.includes(index)) {
+        btn.classList.add("is-correct");
+      }
+      if (index === savedAnswer && !correctIndexes.includes(index)) {
+        btn.classList.add("is-wrong");
+      }
+    });
+
+    taskFeedback.classList.remove("hidden");
+    taskFeedback.classList.remove("correct", "wrong");
+    taskFeedback.classList.add(isCorrect ? "correct" : "wrong");
+    taskFeedback.textContent = `${isCorrect ? "Correct ✅" : "Incorrect ❌"} ${task.feedback}`;
+  }
+
+  nextTaskBtn.classList.remove("hidden");
+  nextTaskBtn.textContent = currentTaskIndex < level2Tasks.length - 1 ? "Next Question" : "See Scores";
+}
+  
 function handleTaskAnswer(selectedIndex) {
   const task = level2Tasks[currentTaskIndex];
   const optionButtons = [...taskOptions.querySelectorAll(".task-option-btn")];
