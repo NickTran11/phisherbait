@@ -666,6 +666,12 @@ function openTasksPanel(index = currentTaskIndex) {
   tasksOverlay.setAttribute("aria-hidden", "false");
 }
 
+function playSfx(audioEl) {
+  if (!audioEl) return;
+  audioEl.currentTime = 0;
+  audioEl.play().catch(() => {});
+}
+  
 function closeTasksPanel() {
   if (!tasksOverlay) return;
   tasksOverlay.classList.add("hidden");
