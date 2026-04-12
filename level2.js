@@ -1232,6 +1232,35 @@ function resetLevel2TasksProgress() {
     }
   });
 
+  const tasksCardHeader = document.querySelector(".tasks-card-header");
+  const tasksProgressBar = document.querySelector(".tasks-progress-bar");
+  const tasksIntroNote = document.querySelector(".tasks-intro-note");
+  const tasksFooter = document.querySelector(".tasks-footer");
+  const taskQuestionShell = document.querySelector(".task-question-shell");
+  const tasksBody = document.querySelector(".tasks-body");
+
+  if (tasksCardHeader) tasksCardHeader.classList.remove("hidden");
+  if (tasksProgressBar) tasksProgressBar.classList.remove("hidden");
+  if (tasksIntroNote) tasksIntroNote.classList.remove("hidden");
+  if (tasksFooter) tasksFooter.classList.remove("hidden");
+
+  if (taskQuestionShell) {
+    taskQuestionShell.classList.remove("stars-only-shell");
+  }
+
+  if (tasksBody) {
+    tasksBody.classList.remove("stars-only-body");
+  }
+
+  taskFeedback.classList.add("hidden");
+  taskHintBox.classList.add("hidden");
+
+  if (nextTaskBtn) {
+    nextTaskBtn.classList.add("hidden");
+    nextTaskBtn.textContent = "Next Question";
+    nextTaskBtn.onclick = null;
+  }
+
   updateTasksBadge();
   renderTaskQuestion();
 }
