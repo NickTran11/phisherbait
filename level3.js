@@ -1178,6 +1178,19 @@ if (window.PhisherBaitSettings && bgMusic) {
                     }
                 }
                 endStars.innerHTML = starsHtml;
+                
+                if (earnedStars === 3) {
+                    // Play the perfect score sound after the last star (0.7s) + a small delay
+                    setTimeout(() => {
+                        const perfectSound = document.getElementById('sfx-perfect');
+                        if (perfectSound) {
+                            perfectSound.currentTime = 0;
+                            const slider = document.getElementById('volume-slider');
+                            perfectSound.volume = slider ? slider.value / 100 : 0.5;
+                            perfectSound.play().catch(e => console.log(e));
+                        }
+                    }, 1200);
+                }
             }
         }
 
