@@ -270,6 +270,12 @@ function hideStarsOverlay() {
   starsOverlay.setAttribute("aria-hidden", "true");
 }
 
+function playSfx(audioEl) {
+  if (!audioEl) return;
+  audioEl.currentTime = 0;
+  audioEl.play().catch(() => {});
+}
+  
 function showStarsOverlay(action = selectedAction) {
   if (!starsOverlay || !starsRow || !starsText) {
     window.location.href = "./levelMap.html";
