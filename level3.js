@@ -1166,10 +1166,13 @@ if (window.PhisherBaitSettings && bgMusic) {
                         setTimeout(() => {
                             const starSound = document.getElementById('sfx-star');
                             if (starSound) {
-                                const soundClone = starSound.cloneNode();
-                                const slider = document.getElementById('volume-slider');
-                                soundClone.volume = slider ? slider.value / 100 : 0.5;
-                                soundClone.play().catch(e => console.log(e));
+                                const source = starSound.querySelector('source');
+                                if (source && source.src) {
+                                    const audio = new Audio(source.src);
+                                    const slider = document.getElementById('volume-slider');
+                                    audio.volume = slider ? slider.value / 100 : 0.5;
+                                    audio.play().catch(e => console.log(e));
+                                }
                             }
                         }, delay * 1000);
                     }
