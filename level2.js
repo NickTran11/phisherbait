@@ -774,10 +774,11 @@ if (task.type === "counter") {
 }
 
 if (answered) {
-  lockTaskOptions();
+ lockTaskOptions();
+ restoreAnsweredTaskState(task);
 }
 
-  updateTasksBadge();
+ updateTasksBadge();
 }
 
 function lockTaskOptions() {
