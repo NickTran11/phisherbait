@@ -1117,12 +1117,12 @@ if (window.PhisherBaitSettings && bgMusic) {
                 
                 if (timerSeconds <= 0) {
                     clearInterval(timerInterval);
-                    endGame(false, "Time's up! You missed your train while sorting through messages.");
+                    endGame(false, "Train Missed","Time's up! You missed your train while sorting through messages.");
                 }
             }, 1000);
         }
 
-        function endGame(isWin, customMessage = null) {
+        function endGame(isWin, customMessage1 = null, customMessage2 = null) {
             clearInterval(timerInterval);
             endOverlay.classList.add('active');
             
@@ -1140,9 +1140,9 @@ if (window.PhisherBaitSettings && bgMusic) {
                 else if (mistakes === 2) earnedStars = 1;
             } else {
                 endIcon.innerHTML = '🪫';
-                endTitle.innerText = 'Phone Compromised!';
+                endTitle.innerText = customMessage1 || 'Phone Compromised!';
                 endTitle.style.color = '#ef4444';
-                endMessage.innerHTML = customMessage || 'You fell for too many traps. Your battery died, your contacts are leaked, and your boss thinks you play the kazoo.';
+                endMessage.innerHTML = customMessage2 || 'You fell for too many traps. Your battery died, your contacts are leaked, and your boss thinks you play the kazoo.';
                 earnedStars = 0;
                 
                 const failSound = document.getElementById('sfx-fail');
