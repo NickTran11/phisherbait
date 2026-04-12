@@ -1144,6 +1144,14 @@ if (window.PhisherBaitSettings && bgMusic) {
                 endTitle.style.color = '#ef4444';
                 endMessage.innerHTML = customMessage || 'You fell for too many traps. Your battery died, your contacts are leaked, and your boss thinks you play the kazoo.';
                 earnedStars = 0;
+                
+                const failSound = document.getElementById('sfx-fail');
+                if (failSound) {
+                    failSound.currentTime = 0;
+                    const slider = document.getElementById('volume-slider');
+                    failSound.volume = slider ? slider.value / 100 : 0.5;
+                    failSound.play().catch(e => console.log(e));
+                }
             }
             
             if (endStars) {
@@ -1158,10 +1166,10 @@ if (window.PhisherBaitSettings && bgMusic) {
                         setTimeout(() => {
                             const starSound = document.getElementById('sfx-star');
                             if (starSound) {
-                                starSound.currentTime = 0;
+                                const soundClone = starSound.cloneNode();
                                 const slider = document.getElementById('volume-slider');
-                                starSound.volume = slider ? slider.value / 100 : 0.5;
-                                starSound.play().catch(e => console.log(e));
+                                soundClone.volume = slider ? slider.value / 100 : 0.5;
+                                soundClone.play().catch(e => console.log(e));
                             }
                         }, delay * 1000);
                     }
