@@ -1002,6 +1002,13 @@ if (window.PhisherBaitSettings && bgMusic) {
             }
 
             if (!isMistake) {
+                const correctSound = document.getElementById('sfx-correct');
+                if (correctSound) {
+                    correctSound.currentTime = 0;
+                    const slider = document.getElementById('volume-slider');
+                    correctSound.volume = slider ? slider.value / 100 : 0.5;
+                    correctSound.play().catch(e => console.log(e));
+                }
                 nextCard();
             }
         }
