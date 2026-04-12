@@ -948,6 +948,13 @@ function renderScoreSummary() {
   const score = calculateFinalScore();
 
   const stars = getStarsFromScore(score);
+
+if (stars >= 1) {
+  playSfx(levelWinSfx);
+} else {
+  playSfx(levelFailSfx);
+}
+  
   if (saveBestLevelScoreFn) {
     saveBestLevelScoreFn("2", stars);
   }
