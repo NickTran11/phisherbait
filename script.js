@@ -104,6 +104,28 @@ const authSelectLoginBtn = document.getElementById('auth-select-login-btn');
 const authSelectSignupBtn = document.getElementById('auth-select-signup-btn');
 const authSelectBackBtn = document.getElementById('auth-select-back-btn');
 
+const bgMusic = document.getElementById("bgMusic");
+
+if (window.PhisherBaitSettings && bgMusic) {
+  window.PhisherBaitSettings.registerBackgroundMusic(bgMusic, { baseVolume: 0.35 });
+}
+function startMusicOnce() {
+  if (!bgMusic) return;
+
+  bgMusic.play().catch(() => {});
+  
+  // Only trigger once
+  document.removeEventListener("click", startMusicOnce);
+}
+
+document.addEventListener("click", startMusicOnce);
+window.addEventListener("load", () => {
+  if (!bgMusic) return;
+
+  // Try to play immediately (works if user already interacted before)
+  bgMusic.play().catch(() => {});
+});
+
 // Check Auth State on Load
 if (auth) {
     onAuthStateChanged(auth, (user) => {
