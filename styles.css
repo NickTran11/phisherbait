@@ -35,6 +35,16 @@ button {
   box-shadow: 0 0 12px rgba(250, 204, 21, 0.3);
 }
 
+.contacts-btn {
+  margin-top: 10px;   /* pushes it down */
+  transform: scale(0.9); /* slightly smaller */
+  opacity: 0.9;       /* makes it feel less “primary” */
+}
+
+/* Optional: nicer hover */
+.contacts-btn:hover {
+  transform: scale(0.95) translateY(-2px);
+}
 
 /* Semantic Layout Classes */
 .app-root {
