@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phisher Bait - Contacts</title>
+  <link rel="stylesheet" href="contacts.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <h1 id="logo">Phisher Bait</h1>
+    <button class="btn-back" onclick="goBack()">← Back</button>
+  </header>
+
+  <main class="contacts-container">
+    <h2>Team Contacts</h2>
+
+    <div class="contacts-grid">
+
+      <!-- MEMBER 1 -->
+      <div class="contact-card">
+        <h3>Adam</h3>
+        <p class="role">Security Developer</p>
+
+        <p class="email" onclick="copyEmail(this)">
+          adam@email.com
+        </p>
+
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" class="btn-linkedin">
+          LinkedIn Profile
+        </a>
+
+        <img src="./qr/adam.png" alt="LinkedIn QR" class="qr">
+      </div>
+
+      <!-- MEMBER 2 -->
+      <div class="contact-card">
+        <h3>Teammate 2</h3>
+        <p class="role">Frontend Developer</p>
+
+        <p class="email" onclick="copyEmail(this)">
+          teammate2@email.com
+        </p>
+
+        <a href="#" target="_blank" class="btn-linkedin">
+          LinkedIn Profile
+        </a>
+
+        <img src="./qr/member2.png" class="qr">
+      </div>
+
+      <!-- MEMBER 3 -->
+      <div class="contact-card">
+        <h3>Teammate 3</h3>
+        <p class="role">Backend Developer</p>
+
+        <p class="email" onclick="copyEmail(this)">
+          teammate3@email.com
+        </p>
+
+        <a href="#" target="_blank" class="btn-linkedin">
+          LinkedIn Profile
+        </a>
+
+        <img src="./qr/member3.png" class="qr">
+      </div>
+
+      <!-- MEMBER 4 -->
+      <div class="contact-card">
+        <h3>Teammate 4</h3>
+        <p class="role">UI/UX Designer</p>
+
+        <p class="email" onclick="copyEmail(this)">
+          teammate4@email.com
+        </p>
+
+        <a href="#" target="_blank" class="btn-linkedin">
+          LinkedIn Profile
+        </a>
+
+        <img src="./qr/member4.png" class="qr">
+      </div>
+
+    </div>
+  </main>
+
+  <script src="contacts.js"></script>
+
+</body>
+</html>
