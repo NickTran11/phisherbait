@@ -24,6 +24,17 @@ button {
 /* Utilities */
 .hidden { display: none !important; }
 
+.btn-secondary {
+  background: linear-gradient(to right, #334155, #1e293b);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  color: #facc15;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.3);
+}
+
 
 /* Semantic Layout Classes */
 .app-root {
