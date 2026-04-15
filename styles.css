@@ -36,9 +36,9 @@ button {
 }
 
 .contacts-btn {
-  margin-top: 10px;   /* pushes it down */
-  transform: scale(0.9); /* slightly smaller */
-  opacity: 0.9;       /* makes it feel less “primary” */
+  margin-top: 14px;   /* pushes it down */
+  transform: scale(1.2); /* slightly smaller */
+  opacity: 1;       /* makes it feel less “primary” */
 }
 
 /* Optional: nicer hover */
