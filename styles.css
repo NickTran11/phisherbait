@@ -323,14 +323,14 @@ button {
 .btn-start {
     position: relative;
     width: 100%;
-    padding: 8px 12px;
+    padding: 18px 24px;
     background: linear-gradient(to bottom, #f97316, #ea580c, #c2410c);
     color: white;
-    font-size: 0.875rem;
+    font-size: 1.25rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    border-radius: 2px;
+    border-radius: 4px;
     border-top: 1px solid #fb923c;
     border-left: 1px solid #fb923c;
     border-right: 1px solid #fb923c;
