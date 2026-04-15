@@ -95,13 +95,19 @@ body {
 
 .profile-pic {
   display: block;
-  width: 180px;
+  width: 220px;
+  height: 220px;
   max-width: 100%;
-  height: auto;
   margin: 0 auto;
   border-radius: 12px;
   object-fit: cover;
+  object-position: center 20%;
   border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* use this only for taller portraits like Adam and Jimmy */
+.profile-pic-tall {
+  object-position: center 18%;
 }
 
 .poster-section {
