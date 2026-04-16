@@ -249,11 +249,10 @@ function wireLevelClicks() {
     node.addEventListener("click", () => {
       const levelId = node.dataset.level;
 
-      // If locked, demo-unlock it (REMOVE later if you want strict locking)
-if (!LEVELS[levelId]?.unlocked || isLocked(node)) {
-  unlockLevel(levelId);
-  return;
-}
+            if (!LEVELS[levelId]?.unlocked || isLocked(node)) {
+        updateSidePanel(levelId);
+        return;
+      }
 
       moveSelectedGlow(node);
       updateSidePanel(levelId);
