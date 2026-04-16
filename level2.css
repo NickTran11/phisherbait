@@ -2166,3 +2166,81 @@ flex-wrap:wrap;
     padding: 12px 14px 14px !important;
   }
 }
+
+@media (max-width: 900px){
+  .feed-layout{
+    padding: 14px 10px 34px !important;
+  }
+
+  .feed-layout > :first-child{
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .reel-wrapper{
+    width: 100% !important;
+    max-width: 368px !important;
+    margin: 0 auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 300px) 56px !important;
+    gap: 10px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .reel-card{
+    width: 100% !important;
+    max-width: 300px !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .reel-media{
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+  }
+
+  .reel-actions{
+    flex-direction: row !important;
+    justify-content: center !important;
+    padding-bottom: 0 !important;
+  }
+
+  .reel-nav{
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+  }
+
+  .nav-pill{
+    width: 52px !important;
+    height: 52px !important;
+    font-size: 28px !important;
+  }
+}
+
+@media (max-width: 480px){
+  .reel-wrapper{
+    max-width: 344px !important;
+    grid-template-columns: minmax(0, 280px) 52px !important;
+    gap: 8px !important;
+  }
+
+  .reel-card{
+    max-width: 280px !important;
+  }
+
+  .reel-media{
+    max-width: 280px !important;
+  }
+
+  .nav-pill{
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 24px !important;
+  }
+}
