@@ -11,7 +11,7 @@ window.LEVEL5_EMAIL = {
     habits: [
       "Quickly scans emails due to busy schedule",
       "Trusts emails that reference recent work activity",
-      "Occasionally click links directly instead of navigating manually"
+      "Click links without thinking"
     ],
     context: "",
     initials: "CB"
