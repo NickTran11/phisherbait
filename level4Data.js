@@ -7,7 +7,7 @@ window.LEVEL4_EMAIL = {
     description: "You are Theo Buch. Level 4 introduces clone phishing. Some emails are legitimate workplace messages, while others copy familiar formatting but use slightly changed domains, reply-style subjects, or swapped malicious links.",
     profile: [
       "Works in a Microsoft office environment",
-      "Receives invoices, document shares, Teams notices, and IT alerts",
+      "Receives invoices, document shares & IT alerts",
       "Often reviews email quickly during busy work hours"
     ],
     habits: [
