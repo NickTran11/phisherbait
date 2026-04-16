@@ -13,7 +13,7 @@ window.LEVEL5_EMAIL = {
       "Trusts emails that reference recent work activity",
       "Occasionally click links directly instead of navigating manually"
     ],
-    context: "This final level tests everything learned so far. Some messages are legitimate. Some are regular phishing attempts. Others are more advanced and reference real emails you received earlier. Compare messages carefully before acting. This level introduces spear phishing:",
+    context: "This level introduces spear phishing:",
     initials: "CB"
   },
 
