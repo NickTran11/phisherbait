@@ -400,13 +400,13 @@ function initParallax(){
 
 // ---------- Init ----------
 function initLevelMap() {
+  applySavedUnlocks();
   placeNodesOnPath();
   applyLockStatesFromData();
   startScoreSync();
   wireLevelClicks();
   initParallax();
 
-  // Default selection (pick the first unlocked level)
   const firstUnlocked = Object.keys(LEVELS).find(id => LEVELS[id].unlocked);
   if (firstUnlocked) {
     const node = document.querySelector(`.level-node[data-level="${firstUnlocked}"]`);
