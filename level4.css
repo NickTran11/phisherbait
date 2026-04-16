@@ -362,6 +362,13 @@ html, body{
  line-height: 1.45;
 }
 
+.scenario-section-title{
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
 .meta-label{
   font-weight: 900;
   font-family: Arial, Helvetica, sans-serif;
