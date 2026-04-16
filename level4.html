@@ -166,29 +166,26 @@
       <div class="scenario-divider"></div>
 
       <div class="auth-gate-box">
+  <div class="auth-gate-top">
+    <div id="authStatusBadge" class="auth-status-badge locked">Locked</div>
+  </div>
 
-        <div class="auth-gate-top">
-          <div id="authStatusBadge" class="auth-status-badge locked">Locked</div>
-        </div>
+  <div id="authStatusText" class="auth-status-text">
+    Before entering Level 4, complete the logo authentication mini game and get at least 4 out of 5 correct.
+  </div>
 
-        <div id="authStatusText" class="auth-status-text">
-          Before entering Level 4, complete the logo authentication mini game and get at least 4 out of 5 correct.
-        </div>
+  <div class="auth-actions">
+    <button id="openMiniGameBtn" type="button" class="auth-btn">
+      Open Authentication Mini Game
+    </button>
 
-        <div class="auth-actions">
-          <button id="openMiniGameBtn" type="button" class="auth-btn">Open Authentication Mini Game</button>
-        </div>
-      </div>
+    <button id="beginMissionBtn" type="button" class="begin-mission-btn" onclick="beginLevelMission()" disabled>
+      Begin Mission
+    </button>
+  </div>
+</div>
 
-      <div class="scenario-actions">
-        <button id="beginMissionBtn" type="button" class="begin-mission-btn" onclick="beginLevelMission()" disabled>
-          Begin Mission
-        </button>
-      </div>
-
-      <div id="beginMissionNote" class="begin-mission-note">
-        Complete authentication first to unlock this mission.
-      </div>
+<div id="beginMissionNote" class="begin-mission-note"></div>
     </div>
   </div>
 
