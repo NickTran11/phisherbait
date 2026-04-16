@@ -13,7 +13,7 @@ window.LEVEL5_EMAIL = {
       "Trusts emails that reference recent work activity",
       "Occasionally click links directly instead of navigating manually"
     ],
-    context: "This level introduces spear phishing:",
+    context: "",
     initials: "CB"
   },
 
