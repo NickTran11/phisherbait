@@ -2122,3 +2122,47 @@ flex-wrap:wrap;
 .action-panel{
   display:none !important;
 }
+
+@media (max-width: 900px){
+  .comments-popup{
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 12px 0 0 0 !important;
+    border-radius: 18px !important;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12) !important;
+    z-index: 1 !important;
+  }
+
+  .comments-popup.hidden{
+    display: none !important;
+  }
+
+  .comments-popup:not(.hidden){
+    display: block !important;
+  }
+
+  .comments-list{
+    max-height: 280px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .comments-popup-header{
+    padding: 14px 16px !important;
+  }
+
+  .comments-popup-title{
+    font-size: 18px !important;
+  }
+
+  .comments-input-row{
+    padding: 12px 14px 14px !important;
+  }
+}
