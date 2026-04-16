@@ -2,7 +2,7 @@ window.LEVEL5_EMAIL = {
   scenario: {
     codename: "CRISTIANA BLUM",
     title: "Senior Project Manager, Westwood Web",
-    description: "You are Cristiana Blum, a senior project manager at Westwood Web. Throughout the day, you receive internal updates, vendor emails, and targeted messages that appear connected to real work activity.",
+    description: "You are Cristiana Blum, a senior project manager at Westwood Web. Throughout the day, you receive internal updates, vendor emails, and targeted messages that appear connected to real work.",
     profile: [
       "Work closely with IT, HR, and external services",
       "Review documents and internal update",
