@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
       openMiniGameBtn.textContent = "Replay Authentication Mini Game";
 
       if (beginMissionNote) {
-        beginMissionNote.textContent = "Authentication complete. You can begin the mission.";
-      }
+  beginMissionNote.textContent = "";
+}
     } else {
       beginMissionBtn.disabled = true;
 
@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
       openMiniGameBtn.textContent = "Open Authentication Mini Game";
 
       if (beginMissionNote) {
-        beginMissionNote.textContent = "Complete authentication first to unlock this mission.";
-      }
+  beginMissionNote.textContent = "";
+}
     }
   }
 
