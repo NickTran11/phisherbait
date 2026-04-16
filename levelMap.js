@@ -22,7 +22,7 @@ const LEVELS = {
       "Identify phishing attempts via text messages",
       "Recognize shortened and suspicious links"
     ],
-    unlocked: false
+    unlocked: true
   },
   "4": {
     title: "Level 4 — Clone Phishing",
@@ -30,7 +30,7 @@ const LEVELS = {
       "Compare similar emails for subtle differences",
       "Catch swapped links/attachments"
     ],
-    unlocked: false
+    unlocked: true
   },
   "5": {
     title: "Level 5 — Final Surprise",
@@ -38,7 +38,7 @@ const LEVELS = {
       "Apply skills across multiple messages",
       "Make safe choices under pressure"
     ],
-    unlocked: false
+    unlocked: true
   }
 };
 
