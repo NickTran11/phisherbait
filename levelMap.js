@@ -22,7 +22,7 @@ const LEVELS = {
       "Identify phishing attempts via text messages",
       "Recognize shortened and suspicious links"
     ],
-    unlocked: true
+    unlocked: false
   },
   "4": {
     title: "Level 4 — Clone Phishing",
@@ -30,7 +30,7 @@ const LEVELS = {
       "Compare similar emails for subtle differences",
       "Catch swapped links/attachments"
     ],
-    unlocked: true
+    unlocked: false
   },
   "5": {
     title: "Level 5 — Final Surprise",
@@ -38,21 +38,40 @@ const LEVELS = {
       "Apply skills across multiple messages",
       "Make safe choices under pressure"
     ],
-    unlocked: true
+    unlocked: false
   }
 };
 
-function applyUnlocksFromScores() {
-  LEVELS["1"].unlocked = true;
-  LEVELS["2"].unlocked = true;
-  LEVELS["3"].unlocked = true;
-  LEVELS["4"].unlocked = true;
-  LEVELS["5"].unlocked = true;
+const UNLOCK_STORAGE_KEY = "phisherbait_manual_unlocks";
 
-  applyLockStatesFromData();
+function getSavedUnlockedLevels() {
+  try {
+    return JSON.parse(localStorage.getItem(UNLOCK_STORAGE_KEY) || "{}");
+  } catch (error) {
+    console.error("Failed to read saved unlocks:", error);
+    return {};
+  }
 }
 
-// ----- AUDIO STUFF
+function saveUnlockedLevel(levelId) {
+  try {
+    const saved = getSavedUnlockedLevels();
+    saved[levelId] = true;
+    localStorage.setItem(UNLOCK_STORAGE_KEY, JSON.stringify(saved));
+  } catch (error) {
+    console.error("Failed to save unlocked level:", error);
+  }
+}
+
+function applySavedUnlocks() {
+  const saved = getSavedUnlockedLevels();
+
+  ["3", "4", "5"].forEach((levelId) => {
+    if (saved[levelId]) {
+      LEVELS[levelId].unlocked = true;
+    }
+  });
+}
 
 // ----- AUDIO STUFF
 const startLevelSfx = document.getElementById("startLevelSfx");
