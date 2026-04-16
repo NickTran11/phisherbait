@@ -309,42 +309,36 @@ html, body{
 }
 
 .feed-layout{
-  display:grid;
-  grid-template-columns:minmax(420px, 1fr) 420px;
-  gap:24px;
-  padding:20px 24px 40px;
-  min-height:calc(100vh - 62px);
-}
-
-.feed-center{
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
+ display:grid;
+ grid-template-columns:minmax(360px, 1fr) 380px;
+ gap:18px;
+ padding:16px 18px 20px;
+ min-height:calc(100vh - 62px);
 }
 
 .reel-wrapper{
-  display:grid;
-  grid-template-columns:minmax(380px, 460px) 72px;
-  gap:22px;
-  align-items:center;
-  position:relative;
+ display:grid;
+ grid-template-columns:minmax(320px, 400px) 64px;
+ gap:16px;
+ align-items:center;
+ position:relative;
 }
 
 .reel-card{
-  display:grid;
-  grid-template-columns:minmax(320px, 450px) 66px;
-  gap:18px;
-  align-items:end;
+ display:grid;
+ grid-template-columns:minmax(280px, 390px) 58px;
+ gap:14px;
+ align-items:end;
 }
 
 .reel-media{
-  position:relative;
-  aspect-ratio:9 / 16;
-  border-radius:16px;
-  overflow:hidden;
-  background:#111827;
-  box-shadow:0 20px 40px rgba(0,0,0,0.16);
-  border:1px solid rgba(0,0,0,0.08);
+ position:relative;
+ aspect-ratio:9 / 15.2;
+ border-radius:16px;
+ overflow:hidden;
+ background:#111827;
+ box-shadow:0 16px 30px rgba(0,0,0,0.14);
+ border:1px solid rgba(0,0,0,0.08);
 }
 
 .reel-overlay-top{
