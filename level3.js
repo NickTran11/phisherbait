@@ -1153,7 +1153,11 @@ if (window.PhisherBaitSettings && bgMusic) {
                     failSound.play().catch(e => console.log(e));
                 }
             }
-            
+                
+            import("./scoreService.js")
+  .then(({ saveBestLevelScore }) => saveBestLevelScore("3", earnedStars))
+  .catch((error) => console.error("Failed to save Level 3 score:", error));
+                
             if (endStars) {
                 let starsHtml = '';
                 for (let i = 0; i < 3; i++) {
