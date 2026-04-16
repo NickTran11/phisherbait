@@ -42,12 +42,12 @@ const LEVELS = {
   }
 };
 
-function applyUnlocksFromScores(scores = {}) {
+function applyUnlocksFromScores() {
   LEVELS["1"].unlocked = true;
   LEVELS["2"].unlocked = true;
-  LEVELS["3"].unlocked = Number(scores["2"] ?? 0) > 0;
-  LEVELS["4"].unlocked = Number(scores["3"] ?? 0) > 0;
-  LEVELS["5"].unlocked = Number(scores["4"] ?? 0) > 0;
+  LEVELS["3"].unlocked = true;
+  LEVELS["4"].unlocked = true;
+  LEVELS["5"].unlocked = true;
 
   applyLockStatesFromData();
 }
