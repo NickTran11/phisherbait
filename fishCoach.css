@@ -42,6 +42,109 @@
   }
 }
 
+@media (max-width: 900px){
+  .fish-overlay{
+    top: 0;
+  }
+
+  .fish-fullscreen{
+    height: 100dvh;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .fish-image-wrapper{
+    min-height: 160px;
+    max-height: 220px;
+  }
+
+  .speech-bubble{
+    top: 10px;
+    width: min(92%, 520px);
+    padding: 10px 12px;
+  }
+
+  #fishText{
+    font-size: 14px;
+    line-height: 1.3;
+    min-height: 0;
+  }
+
+  .fish-panel{
+    min-height: 0;
+    max-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 14px;
+  }
+
+  #fishTitle{
+    margin: 0 0 4px;
+    font-size: 18px;
+  }
+
+  .fish-lessons{
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .proof-box{
+    margin-top: 10px;
+  }
+
+  #fishCloseBtn{
+    position: sticky;
+    bottom: 0;
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px){
+  .fish-fullscreen{
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .fish-image-wrapper{
+    min-height: 140px;
+    max-height: 180px;
+  }
+
+  .speech-bubble{
+    top: 8px;
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+
+  #fishText{
+    font-size: 13px;
+  }
+
+  .fish-panel{
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  #fishTitle{
+    font-size: 17px;
+  }
+
+  .proof-input{
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .proof-btn,
+  #fishCloseBtn{
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}
+
 .fish-image-wrapper{
   position: relative;
   border-radius: 22px;
