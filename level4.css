@@ -405,6 +405,25 @@ html, body{
   filter: brightness(1.08);
 }
 
+.auth-actions{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.auth-actions .auth-btn,
+.auth-actions .begin-mission-btn{
+  margin: 0;
+}
+
+.auth-actions .begin-mission-btn{
+  padding: 14px 22px;
+  font-size: 15px;
+}
+
 /* ================= MAIN LEVEL ================= */
 .level-shell{
   min-height: 100vh;
