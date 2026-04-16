@@ -437,12 +437,21 @@ import("./scoreService.js")
   }
 
 window.level4SwitchMailbox = function(targetBox) {
+  const mobileInboxBtn = document.getElementById("mobileInboxBtn");
+  const mobileJunkBtn = document.getElementById("mobileJunkBtn");
+
   if (targetBox === "junk") {
     renderFolder("Junk Email");
+
+    if (mobileInboxBtn) mobileInboxBtn.classList.remove("mailbox-toggle-active");
+    if (mobileJunkBtn) mobileJunkBtn.classList.add("mailbox-toggle-active");
     return;
   }
 
   renderFolder("Inbox");
+
+  if (mobileInboxBtn) mobileInboxBtn.classList.add("mailbox-toggle-active");
+  if (mobileJunkBtn) mobileJunkBtn.classList.remove("mailbox-toggle-active");
 };
   
   function refreshFolderCounts() {
