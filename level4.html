@@ -209,15 +209,15 @@
     </header>
 
     <div class="mail-toolbar">
-      <button class="primary-btn">New mail</button>
-      <button class="toolbar-btn">Delete</button>
-      <button class="toolbar-btn">Archive</button>
-      <button class="toolbar-btn">Junk</button>
-      <button class="toolbar-btn">Sweep</button>
-      <button class="toolbar-btn">Move to</button>
-      <button class="toolbar-btn">Categorize</button>
-      <button class="toolbar-btn">More</button>
-    </div>
+  <button class="primary-btn" type="button" onclick="switchMailbox('inbox')">New mail</button>
+  <button class="toolbar-btn">Delete</button>
+  <button class="toolbar-btn">Archive</button>
+  <button class="toolbar-btn" type="button" onclick="switchMailbox('junk')">Junk</button>
+  <button class="toolbar-btn">Sweep</button>
+  <button class="toolbar-btn">Move to</button>
+  <button class="toolbar-btn">Categorize</button>
+  <button class="toolbar-btn">More</button>
+</div>
 
     <main class="mail-layout">
       <aside class="app-rail">
@@ -502,6 +502,26 @@
     <source src="./audio/wrongAnswer.mp3" type="audio/mpeg">
   </audio>
 
+  <script>
+  function switchMailbox(targetBox) {
+    if (typeof window.renderMailbox === "function") {
+      window.renderMailbox(targetBox);
+      return;
+    }
+
+    if (typeof window.loadMailbox === "function") {
+      window.loadMailbox(targetBox);
+      return;
+    }
+
+    if (typeof window.selectMailbox === "function") {
+      window.selectMailbox(targetBox);
+      return;
+    }
+
+    console.warn("No mailbox switch function found for:", targetBox);
+  }
+</script>
 
   <script>
     function beginLevelMission() {
