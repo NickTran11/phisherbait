@@ -196,6 +196,10 @@ const forceBubbleText = setInterval(() => {
 
   const goldenRods = getGoldenRodsEarned();
 
+import("./scoreService.js")
+  .then(({ saveBestLevelScore }) => saveBestLevelScore("5", goldenRods))
+  .catch((error) => console.error("Failed to save Level 5 score:", error));
+    
 if (verificationPrompt) {
   verificationPrompt.textContent = "Golden Stars Rating.";
 }
