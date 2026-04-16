@@ -504,25 +504,15 @@
 
   <script>
   function switchMailbox(targetBox) {
-    if (typeof window.renderMailbox === "function") {
-      window.renderMailbox(targetBox);
+    if (typeof window.level4SwitchMailbox === "function") {
+      window.level4SwitchMailbox(targetBox);
       return;
     }
 
-    if (typeof window.loadMailbox === "function") {
-      window.loadMailbox(targetBox);
-      return;
-    }
-
-    if (typeof window.selectMailbox === "function") {
-      window.selectMailbox(targetBox);
-      return;
-    }
-
-    console.warn("No mailbox switch function found for:", targetBox);
+    console.warn("No Level 4 mailbox switch function found for:", targetBox);
   }
 </script>
-
+  
   <script>
     function beginLevelMission() {
       const overlay = document.getElementById("scenarioOverlay");
