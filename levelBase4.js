@@ -357,6 +357,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderMissionStars(starCount);
 
+import("./scoreService.js")
+  .then(({ saveBestLevelScore }) => saveBestLevelScore("4", starCount))
+  .catch((error) => console.error("Failed to save Level 4 score:", error));
+    
     if (starsText) {
       if (starCount === 3) {
         starsText.textContent = "Excellent job. You chose the safest action and earned 3 stars.";
