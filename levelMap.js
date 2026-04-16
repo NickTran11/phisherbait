@@ -244,18 +244,18 @@ function unlockLevel(levelId) {
   const node = document.querySelector(`.level-node[data-level="${levelId}"]`);
   if (!node) return;
 
-  // Update data model
   if (!LEVELS[levelId]) return;
   LEVELS[levelId].unlocked = true;
+  saveUnlockedLevel(levelId);
 
-  // Play animation on node (even if it currently has locked class)
   playUnlockSfx();
   node.classList.add("unlocking");
 
-  // After sparkle, switch to available and remove locked visuals
   setTimeout(() => {
     node.classList.remove("unlocking");
-    applyLockStatesFromData(); // sync classes based on LEVELS
+    applyLockStatesFromData();
+    moveSelectedGlow(node);
+    updateSidePanel(levelId);
   }, 520);
 }
 
@@ -268,8 +268,8 @@ function wireLevelClicks() {
     node.addEventListener("click", () => {
       const levelId = node.dataset.level;
 
-            if (!LEVELS[levelId]?.unlocked || isLocked(node)) {
-        updateSidePanel(levelId);
+                  if (!LEVELS[levelId]?.unlocked || isLocked(node)) {
+        unlockLevel(levelId);
         return;
       }
 
