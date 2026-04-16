@@ -386,7 +386,6 @@ function initLevelMap() {
   placeNodesOnPath();
   applyLockStatesFromData();
   startScoreSync();
-  // DELETE LATER!! Demo ratings (0-3). Replace with localStorage later.
   wireLevelClicks();
   initParallax();
 
