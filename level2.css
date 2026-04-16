@@ -832,6 +832,61 @@ html, body{
  border-bottom:1px solid #e5e7eb;
 }
 
+.tasks-kicker{
+  font-size:14px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  color:#6366f1;
+  margin-bottom:6px;
+}
+
+.tasks-progress-text{
+  margin-top:8px;
+  font-size:16px;
+  font-weight:700;
+  color:#6b7280;
+}
+
+.tasks-header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.tasks-header-btn{
+  width:56px;
+  height:56px;
+  border:none;
+  border-radius:999px;
+  background:#f3f4f6;
+  color:#111827;
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+}
+
+.tasks-header-btn:hover{
+  background:#e5e7eb;
+}
+
+.tasks-progress-bar{
+  height:14px;
+  margin:0 24px;
+  border-radius:999px;
+  background:#e5e7eb;
+  overflow:hidden;
+}
+
+.tasks-progress-fill{
+  width:7.14%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg, #8b5cf6, #06b6d4);
+}
+
 .tasks-title{
  margin:0;
  font-size:28px;
