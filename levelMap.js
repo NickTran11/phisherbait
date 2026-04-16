@@ -330,8 +330,6 @@ function startScoreSync() {
       setRodRating(levelId, earned);
     });
 
-    applyUnlocksFromScores(scores);
-
     const selectedNode = document.querySelector(".level-node.selected");
     if (selectedNode?.dataset?.level) {
       updateSidePanel(selectedNode.dataset.level);
