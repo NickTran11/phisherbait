@@ -310,15 +310,21 @@ html, body{
 
 .feed-layout{
  display:grid;
- grid-template-columns:minmax(420px, 1fr) 420px;
+ grid-template-columns: 1fr 420px;   /* left = center area, right = panel */
  gap:24px;
  padding:20px 24px 40px;
  min-height:calc(100vh - 62px);
 }
 
+/* 👇 NEW: center the reel area */
+.feed-layout > :first-child{
+ display:flex;
+ justify-content:center;
+}
+
 .reel-wrapper{
  display:grid;
- grid-template-columns:minmax(380px, 460px) 72px;
+ grid-template-columns: 460px 72px;
  gap:22px;
  align-items:center;
  position:relative;
