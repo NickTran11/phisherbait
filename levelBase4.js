@@ -164,6 +164,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     refreshFolderCounts();
     renderFolder("Inbox");
+
+const mobileInboxBtn = document.getElementById("mobileInboxBtn");
+if (mobileInboxBtn) {
+  mobileInboxBtn.classList.add("mailbox-toggle-active");
+}
+    
     lockMissionUntilMiniGameStarts();
   }
 
