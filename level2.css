@@ -808,50 +808,48 @@ html, body{
  z-index:9990;
  display:grid;
  place-items:center;
- padding:16px;
+ padding:24px;
  background:rgba(15, 23, 42, 0.62);
  backdrop-filter:blur(6px);
 }
 
 .tasks-card{
- width:min(920px, 95vw);
- max-height:none;
- overflow:visible;
+ width:min(760px, 96vw);
+ max-height:min(88vh, 900px);
+ overflow:auto;
  background:linear-gradient(180deg, #ffffff, #f8fafc);
  border:1px solid #e5e7eb;
  border-radius:24px;
- box-shadow:0 24px 60px rgba(15, 23, 42, 0.24);
- transform:scale(0.88);
- transform-origin:center center;
+ box-shadow:0 30px 80px rgba(15, 23, 42, 0.28);
 }
 
 .tasks-card-header{
  display:flex;
  justify-content:space-between;
  align-items:flex-start;
- gap:12px;
- padding:18px 18px 12px;
+ gap:16px;
+ padding:24px 24px 16px;
  border-bottom:1px solid #e5e7eb;
 }
 
 .tasks-title{
  margin:0;
- font-size:22px;
- line-height:1.1;
+ font-size:28px;
+ line-height:1.15;
 }
 
 .tasks-body{
- padding:18px;
+ padding:24px;
 }
 
 .tasks-intro-note{
- padding:12px 14px;
- border-radius:14px;
+ padding:14px 16px;
+ border-radius:16px;
  background:#eef2ff;
  color:#312e81;
- font-size:13px;
- line-height:1.45;
- margin-bottom:16px;
+ font-size:14px;
+ line-height:1.55;
+ margin-bottom:20px;
 }
 
 .task-question-shell{
