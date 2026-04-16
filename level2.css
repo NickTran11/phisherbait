@@ -795,6 +795,45 @@ html, body{
     display:none;
   }
 
+  .comments-popup{
+    position: static;
+    top: auto;
+    right: auto;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 12px 0 0;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+
+  .comments-popup.hidden{
+    display: none !important;
+  }
+
+  .comments-popup:not(.hidden){
+    display: block;
+  }
+
+  .comments-list{
+    max-height: 280px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .comments-popup-header{
+    padding: 14px 16px;
+  }
+
+  .comments-popup-title{
+    font-size: 18px;
+  }
+
+  .comments-input-row{
+    padding: 12px 14px 14px;
+  }
+  
   .action-cards{
     grid-template-columns:1fr;
   }
