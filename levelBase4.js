@@ -436,6 +436,15 @@ import("./scoreService.js")
     }
   }
 
+window.level4SwitchMailbox = function(targetBox) {
+  if (targetBox === "junk") {
+    renderFolder("Junk Email");
+    return;
+  }
+
+  renderFolder("Inbox");
+};
+  
   function refreshFolderCounts() {
     const inboxMessages = data.messages.filter(msg => (msg.folder || "Inbox") === "Inbox");
     const junkMessages = data.messages.filter(msg => (msg.folder || "Inbox") === "Junk Email");
