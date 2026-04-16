@@ -42,6 +42,16 @@ const LEVELS = {
   }
 };
 
+function applyUnlocksFromScores(scores = {}) {
+  LEVELS["1"].unlocked = true;
+  LEVELS["2"].unlocked = true;
+  LEVELS["3"].unlocked = Number(scores["2"] ?? 0) > 0;
+  LEVELS["4"].unlocked = Number(scores["3"] ?? 0) > 0;
+  LEVELS["5"].unlocked = Number(scores["4"] ?? 0) > 0;
+
+  applyLockStatesFromData();
+}
+
 // ----- AUDIO STUFF
 
 // ----- AUDIO STUFF
