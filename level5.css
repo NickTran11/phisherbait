@@ -48,26 +48,29 @@ html, body{
 
 /* ================= DOSSIER ================= */
 .scenario-overlay{
-  position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.06), transparent 30%),
-    rgba(13, 14, 18, 0.84);
-  z-index: 10000;
-  padding: 24px;
+ position: fixed;
+ inset: 0;
+ display: grid;
+ place-items: center;
+ background:
+ radial-gradient(circle at 20% 20%, rgba(255,255,255,0.06), transparent 30%),
+ rgba(13, 14, 18, 0.84);
+ z-index: 10000;
+ padding: 16px;
+ overflow: hidden;
 }
 
 .scenario-card{
-  position: relative;
-  width: min(600px, 95vw);   /* bigger width */
-  background: linear-gradient(180deg, #e8dcc4, #d9cbb0);
-  color: #2f2a24;
-  border: 1px solid #b5a78b;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.45);
-  padding: 28px 28px 24px;   /* more spacing */
-  transform: rotate(-0.5deg) scale(1.15);  /* BIGGER */
+ position: relative;
+ width: min(760px, 92vw);
+ max-height: calc(100vh - 32px);
+ background: linear-gradient(180deg, #e8dcc4, #d9cbb0);
+ color: #2f2a24;
+ border: 1px solid #b5a78b;
+ box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+ padding: 20px 24px 18px;
+ transform: rotate(-0.5deg) scale(1);
+ overflow: hidden;
 }
 
 .paperclip{
