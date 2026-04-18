@@ -3,12 +3,12 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-aut
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAhUzDkvbcfp751T9hgvbzN2ZaAOZOxDG0",
-  authDomain: "masterbait-b571c.firebaseapp.com",
-  projectId: "masterbait-b571c",
-  storageBucket: "masterbait-b571c.firebasestorage.app",
-  messagingSenderId: "4078870670",
-  appId: "1:4078870670:web:529f2701c2d27b2ca2e9df"
+  apiKey: import.meta.env.API_KEY,
+  authDomain: import.meta.env.AUTH_DOMAIN,
+  projectId: import.meta.env.PROJECT_ID,
+  storageBucket: import.meta.env.STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.MESSAGING_SENDER_ID,
+  appId: import.meta.env.APP_ID
 };
 
 let app;
