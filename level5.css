@@ -999,10 +999,10 @@ html, body{
 @media (max-width: 768px){
 
   .mail-topbar{
-    grid-template-columns: 1fr auto !important;
-    padding: 0 10px !important;
-    column-gap: 8px !important;
-  }
+  grid-template-columns: minmax(0,1fr) auto !important;
+  padding: 0 10px !important;
+  column-gap: 10px !important;
+}
 
   .top-search-wrap{
     display: none !important;
