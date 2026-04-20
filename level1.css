@@ -1405,6 +1405,19 @@ html, body{
   .clue-chip{
     font-size: 12px;
   }
+
+  .scenario-overlay{
+    padding: 10px;
+  }
+
+  .scenario-card{
+    width: min(100%, 420px);
+    max-height: calc(100vh - 20px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  
 }
 
 @media (max-width: 480px){
