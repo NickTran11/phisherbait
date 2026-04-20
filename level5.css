@@ -1017,6 +1017,12 @@ html, body{
     flex-wrap: nowrap !important;
   }
 
+.top-right{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+  
   .icon-btn{
     font-size: 16px !important;
     padding: 0 !important;
@@ -1037,15 +1043,30 @@ html, body{
   }
 
   .mail-toolbar{
-    padding: 8px 8px !important;
-    gap: 6px !important;
-  }
+  display: flex !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  flex-wrap: nowrap !important;
+}
 
-  .primary-btn,
-  .toolbar-btn{
-    padding: 8px 10px !important;
-    font-size: 13px !important;
-  }
+.mail-toolbar .toolbar-btn{
+  display: none !important;
+}
+
+/* show only Junk button on phone */
+.mail-toolbar .toolbar-btn:nth-of-type(3){
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.primary-btn,
+.mail-toolbar .toolbar-btn:nth-of-type(3){
+  flex: 1 1 0 !important;
+  padding: 9px 10px !important;
+  font-size: 13px !important;
+  white-space: nowrap !important;
+}
 
   .mail-layout{
     grid-template-columns: 44px 1fr !important;
@@ -1079,6 +1100,16 @@ html, body{
 
 @media (max-width: 480px){
 
+.mail-toolbar{
+  padding: 8px 8px !important;
+  gap: 8px !important;
+}
+
+.primary-btn,
+.mail-toolbar .toolbar-btn:nth-of-type(3){
+  font-size: 12px !important;
+}
+  
   .mail-topbar{
     grid-template-columns: 1fr auto !important;
     padding: 0 8px !important;
