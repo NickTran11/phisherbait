@@ -1335,10 +1335,13 @@ html, body{
     padding: 6px !important;
   }
 
-  .scenario-card{
+    .scenario-card{
     width: calc(100vw - 12px) !important;
     max-height: calc(100dvh - 12px) !important;
     padding: 10px 12px 10px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   .scenario-polaroid{
