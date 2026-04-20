@@ -1244,6 +1244,20 @@ html, body{
   }
 }
 
+@media (max-width: 768px){
+  .scenario-overlay{
+    padding: 10px;
+  }
+
+  .scenario-card{
+    width: min(100%, 420px);
+    max-height: calc(100vh - 20px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* stronger override */
 .icon-btn.dossier-btn{
   color: #d8b4fe !important;
