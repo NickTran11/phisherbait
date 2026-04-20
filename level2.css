@@ -841,6 +841,18 @@ html, body{
   .scenario-columns{
     grid-template-columns:1fr;
   }
+
+    .scenario-overlay{
+    padding: 10px;
+  }
+
+  .scenario-card{
+    width: min(100%, 420px);
+    max-height: calc(100vh - 20px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* =========================
