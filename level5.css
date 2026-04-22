@@ -996,111 +996,7 @@ html, body{
   gap: 4px;
 }
 
-@media (max-width: 768px){
 
-  .mail-topbar{
-  grid-template-columns: minmax(0,1fr) auto !important;
-  padding: 0 10px !important;
-  column-gap: 10px !important;
-}
-
-  .top-search-wrap{
-    display: none !important;
-  }
-
-  .top-left{
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  min-width: 0 !important;
-  flex: 1 1 auto !important;
-}
-
-  .top-right{
-    gap: 4px !important;
-    flex-wrap: nowrap !important;
-  }
-
-.top-right{
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-}
-  
-  .icon-btn{
-    font-size: 16px !important;
-    padding: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    min-width: 0 !important;
-  }
-
-  .exit-link{
-    margin: 0 2px !important;
-    font-size: 12px !important;
-    letter-spacing: 0.5px !important;
-    padding: 2px 4px !important;
-  }
-
-  .dossier-btn{
-    flex: 0 0 auto;
-  }
-
-  .mail-toolbar{
-  display: flex !important;
-  gap: 8px !important;
-  padding: 8px 10px !important;
-  flex-wrap: nowrap !important;
-}
-
-.mail-toolbar .toolbar-btn{
-  display: none !important;
-}
-
-/* show only Junk button on phone */
-.mail-toolbar .toolbar-btn:nth-of-type(3){
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.primary-btn,
-.mail-toolbar .toolbar-btn:nth-of-type(3){
-  flex: 1 1 0 !important;
-  padding: 9px 10px !important;
-  font-size: 13px !important;
-  white-space: nowrap !important;
-}
-
-  .mail-layout{
-    grid-template-columns: 44px 1fr !important;
-    grid-template-rows: auto auto !important;
-    min-height: calc(100vh - 50px - 54px - 120px) !important;
-  }
-
-  .app-rail{
-    grid-column: 1 / 2;
-    grid-row: 1 / 3;
-  }
-
-  .folder-pane{
-    display: none !important;
-  }
-
-  .message-list-pane{
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    min-width: 0;
-    max-height: 260px;
-    overflow-y: auto;
-  }
-
-  .reading-pane{
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    min-width: 0;
-  }
-}
 
 @media (max-width: 480px){
 
@@ -1404,17 +1300,337 @@ html, body{
   }
 }
 
-@media (max-width: 768px){
-  .scenario-overlay{
-    padding: 10px;
+@media (max-width: 768px) {
+  .scenario-overlay {
+    padding: 8px !important;
+    place-items: start center !important;
+    overflow: hidden !important;
   }
 
-  .scenario-card{
-    width: min(100%, 420px);
-    max-height: calc(100vh - 20px);
-    overflow-y: auto;
-    overflow-x: hidden;
+  .scenario-card {
+    width: min(100%, 390px) !important;
+    max-height: calc(100dvh - 16px) !important;
+    padding: 12px 14px 12px !important;
+    transform: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .paperclip {
+    display: none !important;
+  }
+
+  .scenario-photo-wrap {
+    margin-bottom: 6px !important;
+  }
+
+  .scenario-polaroid {
+    width: 122px !important;
+    padding: 6px 6px 12px !important;
+  }
+
+  .scenario-photo-img {
+    width: 110px !important;
+    height: 110px !important;
+  }
+
+  .scenario-name {
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+  }
+
+  .scenario-divider {
+    margin: 5px 0 6px !important;
+  }
+
+  .scenario-meta {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+  }
+
+  .scenario-columns {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .scenario-list {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+  }
+
+  .scenario-context {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  #mission-notes {
+    margin: 6px 0 0 18px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  .scenario-actions {
+    justify-content: center !important;
+    margin-top: 10px !important;
+  }
+
+  .begin-mission-btn {
+    width: 100% !important;
+    max-width: 240px !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+
+  .mail-topbar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    padding: 0 10px !important;
+    column-gap: 10px !important;
+    height: 50px !important;
+  }
+
+  .top-search-wrap {
+    display: none !important;
+  }
+
+  .top-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  .email-badge,
+  .product-name {
+    font-size: 14px !important;
+    white-space: nowrap !important;
+  }
+
+  .top-right {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 4px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .icon-btn {
+    font-size: 16px !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+  }
+
+  .icon-btn.dossier-btn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    font-size: 20px !important;
+  }
+
+  .exit-link {
+    margin: 0 0 0 4px !important;
+    font-size: 12px !important;
+    letter-spacing: 0.4px !important;
+    padding: 5px 7px !important;
+    white-space: nowrap !important;
+  }
+
+  .mail-toolbar {
+    display: flex !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .mail-toolbar .toolbar-btn {
+    display: none !important;
+  }
+
+  .primary-btn {
+    flex: 1 1 0 !important;
+    padding: 9px 10px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+  }
+
+  .mail-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+
+  .app-rail,
+  .folder-pane {
+    display: none !important;
+  }
+
+  .message-list-pane {
+    display: block !important;
+    border-right: none !important;
+    border-bottom: 1px solid #ddd !important;
+    max-height: 220px !important;
+    overflow-y: auto !important;
+  }
+
+  .list-header {
+    padding: 12px 12px 8px !important;
+  }
+
+  .message-group-label {
+    padding: 8px 12px 6px !important;
+  }
+
+  .message-item {
+    padding: 10px 12px !important;
+  }
+
+  .message-item.active {
+    padding-left: 8px !important;
+  }
+
+  .reading-pane {
+    min-width: 0 !important;
+    padding: 10px 10px 18px !important;
+    gap: 10px !important;
+  }
+
+  .reading-subject {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    word-break: break-word !important;
+  }
+
+  .sender-row {
+    display: grid !important;
+    grid-template-columns: 40px 1fr !important;
+    gap: 10px !important;
+    align-items: start !important;
+  }
+
+  .reading-time {
+    grid-column: 2 !important;
+    font-size: 12px !important;
+    white-space: normal !important;
+  }
+
+  .sender-name-line {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    font-size: 13px !important;
+  }
+
+  .sender-address,
+  .to-line {
+    word-break: break-word !important;
+  }
+
+  .external-warning {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    padding: 10px !important;
+  }
+
+  .email-card {
+    width: 100% !important;
+  }
+
+  .email-body {
+    padding: 14px 16px 18px !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    word-break: break-word !important;
+  }
+
+  .email-body p,
+  .email-body li,
+  .email-body span,
+  .email-body a,
+  .email-body div {
+    word-break: break-word !important;
+  }
+
+  .hint-panel,
+  .action-panel {
+    margin-top: 12px !important;
+  }
+
+  .hint-panel-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .reveal-hint-btn {
+    width: 100% !important;
+  }
+
+  .action-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .action-card {
+    width: 100% !important;
+  }
+
+  .action-name {
+    font-size: 14px !important;
+  }
+
+  .action-desc,
+  .action-note {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+  }
+
+  .clue-drawer {
+    padding: 10px 12px !important;
+  }
+
+  .clue-chip {
+    font-size: 12px !important;
+    padding: 7px 9px !important;
+  }
+
+  .call-modal {
+    width: min(100%, 360px) !important;
+    padding: 14px 14px 16px !important;
+  }
+
+  .call-avatar {
+    width: 88px !important;
+    height: 88px !important;
+  }
+
+  .call-caller-name {
+    font-size: 22px !important;
+  }
+
+  .call-status {
+    font-size: 14px !important;
+  }
+
+  .call-actions,
+  .call-choice-list {
+    gap: 8px !important;
+  }
+
+  .call-answer-btn,
+  .call-choice-btn,
+  .call-continue-btn {
+    width: 100% !important;
+  }
+
+  .golden-rod-star-icon {
+    width: 54px !important;
+    height: 54px !important;
   }
 }
 
